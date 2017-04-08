@@ -9,6 +9,7 @@ public class PzApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PzApplication.class, args);
+		System.out.println("API DOSTEPNE POD: Localhost:8080");
 	}
 
 
