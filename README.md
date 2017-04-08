@@ -46,9 +46,11 @@ Directory Name: eventer
 4. Na pytanie czy utworzyc projekt idea, odpowiedzieć TAK i wybrać maven. Przeklikać się do końca. 
 5. Na pytanie o okno wybrać aktualne (nie otwierać nowego)
 
-6. Wybrać File-> Project Structure -> Modules-> (+) -> wybrać sterownik bazy oracle ojdbc7.jar -> Apply
+6. Przełączyć lokalny branch na "production". [PRACA TYLKO NA PRODUCTION]. Z masterem będziemy łączyć kiedy indziej.
 
-7. W klasie DemoRestController, w metodzie uploadImage() jest ścieżka do folderu do którego zapisują się zuploadowane pliki. Zmienić ją na swoje potrzeby. W późniejszej wersji zamiast na dysk pliki trafią do bazy i będzie to zbędne.
+7. Wybrać File-> Project Structure -> Modules-> (+) -> wybrać sterownik bazy oracle ojdbc7.jar -> Apply
+
+8. W klasie DemoRestController, w metodzie uploadImage() jest ścieżka do folderu do którego zapisują się zuploadowane pliki. Zmienić ją na swoje potrzeby. W późniejszej wersji zamiast na dysk pliki trafią do bazy i będzie to zbędne.
 
 -- URUCHOMIENIE BACKENDU http://localhost:8080 (tylko api, nie ma widoków)
 1. Przejść do klasy PzApplication -> Przycisk |> przy nazwie klasy -> RUN. 
