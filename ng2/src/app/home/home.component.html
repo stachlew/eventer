@@ -1,0 +1,180 @@
+<!--UPLOAD PLIKOW-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <form>
+        <div class="form-group">
+          <label for="multiple">file</label>
+          <input id ="multiple" type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
+        </div>
+        <div class="form-group">
+          <label for="single">single</label>
+          <input id="single" type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <h3>UPLOAD PLIKOW (mozliwy tylko dla usera i admina)</h3>
+      Ilość plików: {{ uploader?.queue?.length }}
+      <table class="table">
+        <thead>
+        <tr>
+          <th width="50%">Name</th>
+          <th>Rozmiar</th>
+          <th>Trwanie</th>
+          <th>Stan</th>
+          <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td><strong>{{ item.file.name }}</strong></td>
+          <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
+          <td>
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <span *ngIf="item.isSuccess">OK</span>
+            <span *ngIf="item.isCancel">---</span>
+            <span *ngIf="item.isError"></span>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-success btn-xs"
+                    (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+               Załaduj!
+            </button>
+            <button type="button" class="btn btn-warning btn-xs"
+                    (click)="item.cancel()" [disabled]="!item.isUploading">
+               Anuluj
+            </button>
+            <button type="button" class="btn btn-danger btn-xs"
+                    (click)="item.remove()">
+               Usuń
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <div>
+          Stan procesu:
+          <div class="progress" style="">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+           Załaduj wszystkie!
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+           Anuluj wszystkie
+        </button>
+        <button type="button" class="btn btn-danger btn-s"
+                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+           Usuń wszystkie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--END: UPLOAD PLIKOW-->
+<div style="margin-top: 20px"></div>
+<!-- FORMULARZE -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="">
+        <h1>USER Form</h1>
+        <form>
+          <div class="form-group">
+            <label for="numer">NUMER</label>
+            <input type="number" class="form-control" id="numer" required [(ngModel)]="demoClass.nr" name="numer">
+          </div>
+          <div class="form-group">
+            <label for="napis">NAPIS</label>
+            <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
+          </div>
+          <button (click)="postGuest()" type="" class="btn btn-success">Submit</button>
+        </form>
+      </div>
+
+      <div class="">
+        <h1>ADMIN Form</h1>
+        <form >
+          <div class="form-group">
+            <label for="numer">NUMER</label>
+            <input type="number" class="form-control" id="numer" required [(ngModel)]="demoClass.nr" name="numer">
+          </div>
+          <div class="form-group">
+            <label for="napis">NAPIS</label>
+            <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
+          </div>
+          <button (click)="postAdmin()" type="" class="btn btn-success">Submit</button>
+        </form>
+      </div>
+<!--END: FORMULARZE -->
+      <p>
+        Nulla ornare venenatis enim, a tincidunt dui tempor in. Aenean non posuere est, ac iaculis sem. Mauris convallis pulvinar metus, quis vehicula arcu blandit sit amet. Nunc at eleifend ante. Vestibulum congue luctus purus vitae congue. Integer in hendrerit nunc, id dignissim ligula. In faucibus molestie eros, sed eleifend felis suscipit quis. Mauris convallis orci eu dapibus sagittis. Suspendisse placerat cursus justo, hendrerit dignissim magna posuere et. Donec scelerisque, ante at auctor ullamcorper, turpis elit pellentesque magna, in blandit justo tellus ut enim. Nullam non mattis mi, a tincidunt augue. Sed dapibus congue odio. Donec convallis condimentum est, nec varius ante ornare id. Fusce viverra posuere eleifend. Maecenas eu est rhoncus, pulvinar est id, venenatis turpis.
+      </p>
+      <p>
+        Ut vel feugiat ligula, et dapibus enim. Duis cursus in neque a aliquam. Proin dapibus rhoncus viverra. Nullam ut tellus erat. Nulla aliquam lectus in condimentum dictum. Aliquam orci lacus, ullamcorper ut vehicula sit amet, finibus et lacus. Curabitur nec mauris nisl. Quisque quis ornare tellus, vel elementum purus. Ut eu hendrerit tellus. Maecenas consectetur pretium mi eu malesuada.
+      </p>
+      <p>
+        Vivamus convallis nisi justo, elementum fermentum elit fringilla venenatis. Vestibulum fermentum mattis pulvinar. Integer semper lorem id ante sagittis, sit amet ornare odio fringilla. Aliquam vel urna eu eros bibendum sagittis et ut felis. Mauris velit odio, pulvinar sed eros id, ornare accumsan leo. Praesent massa ipsum, sagittis id massa sit amet, aliquet pharetra ex. Duis euismod sodales maximus. Donec viverra magna purus, at faucibus dui aliquam ac. Pellentesque egestas leo sit amet feugiat varius. Fusce nec velit aliquet, accumsan erat sit amet, volutpat massa. Pellentesque et efficitur ante. Nam facilisis dui ipsum. Vestibulum semper facilisis neque, ac tincidunt purus eleifend sed. Curabitur a laoreet turpis.
+      </p>
+      <p>
+        Nulla ornare venenatis enim, a tincidunt dui tempor in. Aenean non posuere est, ac iaculis sem. Mauris convallis pulvinar metus, quis vehicula arcu blandit sit amet. Nunc at eleifend ante. Vestibulum congue luctus purus vitae congue. Integer in hendrerit nunc, id dignissim ligula. In faucibus molestie eros, sed eleifend felis suscipit quis. Mauris convallis orci eu dapibus sagittis. Suspendisse placerat cursus justo, hendrerit dignissim magna posuere et. Donec scelerisque, ante at auctor ullamcorper, turpis elit pellentesque magna, in blandit justo tellus ut enim. Nullam non mattis mi, a tincidunt augue. Sed dapibus congue odio. Donec convallis condimentum est, nec varius ante ornare id. Fusce viverra posuere eleifend. Maecenas eu est rhoncus, pulvinar est id, venenatis turpis.
+      </p>
+
+
+    </div>
+<!--PRZYCISKI METOD -->
+    <div class="col-sm-12 col-md-6 col-lg-8">
+      <div id="content" class="navbar-adjustment">
+        Kazdy: <button class="btn btn-danger" (click)="clickedGuest()">Kazdy</button>
+        User: <button class="btn btn-info" (click)="clickedUser()">User</button>
+        Admin: <button class="btn btn-default" (click)="clickedAdmin()">Admin</button>
+
+<!--END: PRZYCISKI METOD -->
+        <br/>
+        <br/>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus sit amet sem at euismod. Aenean porttitor, quam in imperdiet ornare, est nisl interdum turpis, quis feugiat odio ligula a ipsum. Nullam ac purus quis risus porta porta vel vitae ipsum. Curabitur odio lacus, rutrum vitae euismod eget, pulvinar imperdiet mauris. Maecenas id venenatis augue, ac sollicitudin quam. Vestibulum id metus ipsum. Nulla vulputate, turpis quis interdum dapibus, quam quam porttitor turpis, nec sodales arcu purus a purus. Nam blandit rutrum nibh, a convallis libero sagittis id. Pellentesque pellentesque blandit ex ut sodales.
+
+          Nam enim leo, scelerisque eget tincidunt in, sodales quis dui. Sed enim arcu, volutpat ut ultricies eget, ultricies sit amet arcu. Suspendisse potenti. Quisque at lacus et arcu molestie suscipit sit amet at elit. Pellentesque non lacus blandit, dapibus turpis vitae, volutpat mi. Nunc eu sem sem. Vivamus iaculis ipsum sit amet orci finibus malesuada.
+
+          Vivamus convallis nisi justo, elementum fermentum elit fringilla venenatis. Vestibulum fermentum mattis pulvinar. Integer semper lorem id ante sagittis, sit amet ornare odio fringilla. Aliquam vel urna eu eros bibendum sagittis et ut felis. Mauris velit odio, pulvinar sed eros id, ornare accumsan leo. Praesent massa ipsum, sagittis id massa sit amet, aliquet pharetra ex. Duis euismod sodales maximus. Donec viverra magna purus, at faucibus dui aliquam ac. Pellentesque egestas leo sit amet feugiat varius. Fusce nec velit aliquet, accumsan erat sit amet, volutpat massa. Pellentesque et efficitur ante. Nam facilisis dui ipsum. Vestibulum semper facilisis neque, ac tincidunt purus eleifend sed. Curabitur a laoreet turpis.
+
+          Nulla ornare venenatis enim, a tincidunt dui tempor in. Aenean non posuere est, ac iaculis sem. Mauris convallis pulvinar metus, quis vehicula arcu blandit sit amet. Nunc at eleifend ante. Vestibulum congue luctus purus vitae congue. Integer in hendrerit nunc, id dignissim ligula. In faucibus molestie eros, sed eleifend felis suscipit quis. Mauris convallis orci eu dapibus sagittis. Suspendisse placerat cursus justo, hendrerit dignissim magna posuere et. Donec scelerisque, ante at auctor ullamcorper, turpis elit pellentesque magna, in blandit justo tellus ut enim. Nullam non mattis mi, a tincidunt augue. Sed dapibus congue odio. Donec convallis condimentum est, nec varius ante ornare id. Fusce viverra posuere eleifend. Maecenas eu est rhoncus, pulvinar est id, venenatis turpis.
+
+          Ut vel feugiat ligula, et dapibus enim. Duis cursus in neque a aliquam. Proin dapibus rhoncus viverra. Nullam ut tellus erat. Nulla aliquam lectus in condimentum dictum. Aliquam orci lacus, ullamcorper ut vehicula sit amet, finibus et lacus. Curabitur nec mauris nisl. Quisque quis ornare tellus, vel elementum purus. Ut eu hendrerit tellus. Maecenas consectetur pretium mi eu malesuada.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus sit amet sem at euismod. Aenean porttitor, quam in imperdiet ornare, est nisl interdum turpis, quis feugiat odio ligula a ipsum. Nullam ac purus quis risus porta porta vel vitae ipsum. Curabitur odio lacus, rutrum vitae euismod eget, pulvinar imperdiet mauris. Maecenas id venenatis augue, ac sollicitudin quam. Vestibulum id metus ipsum. Nulla vulputate, turpis quis interdum dapibus, quam quam porttitor turpis, nec sodales arcu purus a purus. Nam blandit rutrum nibh, a convallis libero sagittis id. Pellentesque pellentesque blandit ex ut sodales.
+
+          Nam enim leo, scelerisque eget tincidunt in, sodales quis dui. Sed enim arcu, volutpat ut ultricies eget, ultricies sit amet arcu. Suspendisse potenti. Quisque at lacus et arcu molestie suscipit sit amet at elit. Pellentesque non lacus blandit, dapibus turpis vitae, volutpat mi. Nunc eu sem sem. Vivamus iaculis ipsum sit amet orci finibus malesuada.
+
+          Vivamus convallis nisi justo, elementum fermentum elit fringilla venenatis. Vestibulum fermentum mattis pulvinar. Integer semper lorem id ante sagittis, sit amet ornare odio fringilla. Aliquam vel urna eu eros bibendum sagittis et ut felis. Mauris velit odio, pulvinar sed eros id, ornare accumsan leo. Praesent massa ipsum, sagittis id massa sit amet, aliquet pharetra ex. Duis euismod sodales maximus. Donec viverra magna purus, at faucibus dui aliquam ac. Pellentesque egestas leo sit amet feugiat varius. Fusce nec velit aliquet, accumsan erat sit amet, volutpat massa. Pellentesque et efficitur ante. Nam facilisis dui ipsum. Vestibulum semper facilisis neque, ac tincidunt purus eleifend sed. Curabitur a laoreet turpis.
+
+          Nulla ornare venenatis enim, a tincidunt dui tempor in. Aenean non posuere est, ac iaculis sem. Mauris convallis pulvinar metus, quis vehicula arcu blandit sit amet. Nunc at eleifend ante. Vestibulum congue luctus purus vitae congue. Integer in hendrerit nunc, id dignissim ligula. In faucibus molestie eros, sed eleifend felis suscipit quis. Mauris convallis orci eu dapibus sagittis. Suspendisse placerat cursus justo, hendrerit dignissim magna posuere et. Donec scelerisque, ante at auctor ullamcorper, turpis elit pellentesque magna, in blandit justo tellus ut enim. Nullam non mattis mi, a tincidunt augue. Sed dapibus congue odio. Donec convallis condimentum est, nec varius ante ornare id. Fusce viverra posuere eleifend. Maecenas eu est rhoncus, pulvinar est id, venenatis turpis.
+
+          Ut vel feugiat ligula, et dapibus enim. Duis cursus in neque a aliquam. Proin dapibus rhoncus viverra. Nullam ut tellus erat. Nulla aliquam lectus in condimentum dictum. Aliquam orci lacus, ullamcorper ut vehicula sit amet, finibus et lacus. Curabitur nec mauris nisl. Quisque quis ornare tellus, vel elementum purus. Ut eu hendrerit tellus. Maecenas consectetur pretium mi eu malesuada.
+        </p>
+<!-- POBIERANIE DANYCH -->
+        POBIERANIE DANYCH DLA WSZYSTKICH: <button class="btn btn-danger" (click)="getCustomers()">Pobierz dane!</button>
+        <ul>
+          <li *ngFor="let i of customers"> {{i.name}} {{i.id}}</li>
+        </ul>
+        POBIERANIE DANYCH DLA ADMINA: <button class="btn btn-danger" (click)="getCustomersAdmin()">Pobierz dane!</button>
+        <ul>
+          <li *ngFor="let i of customersAdmin"> {{i.name}} {{i.email}}</li>
+        </ul>
+<!-- END: POBIERANIE DANYCH -->
+      </div>
+    </div>
+  </div>
+</div>

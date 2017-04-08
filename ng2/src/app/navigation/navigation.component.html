@@ -1,0 +1,82 @@
+<nav class="navbar navbar-default  navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button"  class="navbar-toggle collapsed" (click)="toggleState()">
+        <span class="sr-only">Toggle navigation</span><!--Info dla screen readerow-->
+        <span class="icon-bar"></span><!--poziome kreski przycisku-->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a style="color: #f9f2f4; font-size: x-large" class="navbar-brand" [routerLink]="['/']">
+        <i class="fa fa-bullhorn" aria-hidden="true"></i>
+        EV<b>enter</b>
+      </a>
+
+    </div>
+    <div class="collapse navbar-collapse" [ngClass]="{ 'in': isIn }">
+      <!--Pozycje nawigacji [Wersja mobilna + Pelna]-->
+      <ul class="nav navbar-nav">
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['/home']">
+            <i class="fa fa-tachometer fa-icon-margin"></i> Strona główna
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['administration']">
+            <i class="fa fa-file-text fa-icon-margin"></i> Administracyja
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['settings']">
+            <i class="fa fa-gears fa-icon-margin"></i> Opcje
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="isIn && auth.username != null">
+          <a [routerLink]="['account']" >
+            <i class="fa fa-user-circle-o"></i> {{auth.username}}
+          </a>
+        </li>
+        <!-- Opcje logowania/wylogowania dla widoku mobilnego -->
+        <!-- USER -->
+        <li *ngIf="isAuth() && isIn">
+          <a href="#" (click)="logout()" >
+            <i class="fa fa-sign-out"  ></i>
+            Logout
+          </a>
+        </li>
+        <!-- GOSC -->
+        <li *ngIf="!isAuth() && isIn">
+          <a [routerLink]="['login']">
+            <i class="fa fa-sign-in"></i>
+            Log in
+          </a>
+        </li>
+        <!-- END: Opcje logowania/wylogowania dla widoku mobilnego -->
+      </ul>
+      <!--END: Pozycje nawigacji [Wersja mobilna + Pelna]-->
+
+      <!--Prawa strona paska nawigacji [Pelny ekran]-->
+      <!-- USER -->
+      <ul class="nav navbar-nav pull-right" *ngIf="!isIn">
+        <li *ngIf="auth.username != null">
+          <a [routerLink]="['account']" >
+            <i class="fa fa-user-circle-o"></i> {{auth.username}}
+          </a>
+        </li>
+        <li *ngIf="isAuth()">
+          <a href="#" (click)="logout()" >
+            <i class="fa fa-sign-out"  ></i>
+            Logout
+          </a>
+        </li>
+        <!-- GOSC -->
+        <li *ngIf="!isAuth()">
+          <a [routerLink]="['login']">
+            <i class="fa fa-sign-in"></i>
+            Log in
+          </a>
+        </li>
+      </ul>
+      <!--END: Prawa strona paska nawigacji [Pelny ekran]-->
+
+    </div>
