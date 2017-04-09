@@ -3,7 +3,7 @@ package pl.wat.db.domain;
 import javax.persistence.*;
 import java.util.Date;
 
-//PRZYKLAD TWORZENIA KLASY DOMENOWEJ. ZWROCIC UWAGE NA SEKWENCJE.
+//[DEMO][DEMO][DEMO] PRZYKLAD TWORZENIA KLASY DOMENOWEJ. ZWROCIC UWAGE NA SEKWENCJE.
 @Entity
 public class Customer {
 

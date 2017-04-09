@@ -23,12 +23,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "EVE_Users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ")
-    @SequenceGenerator(sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1, name = "USER_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVE_USER_SEQ")
+    @SequenceGenerator(sequenceName = "EVE_USER_SEQ", initialValue = 1, allocationSize = 1, name = "EVE_USER_SEQ")
     private int id;
 
     @Column(length = 50, unique = true)
@@ -43,18 +43,34 @@ public class User {
 
     @Column(length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 3, max = 50)
     private String firstname;
 
     @Column(length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 3, max = 50)
     private String lastname;
 
     @Column(length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String email;
+
+    @Column(length = 50)
+    @Size(min = 4, max = 50)
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     @NotNull
     private boolean enabled;
@@ -65,7 +81,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "USER_AUTHORITY",
+            name = "EVE_USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "ID")},
             uniqueConstraints = {@UniqueConstraint(

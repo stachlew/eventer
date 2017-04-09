@@ -6,11 +6,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "Authority")
+@Table(name = "EVE_Authority")
 public class Authority {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTH_SEQ")
-    @SequenceGenerator(sequenceName = "AUTH_SEQ", initialValue = 1, allocationSize = 1, name = "AUTH_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVE_AUTH_SEQ")
+    @SequenceGenerator(sequenceName = "EVE_AUTH_SEQ", initialValue = 1, allocationSize = 1, name = "EVE_AUTH_SEQ")
     private int id;
 
     @Column(length = 50)
