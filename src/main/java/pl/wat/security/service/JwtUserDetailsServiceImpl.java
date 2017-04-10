@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.user.User;
 import pl.wat.security.JwtUserFactory;
-import pl.wat.db.repository.UserRepository;
+import pl.wat.db.repository.user.UserRepository;
 
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {

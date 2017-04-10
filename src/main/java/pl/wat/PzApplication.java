@@ -1,7 +1,9 @@
 package pl.wat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pl.wat.logic.CustomerService;
 
 
 @SpringBootApplication(scanBasePackages = { "pl.wat" })
