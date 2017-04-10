@@ -25,6 +25,15 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "EVE_Users")
 public class User {
+    /*INFO ----------------------------
+    //Konstruktor pelny:
+    //String username, String password, String firstname, String lastname, String email, String phone, boolean enabled, Date lastpassres, List<Authority> authorities
+
+    //Konstruktor formularzowy z domyslnymi wartosciami: (lista authority = null, defaultEnabled, lastpasress = biezaca data):
+    //String username, String password, String firstname, String lastname, String email, String phone
+    INFO ---------------------------- */
+
+    private static boolean defaultEnabled = true;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVE_USER_SEQ")
@@ -158,5 +167,31 @@ public class User {
 
     public void setLastpassres(Date lastpassres) {
         this.lastpassres = lastpassres;
+    }
+
+    public User() {
+    }
+
+    public User(String username, String password, String firstname, String lastname, String email, String phone, boolean enabled, Date lastpassres, List<Authority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.enabled = enabled;
+        this.lastpassres = lastpassres;
+        this.authorities = authorities;
+    }
+
+    public User(String username, String password, String firstname, String lastname, String email, String phone){
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.enabled = defaultEnabled;
+        this.lastpassres = new Date();
     }
 }

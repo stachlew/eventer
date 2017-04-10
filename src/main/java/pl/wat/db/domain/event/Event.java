@@ -1,14 +1,13 @@
 package pl.wat.db.domain.event;
 
-import org.hibernate.annotations.ColumnDefault;
-import pl.wat.db.domain.event.location.Place;
-import pl.wat.db.domain.user.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import org.hibernate.annotations.ColumnDefault;
+import pl.wat.db.domain.event.location.Place;
+import pl.wat.db.domain.user.User;
 
 @Entity
 @Table(name = "EVE_Events")

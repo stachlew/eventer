@@ -3,6 +3,7 @@ package pl.wat.db.domain.event.location;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.wat.db.domain.event.location.City;
 
 @Entity
 @Table(name = "EVE_Places")

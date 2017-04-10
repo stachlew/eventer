@@ -2,14 +2,15 @@ package pl.wat.api.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
+import pl.wat.db.domain.user.User;
 import pl.wat.logic.CustomerService;
+import pl.wat.logic.UserService;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -22,6 +23,32 @@ public class DemoRestController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    UserService userService;
+
+    //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    @ResponseBody String getTest(){
+        System.out.println("URUCHOMIENIE TESTU");
+        boolean status1=false;
+        boolean status2=false;
+        //Deklaracja
+
+        User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
+        //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
+
+        //Wykonywanie
+        status1 = userService.createUser(newUser);
+        status2 = userService.deleteUser("user");
+
+
+        //Zwrot wyniku
+        if(status1 && status2)
+            return "OK!";
+        else
+            return "FAIL";
+    }
 
 
     //POBRANIE DANYCH BEZ AUTORYZACJI

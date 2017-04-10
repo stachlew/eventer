@@ -6,6 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'; //bez tego co jakis czas nie dziala http.post powodujac przeladowanie strony
 
+
 import {Customer} from "./customer";
 import {DemoClass} from "./demoClass";
 
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   customers : Customer[];
   customersAdmin: Customer[];
   demoClass: DemoClass;
+
 
   constructor(private http: Http, private myHttp: HttpSecService) {
     this.demoClass = new DemoClass();

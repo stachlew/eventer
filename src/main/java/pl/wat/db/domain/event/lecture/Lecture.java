@@ -1,11 +1,10 @@
 package pl.wat.db.domain.event.lecture;
 
-import pl.wat.db.domain.event.Event;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import pl.wat.db.domain.event.Event;
 
 @Entity
 @Table(name = "EVE_Lectures")

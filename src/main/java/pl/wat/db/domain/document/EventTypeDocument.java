@@ -1,9 +1,8 @@
 package pl.wat.db.domain.document;
 
-import pl.wat.db.domain.event.EventType;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import pl.wat.db.domain.event.EventType;
 
 @Entity
 @Table(name = "EVE_EVENT_TYPE_DOCUMENTS")

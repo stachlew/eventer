@@ -1,11 +1,18 @@
 package pl.wat.db.domain.event;
 
-import org.hibernate.annotations.ColumnDefault;
-import pl.wat.db.domain.event.Event;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+import pl.wat.db.domain.event.Event;
+
+
+
 
 @Entity
 @Table(name = "EVE_Participants")

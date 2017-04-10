@@ -18,4 +18,28 @@ public class EventType {
     @NotNull
     @Size(min = 4, max = 50)
     private String eventTypeName;
+
+    public EventType() {
+    }
+
+    public EventType(int idEventType, String eventTypeName) {
+        this.idEventType = idEventType;
+        this.eventTypeName = eventTypeName;
+    }
+
+    public int getIdEventType() {
+        return idEventType;
+    }
+
+    public void setIdEventType(int idEventType) {
+        this.idEventType = idEventType;
+    }
+
+    public String getEventTypeName() {
+        return eventTypeName;
+    }
+
+    public void setEventTypeName(String eventTypeName) {
+        this.eventTypeName = eventTypeName;
+    }
 }
