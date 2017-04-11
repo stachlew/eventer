@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http, Response, Headers, ResponseContentType, RequestOptions} from '@angular/http';
 import {HttpSecService} from "../_service/util/http-sec.service";
 
+import {Observable} from "rxjs";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'; //bez tego co jakis czas nie dziala http.post powodujac przeladowanie strony
-
+import 'rxjs/Rx' ;
 
 import {Customer} from "./customer";
 import {DemoClass} from "./demoClass";
 
 import { FileUploader } from 'ng2-file-upload';
+
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,6 @@ export class HomeComponent implements OnInit {
   customers : Customer[];
   customersAdmin: Customer[];
   demoClass: DemoClass;
-
 
   constructor(private http: Http, private myHttp: HttpSecService) {
     this.demoClass = new DemoClass();
@@ -40,7 +41,6 @@ export class HomeComponent implements OnInit {
     console.info("postAdmin(): "+ this.demoClass.nr + " "+ this.demoClass.napis);
     return this.http.post(this.myHttp.getUrl()+'/api/postAdmin',this.demoClass,this.myHttp.postConfig()).toPromise();
   }
-
 
   //Wyslanie zadania na serwer przez goscia. Brak oczekiwania na dane zwrotne
   clickedGuest() {
@@ -73,5 +73,10 @@ export class HomeComponent implements OnInit {
 
   //wystarczy tyle by uploadowac plik. Nalezy odpowiednio przystroic formularz tak jak to jest na przykladzie
   public uploader:FileUploader = new FileUploader({url:this.myHttp.getUrl() + 'api/postFile',authToken:this.myHttp.getToken()});
+
+  //Metoda pobierania pliku docx z serwera. Par1: adres Par2: domyslna nazwa dla pobieranego pliku
+  downloadFile() {
+    this.myHttp.getDOCXFromApi('api/download',"dokument_test");
+  }
 
 }

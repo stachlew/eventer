@@ -1,7 +1,12 @@
 package pl.wat.api.demo;
 
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +15,11 @@ import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
 import pl.wat.db.domain.user.User;
 import pl.wat.logic.CustomerService;
+import pl.wat.logic.document.DocumentService;
 import pl.wat.logic.UserService;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 //KONTROLER DEMO typu Ctrl+c, Ctrl+v dla dalszych metod kontrolerow w projekcie
 @RestController
@@ -26,6 +31,9 @@ public class DemoRestController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    DocumentService documentService;
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test",method = RequestMethod.GET)
@@ -42,12 +50,29 @@ public class DemoRestController {
         status1 = userService.createUser(newUser);
         status2 = userService.deleteUser("user");
 
-
         //Zwrot wyniku
         if(status1 && status2)
             return "OK!";
         else
             return "FAIL";
+    }
+
+    //Przyklad pobierania dokumentu
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/download",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<byte[]> getDocument(Authentication authentication){
+        if(authentication!=null){
+            //Dla kogo tworzony
+            String username = authentication.getName();
+
+            //Pobranie odpowiednio przygotowanego w serwisie dokumentu
+            XWPFDocument document = documentService.getDocument(username);
+
+            //Zwrocenie przygotowanej odpowiedzi
+            return documentService.createDocumentResponse(document);
+        }
+        return null;
     }
 
 
