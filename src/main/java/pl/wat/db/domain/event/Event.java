@@ -51,11 +51,13 @@ public class Event {
     private Blob image;
 
 
+    @Column(length = 50)
     @NotNull
-    @ColumnDefault(value = "0")
-    private boolean deleted;
+  //  @ColumnDefault(value = "UNPUBLISHED")
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
 
-    @NotNull
+
     @JoinColumn(name = "id_user")
     @ManyToOne
     private User user;
@@ -73,7 +75,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, int capacity, int visits, Blob image, boolean deleted, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -82,7 +84,7 @@ public class Event {
         this.capacity = capacity;
         this.visits = visits;
         this.image = image;
-        this.deleted = deleted;
+        this.eventStatus = eventStatus;
         this.user = user;
         this.eventType = eventType;
         this.template = template;
@@ -160,12 +162,12 @@ public class Event {
         this.image = image;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public EventStatus getEventStatus() {
+        return eventStatus;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setEventStatus(EventStatus eventStatus) {
+        this.eventStatus = eventStatus;
     }
 
     public User getUser() {
