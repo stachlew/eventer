@@ -22,6 +22,7 @@ import { HttpSecService } from "./_service/util/http-sec.service";
 import { FooterComponent } from './footer/footer.component';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import { AccountComponent } from './account/account.component';
+import {AgmCoreModule} from "angular2-google-maps/core";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,9 @@ import { AccountComponent } from './account/account.component';
     AuthenticationModule,
     AppRoutingModule,
     Ng2PageTransitionModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDzRwU70aqc9Fsin5RDv0MGpP12b-nnBGA'
+    })
   ],
   providers: [
     AuthenticationService,

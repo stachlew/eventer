@@ -25,13 +25,15 @@ export class HomeComponent implements OnInit {
   customersAdmin: Customer[];
   demoClass: DemoClass;
 
+  imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
+
   constructor(private http: Http, private myHttp: HttpSecService) {
     this.demoClass = new DemoClass();
   }
 
   ngOnInit() {  }
 
-  //Wysylanie danych na serwer z autoryzacja i bez sprowadzone do jednej postConfig() z wbudowanymi parametrami. Dostepu broni znacznik metody na serwerze
+  // Wysylanie danych na serwer z autoryzacja i bez sprowadzone do jednej postConfig() z wbudowanymi parametrami. Dostepu broni znacznik metody na serwerze
   postGuest() {
     console.info("postGuest(): "+ this.demoClass.nr + " "+ this.demoClass.napis);
     return this.http.post(this.myHttp.getUrl()+'/api/postGuest',this.demoClass,this.myHttp.postConfig()).toPromise();

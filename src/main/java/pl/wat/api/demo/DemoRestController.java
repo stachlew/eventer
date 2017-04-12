@@ -15,11 +15,15 @@ import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
 import pl.wat.db.domain.user.User;
 import pl.wat.logic.CustomerService;
+import pl.wat.logic.EventService;
 import pl.wat.logic.document.DocumentService;
 import pl.wat.logic.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 //KONTROLER DEMO typu Ctrl+c, Ctrl+v dla dalszych metod kontrolerow w projekcie
 @RestController
@@ -34,6 +38,9 @@ public class DemoRestController {
 
     @Autowired
     DocumentService documentService;
+
+    @Autowired
+    EventService eventService;
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test",method = RequestMethod.GET)
@@ -131,16 +138,40 @@ public class DemoRestController {
         if(!file.isEmpty()){
             try{
                 byte[] bytes = file.getBytes();
+
+                //zapis do bazy danych
+                eventService.saveImageToEvent(1,bytes);
+
+                /* DLA ZAPISU NA LOKALNYM DYSKU
                 File serverFile = new File("D:\\Projekty\\PzPro\\uploadTest"    //ZMIENIC NA SWOJA SCIEZKE DLA ZAPISU UPLOADOWANYCH PLIKO!!!
                         + File.separator  + nrPliku + ".jpg");
                 nrPliku++;
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
-
+                */
             }catch (Exception e){
                 System.out.println("uploadImage() Exception ");
             }
+        }
+    }
+
+    //Odczyt obrazka z bazy
+    @RequestMapping(value = "/getImage",method = RequestMethod.GET)
+    public void findImage(HttpServletResponse resp){
+        Path path = FileSystems.getDefault().getPath("","D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\images\\stock.jpg");
+
+        try{
+            byte [] dbImage = null;
+            dbImage = eventService.findImageByIdEvent(1);
+            if(dbImage==null){ // brak obrazka = stockowy obrazek z dysku
+                dbImage = Files.readAllBytes(path);
+            }
+            resp.setContentType("image/jpeg");
+            resp.getOutputStream().write(dbImage);
+        }
+        catch (IOException ioe){
+            System.out.println("IOException");
         }
     }
 

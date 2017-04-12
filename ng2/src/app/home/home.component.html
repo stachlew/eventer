@@ -15,6 +15,7 @@
     </div>
     <div class="col-md-8">
       <h3>UPLOAD PLIKOW (mozliwy tylko dla usera i admina)</h3>
+      <h4>Aktualnie ostatni wzucony plik staje sie obrazem wydarzenia, ktory wyswietlany jest nizej. Dlatego nie katowac teraz wieloma plikami</h4>
       Ilość plików: {{ uploader?.queue?.length }}
       <table class="table">
         <thead>
@@ -116,6 +117,13 @@
         </form>
       </div>
 <!--END: FORMULARZE -->
+
+      <!--OBRAZEK-->
+      <br/>
+      <img [src]="imageUrl" height="300" width="300" class="img-rounded img-responsive"/>
+      <br/>
+
+
       <p>
         Nulla ornare venenatis enim, a tincidunt dui tempor in. Aenean non posuere est, ac iaculis sem. Mauris convallis pulvinar metus, quis vehicula arcu blandit sit amet. Nunc at eleifend ante. Vestibulum congue luctus purus vitae congue. Integer in hendrerit nunc, id dignissim ligula. In faucibus molestie eros, sed eleifend felis suscipit quis. Mauris convallis orci eu dapibus sagittis. Suspendisse placerat cursus justo, hendrerit dignissim magna posuere et. Donec scelerisque, ante at auctor ullamcorper, turpis elit pellentesque magna, in blandit justo tellus ut enim. Nullam non mattis mi, a tincidunt augue. Sed dapibus congue odio. Donec convallis condimentum est, nec varius ante ornare id. Fusce viverra posuere eleifend. Maecenas eu est rhoncus, pulvinar est id, venenatis turpis.
       </p>
