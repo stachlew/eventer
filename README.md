@@ -70,6 +70,9 @@ npm install angular2-ui-switch
 npm i ng2-file-upload
 npm i ng2-cookies
 
+UPDATE[12.04.2017]
+npm install angular2-google-maps 
+
 -- uruchomienie frontendu (http://localhost:4200)
 3. ng serve
 4. Wyłączenie serwowania apki: W terminalu w którym została zaserwowana: CTRL+C, potem y
