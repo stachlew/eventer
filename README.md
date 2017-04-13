@@ -48,7 +48,7 @@ Directory Name: eventer
 
 6. Przełączyć lokalny branch na "production". [PRACA TYLKO NA PRODUCTION]. Z masterem będziemy łączyć kiedy indziej.
 
-7. Wybrać File-> Project Structure -> Modules-> (+) -> wybrać sterownik bazy oracle ojdbc7.jar -> Apply
+/*7. KROK DO POMINIĘCIA; STEROWNIK ORACLE W FOLDERZE DRIVERS JUZ USTAWIONY W POM Wybrać File-> Project Structure -> Modules-> (+) -> wybrać sterownik bazy oracle ojdbc7.jar -> Apply*/
 
 8. W klasie DemoRestController, w metodzie uploadImage() jest ścieżka do folderu do którego zapisują się zuploadowane pliki. Zmienić ją na swoje potrzeby. W późniejszej wersji zamiast na dysk pliki trafią do bazy i będzie to zbędne.
 
