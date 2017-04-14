@@ -1,0 +1,41 @@
+<p>
+  Panel sterowania eventem id: {{id}}
+</p>
+<ul class="nav">
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['./info']" >
+      Informacje podstawowe
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['edit']" >
+      Edycja eventu
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['formals']" >
+      Sprawy formalne
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['guests']" >
+      Lista gości
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['lectures']" >
+      Prelekcje
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['speakers']" >
+      Mówcy
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['statistics']" >
+      Statystyki
+    </a>
+  </li>
+</ul>
+

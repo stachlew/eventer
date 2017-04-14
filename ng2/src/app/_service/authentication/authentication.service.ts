@@ -43,6 +43,39 @@ export class AuthenticationService {
     return tokenNotExpired('token');
   }
 
+  isAdmin(){
+    if(!this.isLoggedIn())
+      return false;
+
+    const userRoles: Object[] = this.getRoles() as Object[];
+    for (const r in userRoles) {
+      if(userRoles[r]['authority']=='ROLE_ADMIN'){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isUser(){
+    if(!this.isLoggedIn())
+      return false;
+
+    const userRoles: Object[] = this.getRoles() as Object[];
+    let isAdmin = false;
+    let isUser = false;
+    for (const r in userRoles) {
+      let role=userRoles[r]['authority'];
+      if(role=='ROLE_USER')
+        isUser=true;
+      if(role=='ROLE_ADMIN')
+        isAdmin=true;
+    }
+    if(!isAdmin && isUser)
+      return true;
+    else
+      return false;
+  }
+
   getRoles() {
     const user: User = JSON.parse(localStorage.getItem('user'));
     return user.authorities;

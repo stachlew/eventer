@@ -1,0 +1,212 @@
+<!--UPLOAD PLIKOW-->
+<div class="container-fluid">
+  <div class="row">
+    <!-- INPUTY DLA PLIKOW -->
+    <div class="col-md-4">
+      <form>
+        <div class="form-group">
+          <label for="multiple">file</label>
+          <input id ="multiple" type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
+        </div>
+        <div class="form-group">
+          <label for="single">single</label>
+          <input id="single" type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+        </div>
+      </form>
+    </div>
+    <!-- PODGLAD UPLOADU PLIKOW -->
+    <div class="col-md-4">
+      <h3>UPLOAD PLIKOW (mozliwy tylko dla usera i admina)</h3>
+      <h4>Aktualnie ostatni wzucony plik staje sie obrazem wydarzenia, ktory wyswietlany jest nizej. Dlatego nie katowac teraz wieloma plikami</h4>
+      Ilość plików: {{ uploader?.queue?.length }}
+      <table class="table">
+        <thead>
+        <tr>
+          <th width="50%">Name</th>
+          <th>Rozmiar</th>
+          <th>Trwanie</th>
+          <th>Stan</th>
+          <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td><strong>{{ item.file.name }}</strong></td>
+          <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
+          <td>
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <span *ngIf="item.isSuccess">OK</span>
+            <span *ngIf="item.isCancel">---</span>
+            <span *ngIf="item.isError"></span>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-success btn-xs"
+                    (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+               Załaduj!
+            </button>
+            <button type="button" class="btn btn-warning btn-xs"
+                    (click)="item.cancel()" [disabled]="!item.isUploading">
+               Anuluj
+            </button>
+            <button type="button" class="btn btn-danger btn-xs"
+                    (click)="item.remove()">
+               Usuń
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <div>
+          Stan procesu:
+          <div class="progress" style="">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+           Załaduj wszystkie!
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+           Anuluj wszystkie
+        </button>
+        <button type="button" class="btn btn-danger btn-s"
+                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+           Usuń wszystkie
+        </button>
+      </div>
+    </div>
+    <!-- OBRAZ Z BAZY -->
+    <div class="col-md-4">
+      <img [src]="imageUrl" height="300" width="300" class="img-rounded img-responsive"/>
+    </div>
+  </div>
+
+<!--END: UPLOAD PLIKOW-->
+
+
+<div style="margin-top: 50px"></div>
+
+
+<!-- FORMULARZE I POBIERANIE LIST -->
+
+  <div class="row">
+    <!-- FORMULARZ USER -->
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <h1>USER Form</h1>
+      <form>
+        <div class="form-group">
+          <label for="numer">NUMER</label>
+          <input type="number" class="form-control" id="numer" required [(ngModel)]="demoClass.nr" name="numer">
+        </div>
+        <div class="form-group">
+          <label for="napis">NAPIS</label>
+          <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
+        </div>
+        <button (click)="postGuest()" type="" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+    <!-- FORMULARZ ADMIN -->
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <h1>ADMIN Form</h1>
+      <form>
+        <div class="form-group">
+          <label for="numer">NUMER</label>
+          <input type="number" class="form-control" id="numer" required [(ngModel)]="demoClass.nr" name="numer">
+        </div>
+        <div class="form-group">
+          <label for="napis">NAPIS</label>
+          <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
+        </div>
+        <button (click)="postAdmin()" type="" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <!-- POBIERANIE DANYCH LISTA -->
+      POBIERANIE DANYCH DLA WSZYSTKICH: <button class="btn btn-danger" (click)="getCustomers()">Pobierz dane!</button>
+      <ul>
+        <li *ngFor="let i of customers"> {{i.name}} {{i.id}}</li>
+      </ul>
+      POBIERANIE DANYCH DLA ADMINA: <button class="btn btn-danger" (click)="getCustomersAdmin()">Pobierz dane!</button>
+      <ul>
+        <li *ngFor="let i of customersAdmin"> {{i.name}} {{i.email}}</li>
+      </ul>
+      <!-- END: POBIERANIE DANYCH -->
+    </div>
+  </div>
+<!--END: FORMULARZE I POBIERANIE LIST -->
+
+  <div style="margin-top: 50px"></div>
+
+<!--PRZYCISKI METOD -->
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      Kazdy: <button class="btn btn-danger" (click)="clickedGuest()">Kazdy</button>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      User: <button class="btn btn-info" (click)="clickedUser()">User</button>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      Admin: <button class="btn btn-default" (click)="clickedAdmin()">Admin</button>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      POBIERANIE DOKUMENTU W OPARCIU O DANE USERA:
+      <button class="btn btn-default" (click)="downloadFile()">DOWNLOAD</button>
+    </div>
+   </div>
+<!--END: PRZYCISKI METOD -->
+
+  <div style="margin-top: 50px"></div>
+
+<!-- MAPA -->
+  <div class="row">
+    <div class="col-sm-9">
+      <sebm-google-map
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [disableDefaultUI]="false"
+        [zoomControl]="false"
+        (mapClick)="mapClicked($event)">
+
+        <sebm-google-map-marker
+          *ngFor="let m of markers; let i = index"
+          (markerClick)="clickedMarker(m.label, i)"
+          [latitude]="m.lat"
+          [longitude]="m.lng"
+          [label]="m.label"
+          [markerDraggable]="m.draggable"
+          (dragEnd)="markerDragEnd(m, $event)">
+
+          <sebm-google-map-info-window>
+            <strong>Treść znacznika {{i}}:{{m.label}}</strong>
+            <p>
+              Aliquam ante sapien, sodales non lectus a, maximus dapibus eros. Phasellus blandit purus accumsan, convallis purus et, semper ligula. Duis ante orci, tincidunt eget libero id, pretium tempus turpis. Etiam tortor turpis, molestie sed auctor et, malesuada sit amet velit. Maecenas eget arcu tortor. Duis viverra ex mi, quis venenatis erat consequat ac. Donec ac nisi leo. Sed efficitur pharetra eros, sit amet iaculis libero placerat et. Aliquam blandit diam eu quam tempus, nec vulputate magna venenatis. In et arcu porttitor, tristique risus vel, imperdiet urna. Ut sagittis, elit eu volutpat ultrices, ligula est rutrum est, sit amet elementum lacus dolor ut libero. Maecenas congue mauris placerat, hendrerit enim sit amet, accumsan velit. Mauris et orci sapien. Aliquam viverra maximus arcu, eu tincidunt sapien dapibus at. Duis consequat, lacus a pharetra tempor, lacus purus consectetur turpis, quis laoreet tellus nisl vitae turpis.
+            </p>
+          </sebm-google-map-info-window>
+
+        </sebm-google-map-marker>
+
+      </sebm-google-map>
+    </div>
+    <div class="col-sm-2 col-sm-offset-1">
+      <ul>
+        <li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>
+      </ul>
+    </div>
+  </div>
+<!--END: MAPA -->
+
+  <div style="margin-top: 50px"></div>
+
+<!-- VIDEO -->
+  <div class="row">
+    <iframe width="560" height="315" [src]='url' frameborder="0" allowfullscreen></iframe>
+  </div>
+<!--END: VIDEO -->
+</div>

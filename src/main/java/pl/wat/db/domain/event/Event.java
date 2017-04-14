@@ -41,6 +41,21 @@ public class Event {
 
     private int capacity;
 
+    @Column(length = 100)
+    @Size(max = 100)
+    private String youtubeLink;
+
+    @NotNull
+    @ColumnDefault(value = "0")
+    private boolean published;
+
+    @ColumnDefault(value = "1")
+    private boolean freeEntrance;
+
+    @NotNull
+    @ColumnDefault(value = "1")
+    private boolean registerEnabled;
+
     @NotNull
     @ColumnDefault(value = "0")
     private int visits;
@@ -88,6 +103,57 @@ public class Event {
         this.user = user;
         this.eventType = eventType;
         this.template = template;
+    }
+
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, int capacity, String youtubeLink, boolean published, boolean freeEntrance, boolean registerEnabled, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+        this.title = title;
+        this.description = description;
+        this.place = place;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.capacity = capacity;
+        this.youtubeLink = youtubeLink;
+        this.published = published;
+        this.freeEntrance = freeEntrance;
+        this.registerEnabled = registerEnabled;
+        this.visits = visits;
+        this.image = image;
+        this.eventStatus = eventStatus;
+        this.user = user;
+        this.eventType = eventType;
+        this.template = template;
+    }
+
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    public boolean isFreeEntrance() {
+        return freeEntrance;
+    }
+
+    public void setFreeEntrance(boolean freeEntrance) {
+        this.freeEntrance = freeEntrance;
+    }
+
+    public boolean isRegisterEnabled() {
+        return registerEnabled;
+    }
+
+    public void setRegisterEnabled(boolean registerEnabled) {
+        this.registerEnabled = registerEnabled;
     }
 
     public String getTitle() {

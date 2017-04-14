@@ -1,0 +1,20 @@
+<p>
+  Nawigacja wykładów:
+</p>
+<ul class="nav">
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['./']" >
+      Lista wykładów
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['create']" >
+      Utwórz wykład
+    </a>
+  </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['edit']" >
+      Edytuj wykład
+    </a>
+  </li>
+</ul>

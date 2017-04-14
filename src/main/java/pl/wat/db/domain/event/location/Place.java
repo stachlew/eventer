@@ -19,10 +19,18 @@ public class Place {
     @Size(min = 3, max = 50)
     private String streetName;
 
-    @Column(length = 10)
+    @Column(length = 20)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 20)
     private String streetNo;
+
+    @Column(length = 20)
+    @Size(max = 20)
+    private String geoLength;
+
+    @Column(length = 10)
+    @Size(max = 10)
+    private String geoWidth;
 
     @NotNull
     @JoinColumn(name = "id_city")
@@ -36,6 +44,30 @@ public class Place {
         this.streetName = streetName;
         this.streetNo = streetNo;
         this.city = city;
+    }
+
+    public Place(String streetName, String streetNo, String geoLength, String geoWidth, City city) {
+        this.streetName = streetName;
+        this.streetNo = streetNo;
+        this.geoLength = geoLength;
+        this.geoWidth = geoWidth;
+        this.city = city;
+    }
+
+    public String getGeoLength() {
+        return geoLength;
+    }
+
+    public void setGeoLength(String geoLength) {
+        this.geoLength = geoLength;
+    }
+
+    public String getGeoWidth() {
+        return geoWidth;
+    }
+
+    public void setGeoWidth(String geoWidth) {
+        this.geoWidth = geoWidth;
     }
 
     public int getIdPlace() {

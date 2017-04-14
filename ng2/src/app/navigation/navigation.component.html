@@ -14,29 +14,85 @@
 
     </div>
     <div class="collapse navbar-collapse" [ngClass]="{ 'in': isIn }">
-      <!--Pozycje nawigacji [Wersja mobilna + Pelna]-->
+      <!--NAWIGACJA MOBIL + PELNA WERSJA-->
       <ul class="nav navbar-nav">
+
+        <!-- STRONA GLOWNA [ALL]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['/home']">
+          <a [routerLink]="['home']">
             <i class="fa fa-tachometer fa-icon-margin"></i> Strona główna
           </a>
         </li>
+
+        <!-- WYSZUKAJ WYDARZENIA [GUEST+USER+ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['administration']">
-            <i class="fa fa-file-text fa-icon-margin"></i> Administracyja
+          <a [routerLink]="['search']">
+            <i class="fa fa-file-text fa-icon-margin"></i> Wyszukaj wydarzenia
           </a>
         </li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['settings']">
-            <i class="fa fa-gears fa-icon-margin"></i> Opcje
+
+        <!-- UTWORZ WYDARZENIE [GUEST+USER]-->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isUser() || !auth.isLoggedIn()">
+          <a [routerLink]="['event/create']">
+            <i class="fa fa-gears fa-icon-margin"></i> Utwórz wydarzenie
           </a>
         </li>
+
+        <!-- Administracja wydarzen [ADMIN]-->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
+          <a [routerLink]="['administration/events']">
+            <i class="fa fa-gears fa-icon-margin"></i> Administracja wydarzeń
+          </a>
+        </li>
+
+        <!-- Administracja użytkownikow [ADMIN]-->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
+          <a [routerLink]="['administration/users']">
+            <i class="fa fa-gears fa-icon-margin"></i> Administracja użytkowników
+          </a>
+        </li>
+
+        <!-- Statystyki [ADMIN]-->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
+          <a [routerLink]="['administration/statistics']">
+            <i class="fa fa-gears fa-icon-margin"></i> Statystyki serwisu
+          </a>
+        </li>
+
+        <!-- MOJE WYDARZENIA [USER]-->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isUser()">
+          <a [routerLink]="['event/my']">
+            <i class="fa fa-gears fa-icon-margin"></i> Moje wydarzenia
+          </a>
+        </li>
+
+        <!-- DEMO -->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['demo']">
+            <i class="fa fa-gears fa-icon-margin"></i> DEMO
+          </a>
+        </li>
+
+
+
+
+
+
+
+
+        <!-- KONTO MOBILNA WERSJA [USER+ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="isIn && auth.username != null">
           <a [routerLink]="['account']" >
             <i class="fa fa-user-circle-o"></i> {{auth.username}}
           </a>
         </li>
-        <!-- Opcje logowania/wylogowania dla widoku mobilnego -->
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="isIn && !auth.isLoggedIn()">
+          <a [routerLink]="['register']" >
+            Rejestracja
+          </a>
+        </li>
+
+        <!-- LOGOWANIE/WYLOGOWANIE DLA MOBILNEGO [USER+ADMIN]->
         <!-- USER -->
         <li *ngIf="isAuth() && isIn">
           <a href="#" (click)="logout()" >
@@ -51,16 +107,22 @@
             Log in
           </a>
         </li>
-        <!-- END: Opcje logowania/wylogowania dla widoku mobilnego -->
-      </ul>
-      <!--END: Pozycje nawigacji [Wersja mobilna + Pelna]-->
 
-      <!--Prawa strona paska nawigacji [Pelny ekran]-->
+
+      </ul>
+      <!--END: NAWIGACJA MOBIL + PELNA WERSJA->
+
+      <!--LOGOWANIE/WYLOGOWANIE DLA PELNEJ WERSJI <PRAWA STRONA PASKA> [USER+ADMIN]-->
       <!-- USER -->
       <ul class="nav navbar-nav pull-right" *ngIf="!isIn">
         <li *ngIf="auth.username != null">
           <a [routerLink]="['account']" >
             <i class="fa fa-user-circle-o"></i> {{auth.username}}
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="!isIn && !auth.isLoggedIn()">
+          <a [routerLink]="['register']" >
+            Rejestracja
           </a>
         </li>
         <li *ngIf="isAuth()">
