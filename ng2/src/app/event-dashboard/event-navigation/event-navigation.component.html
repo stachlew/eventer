@@ -3,38 +3,33 @@
 </p>
 <ul class="nav">
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['./info']" >
-      Informacje podstawowe
+    <a [routerLink]="['/event/dashboard/'+id]" >
+      <i class="fa fa-fw fa-info-circle"></i>Informacje podstawowe
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
     <a [routerLink]="['edit']" >
-      Edycja eventu
+      <i class="fa fa-fw fa-pencil-square-o"></i>Edycja eventu
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
     <a [routerLink]="['formals']" >
-      Sprawy formalne
+      <i class="fa fa-fw fa-gavel"></i>Sprawy formalne
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
     <a [routerLink]="['guests']" >
-      Lista gości
+      <i class="fa fa-fw fa-users"></i>Lista gości
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
     <a [routerLink]="['lectures']" >
-      Prelekcje
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['speakers']" >
-      Mówcy
+      <i class="fa fa-fw fa-calendar"></i>Prelekcje
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
     <a [routerLink]="['statistics']" >
-      Statystyki
+      <i class="fa fa-fw fa-bar-chart"></i> Statystyki
     </a>
   </li>
 </ul>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-lecture-edit',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lecture-edit.component.css']
 })
 export class LectureEditComponent implements OnInit {
+  id: string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    this.route.params.subscribe(params=>{this.id = params['id'];});
   }
 }

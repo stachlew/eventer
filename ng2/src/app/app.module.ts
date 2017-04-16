@@ -18,7 +18,7 @@ import { DemoComponent } from './demo/demo.component';
 import { LoginComponent } from './login/login.component';
 import { HttpSecService } from "./_service/util/http-sec.service";
 import { FooterComponent } from './footer/footer.component';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileSelectDirective } from 'ng2-file-upload';
 import { AccountComponent } from './account/account.component';
 import { AgmCoreModule } from "angular2-google-maps/core";
 import { HomeComponent } from './home/home.component';
@@ -42,8 +42,10 @@ import { LectureDashboardComponent } from './event-dashboard/lecture-dashboard/l
 import { LectureNavigationComponent } from './event-dashboard/lecture-dashboard/lecture-navigation/lecture-navigation.component';
 import { LectureCreateComponent } from './event-dashboard/lecture-dashboard/lecture-create/lecture-create.component';
 import {LectureEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/lecture-edit.component";
-import {SpeakerEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/speaker-edit/speaker-edit.component";
 import {LecturesListComponent} from "./event-dashboard/lecture-dashboard/lectures-list/lectures-list.component";
+import {SpeakersListComponent } from './event-dashboard/lecture-dashboard/speakers-list/speakers-list.component';
+import { SpeakerCreateComponent } from './event-dashboard/lecture-dashboard/speaker-create/speaker-create.component';
+import { SpeakerEditComponent } from './event-dashboard/lecture-dashboard/speaker-edit/speaker-edit.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,6 @@ import {LecturesListComponent} from "./event-dashboard/lecture-dashboard/lecture
     EventDashboardComponent,
     EventEditComponent,
     LectureEditComponent,
-    SpeakerEditComponent,
     StatisticsViewComponent,
     EventFormalsComponent,
     EventGuestsComponent,
@@ -80,7 +81,10 @@ import {LecturesListComponent} from "./event-dashboard/lecture-dashboard/lecture
     LecturesListComponent,
     LectureDashboardComponent,
     LectureNavigationComponent,
-    LectureCreateComponent
+    LectureCreateComponent,
+    SpeakersListComponent,
+    SpeakerCreateComponent,
+    SpeakerEditComponent,
   ],
   imports: [
     BrowserModule,

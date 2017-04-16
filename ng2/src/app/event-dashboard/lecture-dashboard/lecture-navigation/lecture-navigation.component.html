@@ -8,13 +8,19 @@
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['create']" >
+    <a [routerLink]="['create/lecture']" >
       Utwórz wykład
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['edit']" >
-      Edytuj wykład
+    <a [routerLink]="['speakers']" >
+      Lista prelegentów
     </a>
   </li>
+  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <a [routerLink]="['create/speaker']" >
+      Dodaj prelegenta
+    </a>
+  </li>
+
 </ul>

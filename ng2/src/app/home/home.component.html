@@ -1,21 +1,20 @@
-<p>
-  home works!
-  TODO:
-  Zlistowac wydarzenia
-</p>
+ZAWARTOSC:
+<ul>
+  <li>Krótki opis o co chodzi w stronie, proces w kilku słowach i obrazkach.</li>
+  <li>Ilość eventów, ilość userów, ilość gości</li>
+  <li>Np. 3 najnowsze wydarzenie</li>
+</ul>
+DANE:
+<ul>
+  <li>Dane statystyczne [Klasa HomeStatistics z 3 danymi statystycznymi]</li>
+  <li>Lista najnowszych wydarzeń [Iterable Event]</li>
+</ul>
+
 <h2>Podglad wydarzeń</h2>
 <ul class="nav">
   <li *ngFor="let i of [1,2,3]">
-  <a [routerLink]="['/event/view',i]" >
-    Podgląd eventu id:{{i}}
-  </a>
-  </li>
-</ul>
-<h2>Panel sterowania wydarzeń</h2>
-<ul class="nav">
-  <li *ngFor="let i of [1,2,3]">
-  <a [routerLink]="['/event/dashboard',i]" >
-    Panel Sterowania eventem id: {{i}}
-  </a>
+    <a [routerLink]="['/event/view',i]" >
+      Podgląd eventu id:{{i}}
+    </a>
   </li>
 </ul>

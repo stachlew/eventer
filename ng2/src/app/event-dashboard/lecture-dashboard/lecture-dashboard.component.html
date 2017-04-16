@@ -1,10 +1,12 @@
 <div class="row" >
   <!-- LEWA KOLUMNA NAWIGACJI LECTURE -->
-  <div class="col-md-2 table-bordered">
+  <div class="col-md-2 ">
     <app-lecture-navigation></app-lecture-navigation>
   </div>
   <!-- PRAWA KOLUMNA TRESCI LECTURE  -->
-  <div class="col-md-10 table-bordered">
-    <router-outlet></router-outlet>
+  <div class="col-md-10 ">
+    <ng2-page-transition [scrollTop]="false">
+      <router-outlet></router-outlet>
+    </ng2-page-transition>
   </div>
 </div>

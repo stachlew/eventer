@@ -26,7 +26,9 @@ import {LectureDashboardComponent} from "./event-dashboard/lecture-dashboard/lec
 import {LectureCreateComponent} from "./event-dashboard/lecture-dashboard/lecture-create/lecture-create.component";
 import {LecturesListComponent} from "./event-dashboard/lecture-dashboard/lectures-list/lectures-list.component";
 import {LectureEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/lecture-edit.component";
-import {SpeakerEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/speaker-edit/speaker-edit.component";
+import {SpeakersListComponent} from "./event-dashboard/lecture-dashboard/speakers-list/speakers-list.component";
+import {SpeakerEditComponent} from "./event-dashboard/lecture-dashboard/speaker-edit/speaker-edit.component";
+import {SpeakerCreateComponent} from "./event-dashboard/lecture-dashboard/speaker-create/speaker-create.component";
 
 const appRoutes: Routes = [
 
@@ -95,10 +97,14 @@ const appRoutes: Routes = [
       {path: 'lectures', component: LectureDashboardComponent,
       children: [
         {path: '', component: LecturesListComponent},
-        {path: 'edit', component: LectureEditComponent},
-        {path: 'create', component: LectureCreateComponent},
+        {path: 'edit/:id', component: LectureEditComponent},
+
+        {path: 'create/lecture', component: LectureCreateComponent},
+        {path: 'create/speaker', component: SpeakerCreateComponent},
+
+        {path: 'speakers', component: SpeakersListComponent},
+        {path: 'speakers/edit/:id', component: SpeakerEditComponent},
       ]},
-      {path: 'speakers', component: SpeakerEditComponent},
     ]
   },
   //END: DASHBOARD

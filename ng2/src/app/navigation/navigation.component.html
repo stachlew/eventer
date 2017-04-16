@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a style="color: #f9f2f4; font-size: x-large" class="navbar-brand" [routerLink]="['/']">
+      <a style="color: #f9f2f4; font-size: x-large" class="navbar-brand" [routerLink]="['/']" >
         <i class="fa fa-bullhorn" aria-hidden="true"></i>
         EV<b>enter</b>
       </a>
@@ -18,58 +18,58 @@
       <ul class="nav navbar-nav">
 
         <!-- STRONA GLOWNA [ALL]-->
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-          <a [routerLink]="['home']">
-            <i class="fa fa-tachometer fa-icon-margin"></i> Strona główna
-          </a>
-        </li>
+        <!--<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">-->
+          <!--<a [routerLink]="['home']">-->
+            <!--<i class="fa fa-tachometer fa-icon-margin"></i> Strona główna-->
+          <!--</a>-->
+        <!--</li>-->
 
         <!-- WYSZUKAJ WYDARZENIA [GUEST+USER+ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
           <a [routerLink]="['search']">
-            <i class="fa fa-file-text fa-icon-margin"></i> Wyszukaj wydarzenia
+            <i class="fa fa-search"></i> Wyszukiwanie
           </a>
         </li>
 
         <!-- UTWORZ WYDARZENIE [GUEST+USER]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isUser() || !auth.isLoggedIn()">
           <a [routerLink]="['event/create']">
-            <i class="fa fa-gears fa-icon-margin"></i> Utwórz wydarzenie
+            <i class="fa fa-plus"></i> Stwórz wydarzenie
           </a>
         </li>
 
         <!-- Administracja wydarzen [ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
           <a [routerLink]="['administration/events']">
-            <i class="fa fa-gears fa-icon-margin"></i> Administracja wydarzeń
+            <i class="fa fa-list"></i> Wydarzenia
           </a>
         </li>
 
         <!-- Administracja użytkownikow [ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
           <a [routerLink]="['administration/users']">
-            <i class="fa fa-gears fa-icon-margin"></i> Administracja użytkowników
+            <i class="fa fa-users"></i> Użytkownicy
           </a>
         </li>
 
         <!-- Statystyki [ADMIN]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isAdmin()">
           <a [routerLink]="['administration/statistics']">
-            <i class="fa fa-gears fa-icon-margin"></i> Statystyki serwisu
+            <i class="fa fa-bar-chart"></i> Statystyki
           </a>
         </li>
 
         <!-- MOJE WYDARZENIA [USER]-->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.isUser()">
           <a [routerLink]="['event/my']">
-            <i class="fa fa-gears fa-icon-margin"></i> Moje wydarzenia
+            <i class="fa fa-list"></i> Moje wydarzenia
           </a>
         </li>
 
         <!-- DEMO -->
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
           <a [routerLink]="['demo']">
-            <i class="fa fa-gears fa-icon-margin"></i> DEMO
+            <i class="fa fa-play-circle"></i> DEMO
           </a>
         </li>
 
@@ -88,7 +88,7 @@
         </li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="isIn && !auth.isLoggedIn()">
           <a [routerLink]="['register']" >
-            Rejestracja
+            <i class="fa fa-user-plus"></i>Rejestracja
           </a>
         </li>
 
@@ -122,7 +122,7 @@
         </li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="!isIn && !auth.isLoggedIn()">
           <a [routerLink]="['register']" >
-            Rejestracja
+            <i class="fa fa-user-plus"></i>Rejestracja
           </a>
         </li>
         <li *ngIf="isAuth()">
