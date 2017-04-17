@@ -18,6 +18,7 @@ import pl.wat.logic.CustomerService;
 import pl.wat.logic.EventService;
 import pl.wat.logic.document.DocumentService;
 import pl.wat.logic.UserService;
+import pl.wat.security.SecurityInfo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -126,6 +127,26 @@ public class DemoRestController {
         System.out.println("Otrzymal napis: "+demoClass.napis);
     }
 
+    //WYSLANIE DANYCH I OCZEKIWANIE ODPOWIEDZI ZALEZNEJ OD TYPU USERA
+    @RequestMapping(value = "/postTest",method = RequestMethod.POST)
+    public String postTest(@RequestBody DemoClass demoClass,Authentication auth){
+        System.out.println("METODA DOSTEPNA DLA WSZYSTKICH");
+        SecurityInfo si = new SecurityInfo(auth,userService); //klasa z informacja o uzytkowniku wywolujacym akcje
+
+        if(!si.isLogged()){
+            System.out.println("WYWOLUJE GOSC");
+            return "Jestem gosciem, ktory przeslal napis: "+demoClass.getNapis();
+        }
+        else if(si.isUser()){
+            System.out.println("WYWOLUJE USER "+si.getUsername());
+            return "Jestem userem "+si.getUsername()+", ktory przeslal napis: "+demoClass.getNapis();
+        }
+        else if (si.isAdmin()){
+            System.out.println("WYWOLUJE ADMIN "+si.getDetails().getEmail());
+            return "Jestem adminem o nazwisku "+si.getDetails().getLastname()+", ktory przeslal napis: "+demoClass.getNapis();
+        }
+        return null;
+    }
 
     //UPLOAD PLIKOW Z AUTORYZACJA [USER]
     private static int nrPliku = 0;

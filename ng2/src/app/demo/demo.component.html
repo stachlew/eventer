@@ -108,7 +108,10 @@
           <label for="napis">NAPIS</label>
           <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
         </div>
-        <button (click)="postGuest()" type="" class="btn btn-success">Submit</button>
+        <button (click)="postGuest()" type="" class="btn btn-success">Submit bez odpowiedzi</button>
+        <button (click)="postDemoData()" type="" class="btn btn-success">Submit z odpowiedzia</button>
+
+        <div>Odpowiedź: {{demoResponse}}</div>
       </form>
     </div>
     <!-- FORMULARZ ADMIN -->

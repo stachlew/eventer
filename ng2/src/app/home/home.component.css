@@ -1,0 +1,22 @@
+.image {
+  position: relative;
+  width: 100%; /* for IE 6 */
+  margin-top: -30px;
+}
+
+.imageHeader {
+  position: absolute;
+  top: 7%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  letter-spacing: -1px;
+  /*background: rgb(0, 0, 0); !* fallback color *!*/
+  /*background: rgba(253, 227, 0, 0.1);*/
+  padding: 10px;
+}
+
+
+.spacer {
+  margin-left: 15px;
+}

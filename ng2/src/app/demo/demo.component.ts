@@ -26,6 +26,8 @@ export class DemoComponent implements OnInit {
   customersAdmin: Customer[];
   demoClass: DemoClass;
 
+  demoResponse: string = "nie wywolano pobrania odpowiedzi"
+
   imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
 
   constructor(private http: Http, private myHttp: HttpSecService/*API*/, sanitizer: DomSanitizer/*iFRAME*/) {
@@ -81,6 +83,14 @@ export class DemoComponent implements OnInit {
     console.info("Pobieranie customerow przez admina");
     this.http.get(this.myHttp.getUrl() + '/api/getAdmin',this.myHttp.getConfig()).subscribe((data: Response)=> this.customersAdmin = data.json());
   }
+
+  //Wyslanie zadania na serwer i zapisanie zwroconych danych zaleznych od typu uzytkownika
+  postDemoData(){
+    return this.http.post(this.myHttp.getUrl()+'/api/postTest',this.demoClass,this.myHttp.postConfig())
+      .subscribe((data: Response)=> this.demoResponse = data.text()); //Zwykly string wiec .text
+      // .subscribe((data: Response)=> this.demoResponse = data.json()); GDYBY OBIEKT
+  }
+
 
   //wystarczy tyle by uploadowac plik. Nalezy odpowiednio przystroic formularz tak jak to jest na przykladzie
   public uploader:FileUploader = new FileUploader({url:this.myHttp.getUrl() + 'api/postFile',authToken:this.myHttp.getToken()});
