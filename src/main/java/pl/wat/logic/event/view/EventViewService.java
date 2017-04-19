@@ -27,7 +27,7 @@ public class EventViewService {
     //TODO: Dorobic logike wyszukiwania najnowszych
     public List<EventHeader> getLatest(){
         List<EventHeader> latest = new LinkedList<>();
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findTopNOfLatestEvents(7);
         for (Event e: events) {
             latest.add(new EventHeader(e));
         }
