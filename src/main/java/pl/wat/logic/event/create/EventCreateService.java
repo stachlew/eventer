@@ -6,7 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.repository.event.EventRepository;
 
 @Service
-public class CreateEventService {
+public class EventCreateService {
 
     @Autowired
     EventRepository eventRepository;
