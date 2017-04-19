@@ -25,11 +25,22 @@ DANE:
   <li>Lista najnowszych wydarzeń [Iterable Event]</li>
 </ul>
 
-<h1>Podglad wydarzeń</h1>
-<ul class="nav">
-  <li *ngFor="let i of latestEvents">
-    <a [routerLink]="['/event/view/'+i.idEvent]" >
-      Podgląd eventu id:{{i.idEvent}}, tytuł: {{i.title}}
-    </a>
-  </li>
-</ul>
+<!--<h1>Podglad wydarzeń</h1>-->
+
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-6 myTile" *ngFor="let i of latestEvents">
+    <div class="row">
+      <div class="col-lg-12">
+      OBRAZ
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        Podgląd eventu id:{{i.idEvent}}, tytuł: {{i.title}}, data utworzenia: {{i.createDate| date}}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

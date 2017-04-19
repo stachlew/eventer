@@ -12,7 +12,7 @@ import pl.jsolve.templ4docx.core.Docx;
 import pl.jsolve.templ4docx.variable.TextVariable;
 import pl.jsolve.templ4docx.variable.Variables;
 import pl.wat.db.domain.user.User;
-import pl.wat.logic.UserService;
+import pl.wat.logic.user.account.UserAccountService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.io.IOException;
 public class DocumentService {
 
     @Autowired
-    UserService userService;
+    UserAccountService userAccountService;
 
     public ResponseEntity<byte[]> createDocumentResponse(XWPFDocument document){
         //Przygotowanie formy bajtowej pliku
@@ -44,7 +44,7 @@ public class DocumentService {
     }
 
     public XWPFDocument getDocument(String username){
-        User user = userService.getUser(username);
+        User user = userAccountService.getUser(username);
 
         //Wczytac szablon
         Docx docx = new Docx("src\\main\\resources\\documents\\test.docx");

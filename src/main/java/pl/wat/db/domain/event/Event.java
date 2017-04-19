@@ -39,6 +39,9 @@ public class Event {
     @NotNull
     private Timestamp endTime;
 
+    @NotNull
+    private Timestamp createDate;
+
     private int capacity;
 
     @Column(length = 100)
@@ -68,7 +71,7 @@ public class Event {
 
     @Column(length = 50)
     @NotNull
-  //  @ColumnDefault(value = "UNPUBLISHED")
+    //  @ColumnDefault(value = "UNPUBLISHED")
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
@@ -90,12 +93,13 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
         this.title = title;
         this.description = description;
         this.place = place;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.createDate = createDate;
         this.capacity = capacity;
         this.visits = visits;
         this.image = image;
@@ -105,12 +109,13 @@ public class Event {
         this.template = template;
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, int capacity, String youtubeLink, boolean published, boolean freeEntrance, boolean registerEnabled, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, String youtubeLink, boolean published, boolean freeEntrance, boolean registerEnabled, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
         this.title = title;
         this.description = description;
         this.place = place;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.createDate = createDate;
         this.capacity = capacity;
         this.youtubeLink = youtubeLink;
         this.published = published;
@@ -259,4 +264,13 @@ public class Event {
     public void setTemplate(Template template) {
         this.template = template;
     }
+
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
 }

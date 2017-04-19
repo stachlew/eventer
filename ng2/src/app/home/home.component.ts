@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   getLatest(){
-    this.http.get(this.myHttp.getUrl() + '/api/events/getLatest').subscribe((data: Response)=> this.latestEvents = data.json());
+    this.http.get(this.myHttp.getUrl() + '/api/event/view/getLatest').subscribe((data: Response)=> this.latestEvents = data.json());
   }
 
 

@@ -16,7 +16,12 @@
   padding: 10px;
 }
 
-
 .spacer {
   margin-left: 15px;
+}
+
+/*KAFLE*/
+.myTile {
+  background-color: #2d6987;
+  padding: 3px;
 }
