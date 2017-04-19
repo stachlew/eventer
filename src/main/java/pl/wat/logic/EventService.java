@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.logic.model.Event.EventHeader;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class EventService {
@@ -63,5 +66,15 @@ public class EventService {
             return eventRepository.getOne(id);
         }
         return null;
+    }
+
+    //TODO: Dorobic logike wyszukiwania najnowszych
+    public List<EventHeader> getLatest(){
+        List<EventHeader> latest = new LinkedList<>();
+        List<Event> events = eventRepository.findAll();
+        for (Event e: events) {
+            latest.add(new EventHeader(e));
+        }
+        return latest;
     }
 }

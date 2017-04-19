@@ -60,6 +60,13 @@ export class  Template {
   templateName: string;
 }
 
+export class EventHeader{
+  idEvent: number;
+  title: string;
+  description: string;
+}
+
+
 export class  Event {
   idEvent: number;
   title: string;

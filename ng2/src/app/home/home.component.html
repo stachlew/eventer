@@ -27,9 +27,9 @@ DANE:
 
 <h1>Podglad wydarzeń</h1>
 <ul class="nav">
-  <li *ngFor="let i of [1,2,3]">
-    <a [routerLink]="['/event/view',i]" >
-      Podgląd eventu id:{{i}}
+  <li *ngFor="let i of latestEvents">
+    <a [routerLink]="['/event/view/'+i.idEvent]" >
+      Podgląd eventu id:{{i.idEvent}}, tytuł: {{i.title}}
     </a>
   </li>
 </ul>
