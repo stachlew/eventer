@@ -60,6 +60,64 @@ export class  Template {
   templateName: string;
 }
 
+export class  EventViewSpeaker {
+  idSpeaker: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  description: string;
+  phone: string;
+}
+
+
+export class  EventViewLecture {
+  idLecture: number;
+  idEvent: number;
+
+  lectureName: string;
+  description: string;
+
+  eventViewSpeaker: EventViewSpeaker;
+
+  startTime: Timestamp;
+  endTime: Timestamp;
+}
+
+
+
+
+export class EventViewDetails{
+  idEvent: number;
+  eventTypeName: string;
+  eventStatus: string;
+  username: string;
+
+  title: string;
+  description: string;
+
+  regionName: string;
+  cityName: string;
+  SstreetName: string;
+  streetNo: string;
+  geoLength: string;
+  geoWidth: string;
+
+  youtubeLink: string;
+
+  published: boolean;
+  freeEntrance: boolean;
+  registerEnabled: boolean;
+
+  capacity: number;
+  visits: number;
+
+  startTime: Timestamp;
+  endTime: Timestamp;
+  createDate: Timestamp;
+
+  lectures: EventViewLecture[];
+}
+
 export class EventHeader{
   idEvent: number;
   title: string;

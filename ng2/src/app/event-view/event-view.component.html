@@ -1,19 +1,112 @@
-<p>
-  EVENT ID:{{id}}
-</p>
-ZAWARTOSC:
-<ul>
-  <li>Opis, fotografia, agenda, prelegenci, opinie, przycisk rejestracji[jeśli możliwa w danej chwili],transmisja live*</li>
-</ul>
-DANE:
-<ul>
-  <li>Dane eventu, Lista wykładów, Prelegenci, Ostatnie opinie</li>
-</ul>
-FORMULARZE:
-<ul>
-  <li>Formularz opinii</li>
-</ul>
-AKCJE:
-<ul>
-  <li>Przejście do rejestracji na wydarzenie</li>
-</ul>
+<!--opis, fotografia, agenda, prelegenci, opinie, przycisk rejestracji[jeśli możliwa w danej chwili],transmisja live*</li>-->
+<!--przy rozwijaniu mobila zaslania nawigacje wewnetrzna-->
+<!--<div style="margin-bottom: 80px"></div>-->
+<!--<div class="row">-->
+  <!--<div class="col-md-12">-->
+    <!--<div class=" event-navigation-bar">-->
+
+      <!--<div class="divNav" align="center">-->
+        <!--<div class="partLine"></div>-->
+          <!--<a class="elemNav" (click)="goTo('description')"><span>Opis</span></a>-->
+          <!--<a class="elemNav" (click)="goTo('lectures')"><span>Agenda</span></a>-->
+          <!--<a class="elemNav" (click)="goTo('speakers')"><span>Mówcy</span></a>-->
+          <!--<a class="elemNav" (click)="goTo('registration')"><span>Rejestracja</span></a>-->
+          <!--<a class="elemNav" (click)="goTo('localization')"><span>Lokalizacja</span></a>-->
+        <!--<div class="partLine"></div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div id="title" class="row">
+  <div class="col-md-12 ">
+    <div class="image">
+      <img [src]="imageUrl" style="width: 100%" class="img-responsive"/>
+      <div class="imageHeader" style="font-size: 250%;">
+        <h1>{{event.title}}</h1>
+      </div>
+  </div>
+</div>
+
+<div id="placeTime" class="row">
+  <div class="col-md-6">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h1><i class="fa fa-calendar"></i></h1>
+      <h3><i class="fa fa-fw fa-play"></i>{{event.startTime|date}}</h3>
+      <h3><i class="fa fa-fw fa-stop"></i>{{event.endTime|date}}</h3>
+    </div>
+  </div>
+  <div class="col-md-6  ">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h1><i class="fa fa-map-marker"></i></h1>
+      <h3>{{event.cityName}}</h3>
+      <h4>{{event.streetName}} {{event.streetNo}}</h4>
+    </div>
+  </div>
+  <div class="fullLine"></div>
+</div>
+
+<div id="description" class="row">
+  <div class="col-md-10 col-md-offset-1 ">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h4>Poprawic napis na zdjeciu dla wersji mobilnej. {{event.description}}</h4>
+    </div>
+  </div>
+  <div class="fullLine"></div>
+</div>
+
+<div id="lectures" class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h2>AGENDA</h2>
+      <div class="list-group lecturesList" align="left">
+        <a *ngFor="let i of event.lectures" href="#" class="list-group-item active lecture">
+          <p><i class="fa fa-clock-o"></i> {{i.startTime | date:'shortDate'}} {{i.startTime | date:'shortTime'}} - {{i.endTime | date:'shortTime'}}</p>
+          <h3 class="list-group-item-heading">{{i.lectureName}}</h3>
+          <p>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</p>
+          <p class="list-group-item-text">{{i.description}}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="speakers" class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h2>MÓWCY</h2>
+       <div class="col-sm-6 col-md-4" *ngFor="let i of event.lectures">
+         <div class="thumbnail">
+           <img src="..." alt="...">
+           <div class="caption">
+             <h3>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</h3>
+             <p>{{i.eventViewSpeaker.description}}</p>
+           </div>
+         </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<div id="registration" class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h2>REJESTRACJA</h2>
+
+    </div>
+  </div>
+</div>
+
+<div id="localization" class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h2>LOKALIZACJA</h2>
+      <div class="col-md-6  ">
+        mapa
+      </div>
+      <div class="col-md-6  ">
+        lokalizacja dokladna
+      </div>
+    </div>
+  </div>
+</div>
