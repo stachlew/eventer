@@ -116,6 +116,7 @@ export class EventViewDetails{
   createDate: Timestamp;
 
   lectures: EventViewLecture[];
+  speakers: EventViewSpeaker[];
 }
 
 export class EventHeader{

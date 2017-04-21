@@ -5,7 +5,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.List;
+
 import org.hibernate.annotations.ColumnDefault;
+import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.user.User;
 

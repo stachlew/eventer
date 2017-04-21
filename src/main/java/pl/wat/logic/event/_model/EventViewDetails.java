@@ -3,6 +3,7 @@ package pl.wat.logic.event._model;
 
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
+import pl.wat.db.domain.event.lecture.Speaker;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -40,10 +41,12 @@ public class EventViewDetails {
 
     private List<EventViewLecture> lectures;
 
+    private List<EventViewSpeaker> speakers;
+
     public EventViewDetails(){
     }
 
-    public EventViewDetails(Event event, List<Lecture> lectures){
+    public EventViewDetails(Event event, List<Lecture> lectures,List<Speaker> speakers){
         this.idEvent=event.getIdEvent();
         this.eventTypeName=event.getEventType().getEventTypeName();
         this.eventStatus=event.getEventStatus().name();
@@ -75,6 +78,12 @@ public class EventViewDetails {
         this.lectures = new LinkedList<>();
         for (Lecture lecture: lectures) {
             this.lectures.add(new EventViewLecture(lecture));
+        }
+
+        this.speakers = new LinkedList<>();
+        for (Speaker speaker: speakers
+             ) {
+            this.speakers.add(new EventViewSpeaker(speaker));
         }
     }
 

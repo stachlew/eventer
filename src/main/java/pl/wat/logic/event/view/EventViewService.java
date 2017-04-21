@@ -3,8 +3,11 @@ package pl.wat.logic.event.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.Event;
+import pl.wat.db.domain.event.lecture.Lecture;
+import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.LectureRepository;
+import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.event._model.EventHeader;
 import pl.wat.logic.event._model.EventViewDetails;
 
@@ -20,6 +23,9 @@ public class EventViewService {
     @Autowired
     LectureRepository lectureRepository;
 
+    @Autowired
+    SpeakerRepository speakerRepository;
+
 
     //odczyt wydarzenia --demo
     public Event getEvent(int id){
@@ -33,7 +39,13 @@ public class EventViewService {
     public EventViewDetails getEventViewDetails(int id){
         if(eventRepository.exists(id)){
             Event event = eventRepository.getOne(id);
-            return new EventViewDetails(event,lectureRepository.getAllByEventOrderByStartTime(event));
+            List<Integer> speakersId = speakerRepository.getDistinctIdSpeakersByIdEvent(id);
+            List<Speaker> speakers=new LinkedList<>();
+            for (Integer i: speakersId) {
+                speakers.add(speakerRepository.getOne(i));
+            }
+            List<Lecture> lectures =lectureRepository.getAllByEventOrderByStartTime(event);
+            return new EventViewDetails(event,lectures,speakers);
         }
         return null;
     }
