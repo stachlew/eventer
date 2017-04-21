@@ -97,7 +97,7 @@ export class EventViewDetails{
 
   regionName: string;
   cityName: string;
-  SstreetName: string;
+  streetName: string;
   streetNo: string;
   geoLength: string;
   geoWidth: string;
@@ -163,6 +163,13 @@ export class  Participant {
   activated: boolean;
   presence: boolean;
   event: Event;
+}
+
+export class ParticipantForm{
+  firstname:string;
+  lastname:string
+  email:string
+  idEvent:number;
 }
 
 

@@ -25,10 +25,11 @@
       <div class="imageHeader" style="font-size: 250%;">
         <h1>{{event.title}}</h1>
       </div>
+    </div>
   </div>
 </div>
 
-<div id="placeTime" class="row">
+<div id="placeTime" class="row darkBack">
   <div class="col-md-6">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h1><i class="fa fa-calendar"></i></h1>
@@ -43,8 +44,8 @@
       <h4>{{event.streetName}} {{event.streetNo}}</h4>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
 
 <div id="description" class="row">
   <div class="col-md-10 col-md-offset-1 ">
@@ -52,30 +53,45 @@
       <h4>{{event.description}}</h4>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
 
-<div id="lectures" class="row">
+<div id="lectures"  *ngIf="isLectures" class="row darkBack">
   <div class="col-md-10 col-md-offset-1">
     <div class="jumbotron" style="background-color: inherit" align="center">
-      <h2>AGENDA</h2>
+      <h2><i class="fa fa-fw fa-clock-o"></i>AGENDA</h2>
       <div class="list-group lecturesList" align="left">
         <a *ngFor="let i of event.lectures" href="#" class="list-group-item active lecture">
-          <p><i class="fa fa-clock-o"></i> {{i.startTime | date:'shortDate'}} {{i.startTime | date:'shortTime'}} - {{i.endTime | date:'shortTime'}}</p>
-          <h3 class="list-group-item-heading">{{i.lectureName}}</h3>
-          <p>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</p>
-          <p class="list-group-item-text">{{i.description}}</p>
+          <div class="row">
+            <div class="col-md-5">
+              <p><i class="fa fa-clock-o"></i> {{i.startTime | date:'shortDate'}} {{i.startTime | date:'shortTime'}} - {{i.endTime | date:'shortTime'}}</p>
+            </div>
+            <div class="col-md-7" style="font-weight: lighter">
+              <p>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="font-style: italic">
+              <h2 class="list-group-item-heading"><i class="fa fa-fw fa-quote-right"></i>{{i.lectureName}}</h2>
+            </div>
+          </div>
+
+
+
+
+
+          <!--<p class="list-group-item-text">{{i.description}}</p>-->
         </a>
       </div>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
 
-<div id="speakers" class="row">
+<div id="speakers"  *ngIf="isSpeakers" class="row">
   <div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="background-color: inherit" align="center">
-      <h2>MÓWCY</h2>
+      <h2><i class="fa fa-fw fa-microphone"></i>WYSTĘPUJĄ</h2>
        <div class="col-sm-6 col-md-4" *ngFor="let i of event.speakers">
          <div class="thumbnail">
            <img [src]=getImageUrl(i.idSpeaker) style="width: 100%" >
@@ -87,48 +103,75 @@
        </div>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
 
-<div id="registration" class="row">
+<div id="registration" class="row darkBack">
   <div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="background-color: inherit" align="center">
-      <h2>REJESTRACJA</h2>
-      <button class="btn btn-success btn-lg">ZAREJESTRUJ SIĘ</button>
+      <h2><i class="fa fa-fw fa-id-card"></i>REJESTRACJA</h2>
+      <button  (click)="modal1.show()" class="btn btn-success btn-lg">ZAREJESTRUJ SIĘ</button>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
 
+<!--OKNO-->
+<app-register-participant #modal1>
+  <div class="app-modal-header">
+    <h2>Rejestracja na wydarzenie</h2>
+  </div>
+  <div class="app-modal-body">
+    <!--FORMULARZ-->
+    Whatever content you like, form fields, anything
+    <input type="text">
+
+
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+  </div>
+</app-register-participant>
+
+
+<!--END: OKNO-->
 <div id="localization" class="row">
   <div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="background-color: inherit" align="center">
-      <h2>LOKALIZACJA</h2>
-      <div class="col-md-6  ">
+      <h2><i class="fa fa-fw fa-crosshairs"></i>LOKALIZACJA</h2>
+      <div class="col-md-9">
         <!--MAPA-->
-            <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom"
-               [disableDefaultUI]="false" [zoomControl]="false">
-
-              <sebm-google-map-marker *ngFor="let m of markers; let i = index"
-                [latitude]="m.lat" [longitude]="m.lng"  [label]="m.label"  [iconUrl]="iconUrl">
-
-                <sebm-google-map-info-window>
-                  <strong>Treść znacznika {{i}}:{{m.label}}</strong>
-                  <p>
-                    Aliquam ante sapien, sodales non lectus a, maximus dapibus eros. Phasellus blandit purus accumsan, convallis purus et, semper ligula. Duis ante orci, tincidunt eget libero id, pretium tempus turpis. Etiam tortor turpis, molestie sed auctor et, malesuada sit amet velit. Maecenas eget arcu tortor. Duis viverra ex mi, quis venenatis erat consequat ac. Donec ac nisi leo. Sed efficitur pharetra eros, sit amet iaculis libero placerat et. Aliquam blandit diam eu quam tempus, nec vulputate magna venenatis. In et arcu porttitor, tristique risus vel, imperdiet urna. Ut sagittis, elit eu volutpat ultrices, ligula est rutrum est, sit amet elementum lacus dolor ut libero. Maecenas congue mauris placerat, hendrerit enim sit amet, accumsan velit. Mauris et orci sapien. Aliquam viverra maximus arcu, eu tincidunt sapien dapibus at. Duis consequat, lacus a pharetra tempor, lacus purus consectetur turpis, quis laoreet tellus nisl vitae turpis.
-                  </p>
-                </sebm-google-map-info-window>
-
+        <div class="map-pannel" style="margin-bottom: 5%; margin-top: 5%">
+            <sebm-google-map class="map-wrapper" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+              <sebm-google-map-marker *ngFor="let m of markers; let i = index" [iconUrl]="m.iconUrl" [latitude]="m.lat" [longitude]="m.lng"  [label]="m.label"  [markerDraggable]="m.draggable">
               </sebm-google-map-marker>
-
             </sebm-google-map>
-
+        </div>
         <!--END: MAPA-->
       </div>
-      <div class="col-md-6  ">
-        lokalizacja dokladna
+      <div class="col-md-3 " style="margin-bottom: 5%; margin-top: 15%">
+        <h3>{{event.cityName}}, {{event.regionName}}</h3>
+        <h2>{{event.streetName}} {{event.streetNo}}</h2>
       </div>
     </div>
   </div>
-  <div class="fullLine"></div>
 </div>
+<div class="fullLine"></div>
+
+<div id="live" *ngIf="isLiveYT" class="row darkBack">
+  <div class="col-md-offset-1 col-md-10">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h2><i class="fa fa-fw fa-youtube"></i>Transmisja LIVE</h2>
+      <iframe class="myIFrame" [src]='url' frameborder="5" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<div class="fullLine"></div>
+
+<div id="organizer"  class="row ">
+  <div class="col-md-offset-8 col-md-3">
+    <H4>Organizaror: JAKAS TAM FIRMA SP.ZOO</H4>
+  </div>
+</div>
+<div class="fullLine"></div>

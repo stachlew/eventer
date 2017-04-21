@@ -5,11 +5,27 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './register-participant.component.html',
   styleUrls: ['./register-participant.component.css']
 })
-export class RegisterParticipantComponent implements OnInit {
+export class RegisterParticipantComponent{
 
-  constructor() { }
+  public visible = false;
+  private visibleAnimate = false;
 
-  ngOnInit() {
+  constructor(){}
+
+  public show(): void {
+    this.visible = true;
+    setTimeout(() => this.visibleAnimate = true, 100);
+  }
+
+  public hide(): void {
+    this.visibleAnimate = false;
+    setTimeout(() => this.visible = false, 300);
+  }
+
+  public onContainerClicked(event: MouseEvent): void {
+    if ((<HTMLElement>event.target).classList.contains('modal')) {
+      this.hide();
+    }
   }
 
 }

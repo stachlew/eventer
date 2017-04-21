@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {HttpSecService} from "../_service/util/http-sec.service";
 import {Http, Response} from "@angular/http";
 import {EventViewDetails} from "../_model/domainClass";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-event-view',
@@ -18,15 +19,35 @@ export class EventViewComponent implements OnInit, OnDestroy {
   imageUrl: string;
   speakerImageUrl: string;
 
-  constructor(private route: ActivatedRoute,private http: Http, private myHttp: HttpSecService) {
+  isLiveYT: boolean = false;
+  isLectures: boolean = false;
+  isSpeakers: boolean = false;
+
+
+  /* MAPA */
+  zoom: number;
+  lat: number;
+  lng: number;
+  markers: marker[]=[];
+  /* END: MAPA */
+
+  /*DO iFRAME*/
+  ytUrl="http://www.youtube.com/embed/";
+  videoUrl:string;
+  url: SafeResourceUrl;
+  sanitizer: DomSanitizer;
+  /*END: iFRAME*/
+
+  constructor(private route: ActivatedRoute,private http: Http, private myHttp: HttpSecService, sanitizer: DomSanitizer) {
     this.event=new EventViewDetails;
+    this.sanitizer=sanitizer;
   }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params=>{
       this.id = params['id'];
     });
-    this.http.get(this.myHttp.getUrl() + '/api/event/view/getEventDetails/'+this.id).subscribe((data: Response)=> {this.event = data.json();this.updateCordinates();});
+    this.http.get(this.myHttp.getUrl() + '/api/event/view/getEventDetails/'+this.id).subscribe((data: Response)=> {this.event = data.json();this.updateCordinates();this.updateSiteData();});
     this.imageUrl= this.myHttp.getUrl()+ '/api/images/getEventImage/'+this.id;
     this.speakerImageUrl=this.myHttp.getUrl()+ '/api/images/getSpeakerImage/';
   }
@@ -35,8 +56,6 @@ export class EventViewComponent implements OnInit, OnDestroy {
     this.lat=Number(this.event.geoWidth.replace(',','.'));
     this.lng=Number(this.event.geoLength.replace(',','.'));
     this.zoom=16;
-
-    this.markers = [];
     this.markers.push({
       lat: this.lat,
       lng: this.lng,
@@ -45,6 +64,22 @@ export class EventViewComponent implements OnInit, OnDestroy {
       iconUrl: 'http://localhost:8080/marker.gif'
     });
   }
+
+  updateSiteData(){
+    if(this.event.youtubeLink.length>0){
+      this.isLiveYT=true;
+      this.videoUrl=this.event.youtubeLink;
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.ytUrl+this.videoUrl); //iFrame
+    }
+    if(this.event.lectures.length>0){
+      this.isLectures=true;
+    }
+    if(this.event.speakers.length>0){
+      this.isSpeakers=true;
+    }
+  }
+
+
 
   ngOnDestroy(){
     this.sub.unsubscribe();
@@ -60,17 +95,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
   }
 
 
-  /* MAPA */
-  zoom: number;
-  lat: number;
-  lng: number;
 
-  clickedMarker(label: string, index: number) {
-    console.log(`clicked the marker: ${label || index}`)
-  }
-
-  markers: marker[];
-  /* END: MAPA */
 
 }
 
@@ -80,5 +105,5 @@ interface marker {
   lng: number;
   label?: string;
   draggable: boolean;
-  iconUrl: string;
+  iconUrl: string ;
 }
