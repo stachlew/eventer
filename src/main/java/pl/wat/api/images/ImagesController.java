@@ -21,9 +21,9 @@ public class ImagesController {
     @Autowired
     EventImageService eventImageService;
 
-    //Odczyt obrazka z bazy
-    @RequestMapping(value = "/getImage/{id}",method = RequestMethod.GET)
-    public void findImage(HttpServletResponse resp, @PathVariable String id){
+    //Odczyt obrazka eventu z bazy
+    @RequestMapping(value = "/getEventImage/{id}",method = RequestMethod.GET)
+    public void getEventImage(HttpServletResponse resp, @PathVariable String id){
         int intId=-1;
         try {
             intId = Integer.parseInt(id);
@@ -45,4 +45,32 @@ public class ImagesController {
             System.out.println("IOException");
         }
     }
+
+    //Odczyt obrazka mowcy z bazy
+    @RequestMapping(value = "/getSpeakerImage/{id}",method = RequestMethod.GET)
+    public void getSpeakerImage(HttpServletResponse resp, @PathVariable String id){
+        System.out.println("getSpeakerImage(): "+id);
+        int intId=-1;
+        try {
+            intId = Integer.parseInt(id);
+        }catch (NumberFormatException e){
+        }
+        //default
+        Path path = FileSystems.getDefault().getPath("","D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\images\\defaultProfile.png");
+
+        try{
+            byte [] dbImage = null;
+            dbImage = eventImageService.findImageByIdSpeaker(intId);
+            if(dbImage==null){ // brak obrazka = stockowy obrazek z dysku
+                dbImage = Files.readAllBytes(path);
+            }
+            resp.setContentType("image/jpeg");
+            resp.getOutputStream().write(dbImage);
+        }
+        catch (IOException ioe){
+            System.out.println("IOException");
+        }
+    }
+
+
 }

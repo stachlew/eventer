@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.Event;
+import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.lecture.SpeakerRepository;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.SQLException;
@@ -15,7 +17,25 @@ public class EventImageService {
     @Autowired
     EventRepository eventRepository;
 
-    //zapis obrazu
+    @Autowired
+    SpeakerRepository speakerRepository;
+
+    //odczyt obrazu eventu
+    public byte[] findImageByIdEvent(int idEvent) {
+        Event event = eventRepository.findOne(idEvent);
+        if(event!=null){
+            if (event.getImage()!=null) {
+                try {
+                    return event.getImage().getBytes(1, (int) event.getImage().length());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    //zapis obrazu eventu
     @Transactional
     public void saveImageToEvent(int idEvent, byte[] image) {
         Event event = eventRepository.findOne(idEvent);
@@ -31,13 +51,13 @@ public class EventImageService {
         }
     }
 
-    //odczyt obrazu
-    public byte[] findImageByIdEvent(int idEvent) {
-        Event event = eventRepository.findOne(idEvent);
-        if(event!=null){
-            if (event.getImage()!=null) {
+    //odczyt obrazu speakera
+    public byte[] findImageByIdSpeaker(int idSpeaker) {
+        Speaker speaker = speakerRepository.findOne(idSpeaker);
+        if(speaker!=null){
+            if (speaker.getImage()!=null) {
                 try {
-                    return event.getImage().getBytes(1, (int) event.getImage().length());
+                    return speaker.getImage().getBytes(1, (int) speaker.getImage().length());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -45,4 +65,8 @@ public class EventImageService {
         }
         return null;
     }
+
+
+
+
 }

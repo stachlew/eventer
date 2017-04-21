@@ -81,10 +81,17 @@ public class EventViewDetails {
         }
 
         this.speakers = new LinkedList<>();
-        for (Speaker speaker: speakers
-             ) {
+        for (Speaker speaker: speakers) {
             this.speakers.add(new EventViewSpeaker(speaker));
         }
+    }
+
+    public List<EventViewSpeaker> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<EventViewSpeaker> speakers) {
+        this.speakers = speakers;
     }
 
     public int getIdEvent() {

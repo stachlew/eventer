@@ -76,3 +76,9 @@
 }
 
 
+/*DO MAPY*/
+.sebm-google-map-container {
+  height: 500px;
+  width: 500px;
+}
+

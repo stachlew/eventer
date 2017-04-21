@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.wat.logic.event._model.EventHeader;
 import pl.wat.logic.event._model.EventViewDetails;
+import pl.wat.logic.event._model.EventViewSpeaker;
 import pl.wat.logic.event.view.EventViewService;
 
 import java.util.List;
@@ -28,7 +29,8 @@ public class EventViewController {
     EventViewDetails getEventViewDetails(@PathVariable String id){
         try {
             int intId = Integer.parseInt(id);
-            return eventViewService.getEventViewDetails(intId);
+            EventViewDetails eventViewDetails = eventViewService.getEventViewDetails(intId);
+            return eventViewDetails;
         }catch (NumberFormatException e){
             return null;
         }

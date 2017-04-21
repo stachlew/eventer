@@ -49,7 +49,7 @@
 <div id="description" class="row">
   <div class="col-md-10 col-md-offset-1 ">
     <div class="jumbotron" style="background-color: inherit" align="center">
-      <h4>Poprawic napis na zdjeciu dla wersji mobilnej. {{event.description}}</h4>
+      <h4>{{event.description}}</h4>
     </div>
   </div>
   <div class="fullLine"></div>
@@ -69,32 +69,35 @@
       </div>
     </div>
   </div>
+  <div class="fullLine"></div>
 </div>
 
 <div id="speakers" class="row">
   <div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h2>MÓWCY</h2>
-       <div class="col-sm-6 col-md-4" *ngFor="let i of event.lectures">
+       <div class="col-sm-6 col-md-4" *ngFor="let i of event.speakers">
          <div class="thumbnail">
-           <img src="..." alt="...">
+           <img [src]=getImageUrl(i.idSpeaker) style="width: 100%" >
            <div class="caption">
-             <h3>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</h3>
-             <p>{{i.eventViewSpeaker.description}}</p>
+             <h3>{{i.firstname}} {{i.lastname}}</h3>
+             <p>{{i.description}}</p>
            </div>
          </div>
        </div>
     </div>
   </div>
+  <div class="fullLine"></div>
 </div>
 
 <div id="registration" class="row">
   <div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h2>REJESTRACJA</h2>
-
+      <button class="btn btn-success btn-lg">ZAREJESTRUJ SIĘ</button>
     </div>
   </div>
+  <div class="fullLine"></div>
 </div>
 
 <div id="localization" class="row">
@@ -102,11 +105,30 @@
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h2>LOKALIZACJA</h2>
       <div class="col-md-6  ">
-        mapa
+        <!--MAPA-->
+            <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom"
+               [disableDefaultUI]="false" [zoomControl]="false">
+
+              <sebm-google-map-marker *ngFor="let m of markers; let i = index"
+                [latitude]="m.lat" [longitude]="m.lng"  [label]="m.label"  [iconUrl]="iconUrl">
+
+                <sebm-google-map-info-window>
+                  <strong>Treść znacznika {{i}}:{{m.label}}</strong>
+                  <p>
+                    Aliquam ante sapien, sodales non lectus a, maximus dapibus eros. Phasellus blandit purus accumsan, convallis purus et, semper ligula. Duis ante orci, tincidunt eget libero id, pretium tempus turpis. Etiam tortor turpis, molestie sed auctor et, malesuada sit amet velit. Maecenas eget arcu tortor. Duis viverra ex mi, quis venenatis erat consequat ac. Donec ac nisi leo. Sed efficitur pharetra eros, sit amet iaculis libero placerat et. Aliquam blandit diam eu quam tempus, nec vulputate magna venenatis. In et arcu porttitor, tristique risus vel, imperdiet urna. Ut sagittis, elit eu volutpat ultrices, ligula est rutrum est, sit amet elementum lacus dolor ut libero. Maecenas congue mauris placerat, hendrerit enim sit amet, accumsan velit. Mauris et orci sapien. Aliquam viverra maximus arcu, eu tincidunt sapien dapibus at. Duis consequat, lacus a pharetra tempor, lacus purus consectetur turpis, quis laoreet tellus nisl vitae turpis.
+                  </p>
+                </sebm-google-map-info-window>
+
+              </sebm-google-map-marker>
+
+            </sebm-google-map>
+
+        <!--END: MAPA-->
       </div>
       <div class="col-md-6  ">
         lokalizacja dokladna
       </div>
     </div>
   </div>
+  <div class="fullLine"></div>
 </div>
