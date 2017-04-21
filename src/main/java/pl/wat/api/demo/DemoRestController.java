@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
+import pl.wat.db.domain.event.Participant;
 import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.domain.user.User;
+import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.ParticipantRepository;
 import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
+import pl.wat.logic.event._model.ParticipantForm;
 import pl.wat.logic.event.image.EventImageService;
+import pl.wat.logic.event.view.EventRegisterService;
 import pl.wat.logic.user._model.SecurityInfo;
 import pl.wat.logic.user.account.UserAccountService;
 import pl.wat.logic.user.register.UserRegisterService;
@@ -27,6 +32,7 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.List;
 
 //KONTROLER DEMO typu Ctrl+c, Ctrl+v dla dalszych metod kontrolerow w projekcie
@@ -51,6 +57,11 @@ public class DemoRestController {
 
     @Autowired
     SpeakerRepository speakerRepository;
+    @Autowired
+    EventRepository eventRepository;
+    @Autowired
+    EventRegisterService eventRegisterService;
+
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test",method = RequestMethod.GET)
@@ -59,13 +70,16 @@ public class DemoRestController {
         boolean status1=false;
         boolean status2=false;
         //Deklaracja
-        List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+       //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
 
-        for (Integer s: distinctSpeakersByIdEvent
-             ) {
-            System.out.println(s);
+//        for (Integer s: distinctSpeakersByIdEvent
+//             ) {
+//            System.out.println(s);
+//
+//        }
+        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
+        eventRegisterService.registeredParticipant(participantForm);
 
-        }
         //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
         //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
 

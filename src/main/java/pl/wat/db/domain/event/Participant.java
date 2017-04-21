@@ -10,8 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import pl.wat.db.domain.event.Event;
-
-
+import pl.wat.logic.event._model.ParticipantForm;
 
 
 @Entity
@@ -61,6 +60,12 @@ public class Participant {
         this.activated = activated;
         this.presence = presence;
         this.event = event;
+    }
+
+    public Participant(ParticipantForm participantForm) {
+        this.email=participantForm.getEmail();
+        this.firstname=participantForm.getFirstname();
+        this.lastname=participantForm.getLastname();
     }
 
     public int getIdParticipant() {
