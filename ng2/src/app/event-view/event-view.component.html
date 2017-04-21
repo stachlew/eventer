@@ -118,19 +118,10 @@
 
 <!--OKNO-->
 <app-register-participant #modal1>
-  <div class="app-modal-header">
-    <h2>Rejestracja na wydarzenie</h2>
-  </div>
-  <div class="app-modal-body">
-    <!--FORMULARZ-->
-    Whatever content you like, form fields, anything
-    <input type="text">
-
-
-  </div>
+  <div class="app-modal-header"></div>
+  <div class="app-modal-body"></div>
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
-    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-primary" (click)="modal1.save(event.idEvent)">Save changes</button>
   </div>
 </app-register-participant>
 

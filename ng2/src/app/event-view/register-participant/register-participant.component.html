@@ -2,14 +2,58 @@
      [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
   <div class="modal-dialog">
     <div class="modal-content">
+      <!-- HEADER -->
       <div class="modal-header">
         <ng-content select=".app-modal-header"></ng-content>
+        <div class="row">
+          <div class="col-md-10">
+            <h2>Rejestracja na wydarzenie </h2>
+          </div>
+          <div class="col-md-1" style="color: black; background-color: white">
+            <h2><a (click)="hide()"><i class="fa fa-window-close-o"></i></a></h2>
+          </div>
+        </div>
       </div>
+
+      <!-- BODY -->
       <div class="modal-body">
         <ng-content select=".app-modal-body"></ng-content>
+        <!--FORMULARZ-->
+
+        <form>
+          <div class="form-group">
+            <label for="firstname">Imię</label>
+            <input type="text" class="form-control" id="firstname" required [(ngModel)]="participant.firstname" name="firstname">
+          </div>
+          <div class="form-group">
+            <label for="lastname">Nazwisko</label>
+            <input type="text" class="form-control" id="lastname" required [(ngModel)]="participant.lastname" name="lastname">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" class="form-control" id="email" required [(ngModel)]="participant.email" name="email">
+          </div>
+
+          <!--Podczas ladowania-->
+          <div *ngIf="loading">
+            <i class="fa fa-spin fa-spinner"></i>
+          </div>
+          <!--Efekt zapytania-->
+          <div *ngIf="!loading && !firstLoad">
+            <div class="alert alert-success" *ngIf="successRegister" role="alert">Pomyślnie zarejestrowano. Sprawdź skrzynkę mejlową, tam jest Twój bilet.</div>
+            <div class="alert alert-danger" *ngIf="!successRegister" role="alert">Nie udało się zarejestrować na wydarzenie.</div>
+          </div>
+
+        </form>
+
+        <!--END: FORMULARZ-->
       </div>
+
+      <!-- FOOTER -->
       <div class="modal-footer">
-        <ng-content select=".app-modal-footer"></ng-content>
+        <div *ngIf="!loading && !successRegister">
+          <ng-content select=".app-modal-footer"></ng-content>
+        </div>
       </div>
     </div>
   </div>
