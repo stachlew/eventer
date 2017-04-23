@@ -59,6 +59,7 @@ public class DemoRestController {
     SpeakerRepository speakerRepository;
     @Autowired
     EventRepository eventRepository;
+
     @Autowired
     EventRegisterService eventRegisterService;
 
@@ -77,8 +78,9 @@ public class DemoRestController {
 //            System.out.println(s);
 //
 //        }
-        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
-        eventRegisterService.registeredParticipant(participantForm);
+//        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
+//        eventRegisterService.registeredParticipant(participantForm);
+
 
         //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
         //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");

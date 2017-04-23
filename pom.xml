@@ -114,6 +114,17 @@
 			<version>2.0.0</version>
 		</dependency>
 
+		<!--Wysyłanie mejli-->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.2.4.RELEASE</version>
+		</dependency>
 
 
 		<!--Do czeskiej maszyny generujacej type-script z klas javy-->
