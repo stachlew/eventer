@@ -20,40 +20,64 @@
         <ng-content select=".app-modal-body"></ng-content>
         <!--FORMULARZ-->
 
-        <form>
-          <div class="form-group">
-            <label for="firstname">Imię</label>
-            <input type="text" class="form-control" id="firstname" required [(ngModel)]="participant.firstname" name="firstname">
-          </div>
-          <div class="form-group">
-            <label for="lastname">Nazwisko</label>
-            <input type="text" class="form-control" id="lastname" required [(ngModel)]="participant.lastname" name="lastname">
-          </div>
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" class="form-control" id="email" required [(ngModel)]="participant.email" name="email">
+        <form (ngSubmit)="save(complexForm.value)" [formGroup]="complexForm" *ngIf="!successRegister">
+
+          <!--POLA FORMULARZA-->
+          <!--IMIE-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['firstname'].valid && complexForm.controls['firstname'].touched}">
+            <label>Imie:</label>
+            <input type="text" class="form-control" ngControl="firstname"  placeholder="wpisz imię" name="firstname" [formControl]="complexForm.controls['firstname']">
+            <div *ngIf="complexForm.controls['firstname'].hasError('required') && complexForm.controls['firstname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['firstname'].hasError('minlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+            <div *ngIf="complexForm.controls['firstname'].hasError('maxlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
           </div>
 
-          <!--Podczas ladowania-->
-          <div *ngIf="loading">
-            <i class="fa fa-spin fa-spinner"></i>
-          </div>
-          <!--Efekt zapytania-->
-          <div *ngIf="!loading && !firstLoad">
-            <div class="alert alert-success" *ngIf="successRegister" role="alert">Pomyślnie zarejestrowano. Sprawdź skrzynkę mejlową, tam jest Twój bilet.</div>
-            <div class="alert alert-danger" *ngIf="!successRegister" role="alert">Nie udało się zarejestrować na wydarzenie.</div>
+
+          <!--NAZWISKO-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['lastname'].valid && complexForm.controls['lastname'].touched}">
+            <label>Nazwisko</label>
+            <input type="text" class="form-control" placeholder="wpisz nazwisko" name="lastname" [formControl]="complexForm.controls['lastname']">
+            <div *ngIf="complexForm.controls['lastname'].hasError('required') && complexForm.controls['lastname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['lastname'].hasError('minlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+            <div *ngIf="complexForm.controls['lastname'].hasError('maxlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
           </div>
 
+
+          <!--EMAIL-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+            <label>E-mail</label>
+            <input type="email" class="form-control" placeholder="wpisz e-mail" name="email" [formControl]="complexForm.controls['email']" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" >
+            <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('pattern') && complexForm.controls['email'].touched" class="alert alert-danger">Niepoprawny format.</div>
+          </div>
+
+          <!--Przycisk submit-->
+          <div *ngIf="!loading && !successRegister">
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid">Rejestruj!</button>
+            </div>
+            <ng-content select=".app-modal-footer"></ng-content>
+          </div>
+          <!--END POLA FORMULARZA-->
         </form>
+
+        <!--Podczas ladowania-->
+        <div *ngIf="loading">
+          <i class="fa fa-spin fa-spinner"></i>
+        </div>
+        <!--Efekt zapytania-->
+        <div *ngIf="!loading && !firstLoad">
+          <div class="alert alert-success" *ngIf="successRegister" role="alert">Pomyślnie zarejestrowano. Sprawdź skrzynkę mejlową, tam jest Twój bilet.</div>
+          <div class="alert alert-danger" *ngIf="!successRegister" role="alert">Nie udało się zarejestrować na wydarzenie.</div>
+        </div>
 
         <!--END: FORMULARZ-->
       </div>
 
       <!-- FOOTER -->
       <div class="modal-footer">
-        <div *ngIf="!loading && !successRegister">
-          <ng-content select=".app-modal-footer"></ng-content>
-        </div>
       </div>
     </div>
   </div>

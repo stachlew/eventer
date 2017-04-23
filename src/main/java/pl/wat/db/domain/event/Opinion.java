@@ -2,6 +2,7 @@ package pl.wat.db.domain.event;
 
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.location.Region;
+import pl.wat.logic.event._model.EventViewOpinionForm;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,6 +44,14 @@ public class Opinion {
         this.email = email;
         this.createDate = createDate;
         this.event = event;
+    }
+
+    public Opinion(EventViewOpinionForm form){
+        if(form!=null){
+            this.content=form.getContent();
+            this.email=form.getEmail();
+            this.createDate=form.getCreateDate();
+        }
     }
 
     public int getIdOpinion() {

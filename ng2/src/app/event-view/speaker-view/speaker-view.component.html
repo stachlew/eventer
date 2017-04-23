@@ -1,0 +1,32 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- HEADER -->
+      <div class="modal-header">
+        <ng-content select=".app-modal-header"></ng-content>
+        <div class="row">
+          <div class="col-md-10">
+            <h2>{{speaker.firstname}} {{speaker.lastname}}</h2>
+          </div>
+          <div class="col-md-1" style="color: black; background-color: white">
+            <h2><a (click)="hide()"><i class="fa fa-window-close-o"></i></a></h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+        <ng-content select=".app-modal-body"></ng-content>
+        <H2>{{speaker.description}}</H2>
+      </div>
+
+      <!--STOPKA-->
+      <div class="modal-footer">
+        <H4>{{speaker.email}}</H4>
+        <H4>{{speaker.phone}}</H4>
+        <ng-content select=".app-modal-footer"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

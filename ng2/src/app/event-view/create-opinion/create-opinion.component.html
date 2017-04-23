@@ -1,0 +1,73 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- HEADER -->
+      <div class="modal-header">
+        <ng-content select=".app-modal-header"></ng-content>
+        <div class="row">
+          <div class="col-md-10">
+            <h2>Dodawanie opinii</h2>
+          </div>
+          <div class="col-md-1" style="color: black; background-color: white">
+            <h2><a (click)="hide()"><i class="fa fa-window-close-o"></i></a></h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+        <ng-content select=".app-modal-body"></ng-content>
+        <!--FORMULARZ-->
+
+        <form (ngSubmit)="save(complexForm.value)" [formGroup]="complexForm" *ngIf="!successAdd">
+
+          <!--EMAIL-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+            <label>E-mail</label>
+            <input type="email" class="form-control" placeholder="wpisz e-mail" name="email" [formControl]="complexForm.controls['email']" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" >
+            <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            <div *ngIf="complexForm.controls['email'].hasError('pattern') && complexForm.controls['email'].touched" class="alert alert-danger">Niepoprawny format.</div>
+          </div>
+
+
+          <!--OPINIA-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['myContent'].valid && complexForm.controls['myContent'].touched}">
+            <label>Treść</label>
+            <input type="text" class="form-control" placeholder="wpisz nazwisko" name="myContent" [formControl]="complexForm.controls['myContent']">
+            <div *ngIf="complexForm.controls['myContent'].hasError('required') && complexForm.controls['myContent'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['myContent'].hasError('minlength') && complexForm.controls['myContent'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+            <div *ngIf="complexForm.controls['myContent'].hasError('maxlength') && complexForm.controls['myContent'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+          </div>
+
+
+
+
+          <!--Podczas ladowania-->
+          <div *ngIf="loading">
+            <i class="fa fa-spin fa-spinner"></i>
+          </div>
+
+          <!--Efekt zapytania-->
+          <div *ngIf="!loading && !firstLoad">
+            <div class="alert alert-success" *ngIf="successAdd" role="alert">Pomyślnie dodano opinię.</div>
+            <div class="alert alert-danger" *ngIf="!successAdd" role="alert">Nie udało się dodać opinii.</div>
+          </div>
+
+          <!--Przycisk submit-->
+          <div *ngIf="!loading && !successAdd">
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" [disabled]="!complexForm.valid">Dodaj opinię!</button>
+            </div>
+            <ng-content select=".app-modal-footer"></ng-content>
+          </div>
+        </form>
+
+        <!--END: FORMULARZ-->
+      </div>
+
+    </div>
+  </div>
+</div>

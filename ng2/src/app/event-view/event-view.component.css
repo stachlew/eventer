@@ -100,3 +100,9 @@
   color: white
 }
 
+.clickable:hover{
+background-color: firebrick;
+text-decoration: none;
+cursor: pointer;
+}
+

@@ -146,6 +146,23 @@ export class  Event {
   template: Template;
 }
 
+export class EventViewOpinion {
+  idOpinion: number;
+  idEvent: number;
+  content: string;
+  email: string;
+  createDate: Timestamp;
+}
+
+export class EventViewOpinionForm {
+  content: string;
+  email: string;
+  createDate: Timestamp;
+  idEvent: number;
+}
+
+
+
 
 export class Opinion {
   idOpinion: number;

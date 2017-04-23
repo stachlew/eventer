@@ -41,11 +41,14 @@ import { EventInfoComponent } from './event-dashboard/event-info/event-info.comp
 import { LectureDashboardComponent } from './event-dashboard/lecture-dashboard/lecture-dashboard.component';
 import { LectureNavigationComponent } from './event-dashboard/lecture-dashboard/lecture-navigation/lecture-navigation.component';
 import { LectureCreateComponent } from './event-dashboard/lecture-dashboard/lecture-create/lecture-create.component';
-import {LectureEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/lecture-edit.component";
-import {LecturesListComponent} from "./event-dashboard/lecture-dashboard/lectures-list/lectures-list.component";
-import {SpeakersListComponent } from './event-dashboard/lecture-dashboard/speakers-list/speakers-list.component';
+import { LectureEditComponent} from "./event-dashboard/lecture-dashboard/lecture-edit/lecture-edit.component";
+import { LecturesListComponent} from "./event-dashboard/lecture-dashboard/lectures-list/lectures-list.component";
+import { SpeakersListComponent } from './event-dashboard/lecture-dashboard/speakers-list/speakers-list.component';
 import { SpeakerCreateComponent } from './event-dashboard/lecture-dashboard/speaker-create/speaker-create.component';
 import { SpeakerEditComponent } from './event-dashboard/lecture-dashboard/speaker-edit/speaker-edit.component';
+import { LectureViewComponent } from './event-view/lecture-view/lecture-view.component';
+import { SpeakerViewComponent } from './event-view/speaker-view/speaker-view.component';
+import { CreateOpinionComponent } from './event-view/create-opinion/create-opinion.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +88,9 @@ import { SpeakerEditComponent } from './event-dashboard/lecture-dashboard/speake
     SpeakersListComponent,
     SpeakerCreateComponent,
     SpeakerEditComponent,
+    LectureViewComponent,
+    SpeakerViewComponent,
+    CreateOpinionComponent,
   ],
   imports: [
     BrowserModule,

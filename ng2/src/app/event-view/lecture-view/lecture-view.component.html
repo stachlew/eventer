@@ -1,0 +1,35 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- HEADER -->
+      <div class="modal-header">
+        <ng-content select=".app-modal-header"></ng-content>
+        <div class="row">
+          <div class="col-md-10">
+            <h3>{{lecture.lectureName}}</h3>
+            <h4>{{speaker.firstname}} {{speaker.lastname}}</h4>
+          </div>
+          <div class="col-md-1" style="color: black; background-color: white">
+            <h2><a (click)="hide()"><i class="fa fa-window-close-o"></i></a></h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+        <ng-content select=".app-modal-body"></ng-content>
+        <!--FORMULARZ-->
+
+        <h4>{{lecture.description}}</h4>
+
+        <!--END: FORMULARZ-->
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <h4>{{lecture.startTime | date:'shortDate' }} {{lecture.startTime | date:'shortTime'}} - {{lecture.endTime | date:'shortDate' }} {{lecture.endTime | date:'shortTime'}}</h4>
+      </div>
+    </div>
+  </div>
+</div>

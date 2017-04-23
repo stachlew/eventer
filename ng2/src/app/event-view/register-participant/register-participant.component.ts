@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component } from '@angular/core';
 import {ParticipantForm} from "../../_model/domainClass";
 import {HttpSecService} from "../../_service/util/http-sec.service";
 import {Http,Response} from "@angular/http";
+
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-register-participant',
@@ -13,21 +15,33 @@ export class RegisterParticipantComponent{
   public visible = false;
   private visibleAnimate = false;
 
+  private idEvent:number;
   private participant:ParticipantForm;
   private firstLoad: boolean;
   private loading: boolean;
   private successRegister: boolean;
 
+  //FORMULARZ
+  submitted = false;
+  complexForm : FormGroup; //FORMULARZ
 
-  constructor(private http: Http, private myHttp: HttpSecService){
+
+  constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder){
+    this.complexForm = fb.group({ //FORMULARZ
+      'firstname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
+      'lastname':new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
+      'email':new FormControl(null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)]))
+    })
+
+
     this.participant = new ParticipantForm;
     this.firstLoad=true;
     this.loading=false;
     this.successRegister=false;
   }
 
-  public show(): void {
-    console.info("first: "+ this.firstLoad + " loadin: "+ this.loading + " success: "+ this.successRegister );
+  public show(idEvent:number): void {
+    this.idEvent=idEvent;
     this.participant= new ParticipantForm;
     this.visible = true;
     this.firstLoad = true;
@@ -41,19 +55,27 @@ export class RegisterParticipantComponent{
     setTimeout(() => this.visible = false, 300);
   }
 
-  public save(idEvent:number): void {
+  public save(form: any): void {
+    this.submitted = true;
     this.firstLoad=false;
     this.loading=true;
-    this.participant.idEvent=idEvent;
-    console.info("ZAPISUJE: "+ this.participant.idEvent + " "+ this.participant.firstname + " " + this.participant.lastname + " "+ this.participant.email);
 
-    this.firstLoad=false;
+    this.participant.firstname=form.firstname;
+    this.participant.lastname=form.lastname;
+    this.participant.email=form.email;
+    this.participant.idEvent=this.idEvent;
+    console.info("ID: "+this.participant.idEvent + "F: "+this.participant.firstname +" L: "+this.participant.lastname + " E "+this.participant.email);
+
+
+
     this.http.post(this.myHttp.getUrl()+'/api/event/view/register/postNewParticipant',this.participant,this.myHttp.postConfig())
       .subscribe((data: Response)=> {this.successRegister = data.json(),this.endRequest()});
   }
 
   private endRequest(){
     this.loading=false;
+    this.participant=new ParticipantForm();
+    this.participant.idEvent=this.idEvent;
   }
 
 
