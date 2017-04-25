@@ -41,7 +41,8 @@ public class EventDashboardCreateCtrl {
                         .city(cityRepository.findByCityName(ev.getCityName()))
                         .build())
                 .build();
-        Event saved = eventCreateService.save(event);
-        return saved.getIdEvent();
+        //Event saved = eventCreateService.save(event);
+        System.out.println(event.toString());
+        return event.getIdEvent();
     }
 }
