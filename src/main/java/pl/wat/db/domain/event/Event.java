@@ -401,7 +401,7 @@ public class Event {
                 ", place=" + place +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", createDate='" + createDate + '\'' +
+                //", createDate='" + createDate + '\'' +
                 ", capacity=" + capacity +
                 ", youtubeLink='" + youtubeLink + '\'' +
                 ", published=" + published +

@@ -27,8 +27,8 @@ public class Place {
     @Size(max = 20)
     private String geoLength;
 
-    @Column(length = 10)
-    @Size(max = 10)
+    @Column(length = 20)
+    @Size(max = 20)
     private String geoWidth;
 
     @NotNull
