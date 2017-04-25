@@ -1,85 +1,96 @@
-<div class="row">
+<div class="row glownyDiv">
   <!-- FORMULARZ USER -->
-  <div class="col-sm-12 col-md-6 col-lg-4">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <h1>Formularz tworzenia wydarzenia:</h1>
     <form>
       <div class="form-group">
         <label for="nazwaWydarzenia">Podaj nazwę wydarzenia:</label>
         <input type="text" class="form-control" id="nazwaWydarzenia" required [(ngModel)]="addEventClass.title" name="nazwaWydarzenia">
       </div>
-      <div class="form-group">
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
         <label for="startTime">Podaj datę i godzinę rozpoczęcia:</label>
         <input type="datetime-local" class="form-control" id="startTime" required [(ngModel)]="addEventClass.startTime" name="startTime">
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm">
         <label for="endTime">Podaj datę i godzinę zakończenia:</label>
         <input type="datetime-local" class="form-control" id="endTime" required [(ngModel)]="addEventClass.endTime" name="endTime">
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
         <label for="regionName">Wybierz region:</label>
         <select class="form-control" required [(ngModel)]="addEventClass.region" name="regionName" id="regionName" (click)="getEventCities()">
           <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm">
         <label for="cityName">Wybierz miasto:</label>
         <select class="form-control" required [(ngModel)]="addEventClass.city" name="cityName" id="cityName">
           <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
         </select>
       </div>
-      <div class="form-group">
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingLeftForm">
         <label for="eventTypeName">Wybierz typ wydarzenia:</label>
         <select class="form-control" required [(ngModel)]="addEventClass.eventType" name="regionName" id="eventTypeName">
           <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="endTime">Opisz swoje wydarzenie:</label>
-        <textarea rows="5" class="form-control" id="description" required [(ngModel)]="addEventClass.description" name="description"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="capacity">Wpisz przewidywaną liczbę uczestników:</label>
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingCenterForm">
+        <label for="capacity">Liczba uczestników:</label>
         <input type="number" class="form-control" id="capacity" required [(ngModel)]="addEventClass.capacity" name="capacity">
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingRightForm">
         <label for="freeEntrance">Czy wstęp wolny?</label>
         <select class="form-control" required [(ngModel)]="addEventClass.freeEntrance" name="freeEntrance" id="freeEntrance">
           <option label="Tak">true</option>
           <option label="Nie">false</option>
         </select>
       </div>
+      </div>
+
       <div class="form-group">
+        <label for="endTime">Opisz swoje wydarzenie:</label>
+        <textarea rows="5" class="form-control" id="description" required [(ngModel)]="addEventClass.description" name="description"></textarea>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
         <label for="streetName">Podaj nazwę ulicy:</label>
         <input type="text" class="form-control" id="streetName" required [(ngModel)]="addEventClass.streetName" name="streetName">
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm">
         <label for="streetNo">Podaj numer budynku/lokalu:</label>
         <input type="text" class="form-control" id="streetNo" required [(ngModel)]="addEventClass.streetNo" name="streetNo">
       </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="geoLength" required [(ngModel)]="addEventClass.geoLength" name="geoLength">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="geoWidth" required [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
       </div>
 
-      <button (click)="postAddEvent()" type="" class="btn btn-success">Submit z odpowiedzia</button>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoLength" required [(ngModel)]="addEventClass.geoLength" name="geoLength">
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoWidth" required [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
+      </div>
 
-      <div>Odpowiedź: {{demoResponse}}</div>
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <button (click)="postAddEvent()" type="" class="btn btn-success btn-block">Utwórz wydarzenie!</button>
+      </div>
+
     </form>
   </div>
-</div>
+
 
 <!-- MAPA -->
-<div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"
       [zoom]="zoom"
       [disableDefaultUI]="false"
       [zoomControl]="false"
-      (mapClick)="mapClicked($event) ">
+      (mapClick)="mapClicked($event)" style="width: auto; height: 734px">
 
       <sebm-google-map-marker
         *ngFor="let m of markers; let i = index"
@@ -98,5 +109,5 @@
 
     </sebm-google-map>
   </div>
-</div>
 <!--END: MAPA -->
+</div>

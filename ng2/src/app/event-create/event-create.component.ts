@@ -72,7 +72,7 @@ export class EventCreateComponent implements OnInit {
   }
 
   mapClicked($event: any) {
-    this.markers = [];
+    this.markers.pop();
     this.markers.push({
       lat: $event.coords.lat,
       lng: $event.coords.lng,
