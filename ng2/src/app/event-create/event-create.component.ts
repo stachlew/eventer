@@ -47,10 +47,11 @@ export class EventCreateComponent implements OnInit {
     console.info("Pobieranie eventTypes");
     this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response)=> this.eventTypes = data.json());
   }
-  //TODO: napisać wyszukiwanie po parametrze regionu!
-  getEventCities() {
+
+  getEventCities(region: Region) {
     console.info("Pobieranie nazw miast");
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities').subscribe((data: Response)=> this.cities = data.json());
+    if (region!=null)
+     this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> this.cities = data.json());
   }
 
 //Wyslanie zadania na serwer i zapisanie zwroconych danych zaleznych od typu uzytkownika

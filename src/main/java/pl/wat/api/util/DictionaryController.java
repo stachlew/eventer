@@ -1,10 +1,7 @@
 package pl.wat.api.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.wat.db.domain.event.EventType;
 import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Region;
@@ -37,7 +34,8 @@ public class DictionaryController {
 
     @ResponseBody
     @GetMapping("/cities")
-    public List<City> getCities() {
+    public List<City> getCities(@RequestParam int idRegion) {
+        // TODO pobranie miast z regionu
         return dictionaryService.getAllCities();
     }
 }
