@@ -7,6 +7,7 @@ import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.event.location.Region;
 import pl.wat.db.repository.event.EventTypeRepository;
+import pl.wat.db.repository.event.location.CityRepository;
 import pl.wat.logic.event._model.EventCreateForm;
 import pl.wat.logic.event.create.EventCreateService;
 
@@ -19,6 +20,9 @@ public class EventDashboardCreateCtrl {
 
     @Autowired
     private EventTypeRepository eventTypeRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
 
     @PostMapping
     public int CreateEvent(@RequestBody EventCreateForm ev) {
@@ -34,15 +38,10 @@ public class EventDashboardCreateCtrl {
                         .streetNo(ev.getStreetNo())
                         .geoLength(ev.getGeoLength())
                         .geoWidth(ev.getGeoWidth())
-                        .city(new City.CityBuilder()
-                                .cityName(ev.getCityName())
-                                .region(new Region.RegionBuilder()
-                                        .regionName(ev.getRegionName())
-                                        .createRegion())
-                                .createCity())
-                        .createPlace())
-                .createEvent();
-        Event saved = eventCreateService.createEvent(event);
+                        .city(cityRepository.findByCityName(ev.getCityName()))
+                        .build())
+                .build();
+        Event saved = eventCreateService.save(event);
         return saved.getIdEvent();
     }
 }

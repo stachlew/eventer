@@ -4,20 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.location.PlaceRepository;
 
 @Service
 public class EventCreateService {
 
     @Autowired
-    EventRepository eventRepository;
+    private EventRepository eventRepository;
+
+    @Autowired
+    private PlaceRepository placeRepository;
 
     //stworzenie wydarzenia
     //TODO: Dopracowac metode dodawania eventow do bazy. Aktualnie dosc trywialna
-    public Event createEvent(Event event){
-        if(event!=null && eventRepository.exists(event.getIdEvent())){
+    public Event save(Event event){
+        if(event!=null){
+            placeRepository.save(event.getPlace());
             Event saved = eventRepository.save(event);
-            if(saved!=null)
-                return saved;
+            if(saved!=null) return saved;
         }
         return null;
     }

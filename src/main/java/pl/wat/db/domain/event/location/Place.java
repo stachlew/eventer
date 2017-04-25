@@ -39,12 +39,13 @@ public class Place {
     public Place() {
     }
 
-    public Place(String streetName, String streetNo, City city) {
-        this.streetName = streetName;
-        this.streetNo = streetNo;
-        this.city = city;
+    public Place(PlaceBuilder placeBuilder) {
+        this.streetName = placeBuilder.streetName;
+        this.streetNo = placeBuilder.streetNo;
+        this.geoLength = placeBuilder.geoLength;
+        this.geoWidth = placeBuilder.geoWidth;
+        this.city = placeBuilder.city;
     }
-
     public Place(String streetName, String streetNo, String geoLength, String geoWidth, City city) {
         this.streetName = streetName;
         this.streetNo = streetNo;
@@ -133,8 +134,8 @@ public class Place {
             return this;
         }
 
-        public Place createPlace() {
-            return new Place(streetName, streetNo, city);
+        public Place build() {
+            return new Place(this);
         }
     }
 }

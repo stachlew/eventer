@@ -110,25 +110,27 @@ public class Event {
         this.template = template;
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, String youtubeLink, boolean published, boolean freeEntrance, boolean registerEnabled, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
-        this.title = title;
-        this.description = description;
-        this.place = place;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.createDate = createDate;
-        this.capacity = capacity;
-        this.youtubeLink = youtubeLink;
-        this.published = published;
-        this.freeEntrance = freeEntrance;
-        this.registerEnabled = registerEnabled;
-        this.visits = visits;
-        this.image = image;
-        this.eventStatus = eventStatus;
-        this.user = user;
-        this.eventType = eventType;
-        this.template = template;
+    public Event(EventBuilder eventBuilder) {
+        this.title = eventBuilder.title;
+        this.description = eventBuilder.description;
+        this.place = eventBuilder.place;
+        this.startTime = eventBuilder.startTime;
+        this.endTime = eventBuilder.endTime;
+        this.createDate = eventBuilder.createDate;
+        this.capacity = eventBuilder.capacity;
+        this.visits = eventBuilder.visits;
+        this.image = eventBuilder.image;
+        this.eventStatus = eventBuilder.eventStatus;
+        this.user = eventBuilder.user;
+        this.eventType = eventBuilder.eventType;
+        this.template = eventBuilder.template;
+        this.youtubeLink = eventBuilder.youtubeLink;
+        this.published = eventBuilder.published;
+        this.freeEntrance = eventBuilder.freeEntrance;
+        this.registerEnabled = eventBuilder.registerEnabled;
     }
+
+
 
     public String getYoutubeLink() {
         return youtubeLink;
@@ -378,8 +380,8 @@ public class Event {
             return this;
         }
 
-        public Event createEvent() {
-            return new Event(title, description, place, startTime, endTime, createDate, capacity, visits, image, eventStatus, user, eventType, template);
+        public Event build() {
+            return new Event(this);
         }
     }
 }
