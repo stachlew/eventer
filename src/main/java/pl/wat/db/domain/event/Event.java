@@ -384,4 +384,28 @@ public class Event {
             return new Event(this);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "idEvent=" + idEvent +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", place=" + place +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", capacity=" + capacity +
+                ", youtubeLink='" + youtubeLink + '\'' +
+                ", published=" + published +
+                ", freeEntrance=" + freeEntrance +
+                ", registerEnabled=" + registerEnabled +
+                ", visits=" + visits +
+                ", image=" + image +
+                ", eventStatus=" + eventStatus +
+                ", user=" + user +
+                ", eventType=" + eventType +
+                ", template=" + template +
+                '}';
+    }
 }
