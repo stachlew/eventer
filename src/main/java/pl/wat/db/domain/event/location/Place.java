@@ -24,12 +24,12 @@ public class Place {
     @Size(min = 1, max = 20)
     private String streetNo;
 
-    @Column(length = 20)
-    @Size(max = 20)
+    @Column(length = 25)
+    @Size(max = 25)
     private String geoLength;
 
-    @Column(length = 10)
-    @Size(max = 10)
+    @Column(length = 25)
+    @Size(max = 25)
     private String geoWidth;
 
     @NotNull
