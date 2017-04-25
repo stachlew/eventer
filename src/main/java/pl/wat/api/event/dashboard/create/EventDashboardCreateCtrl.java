@@ -22,7 +22,7 @@ public class EventDashboardCreateCtrl {
                 .id(5)
                 .title(ev.getTitle())
                 .capacity(ev.getCapacity())
-                .createDate(ev.getCreateDate())
+                .createDate(ev.getCreateDate().replace("T", " "))
                 .description(ev.getDescription())
                 .startTime(ev.getStartTime().replace("T"," "))
                 .endTime(ev.getEndTime().replace("T"," "))
