@@ -13,12 +13,12 @@ public class EventCreateService {
 
     //stworzenie wydarzenia
     //TODO: Dopracowac metode dodawania eventow do bazy. Aktualnie dosc trywialna
-    public boolean createEvent(Event event){
+    public Event createEvent(Event event){
         if(event!=null && eventRepository.exists(event.getIdEvent())){
             Event saved = eventRepository.save(event);
             if(saved!=null)
-                return true;
+                return saved;
         }
-        return false;
+        return null;
     }
 }

@@ -5,10 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
-import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.user.User;
 
@@ -276,4 +274,112 @@ public class Event {
         this.createDate = createDate;
     }
 
+    public static class EventBuilder {
+        private String title;
+        private String description;
+        private Place place;
+        private Timestamp startTime;
+        private Timestamp endTime;
+        private Timestamp createDate;
+        private int capacity;
+        private int visits;
+        private Blob image;
+        private EventStatus eventStatus;
+        private User user;
+        private EventType eventType;
+        private Template template;
+        private String youtubeLink;
+        private boolean published;
+        private boolean freeEntrance;
+        private boolean registerEnabled;
+
+        public EventBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public EventBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public EventBuilder place(Place place) {
+            this.place = place;
+            return this;
+        }
+
+        public EventBuilder startTime(Timestamp startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public EventBuilder endTime(Timestamp endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        public EventBuilder createDate(Timestamp createDate) {
+            this.createDate = createDate;
+            return this;
+        }
+
+        public EventBuilder capacity(int capacity) {
+            this.capacity = capacity;
+            return this;
+        }
+
+        public EventBuilder visits(int visits) {
+            this.visits = visits;
+            return this;
+        }
+
+        public EventBuilder image(Blob image) {
+            this.image = image;
+            return this;
+        }
+
+        public EventBuilder eventStatus(EventStatus eventStatus) {
+            this.eventStatus = eventStatus;
+            return this;
+        }
+
+        public EventBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public EventBuilder eventType(EventType eventType) {
+            this.eventType = eventType;
+            return this;
+        }
+
+        public EventBuilder template(Template template) {
+            this.template = template;
+            return this;
+        }
+
+        public EventBuilder youtubeLink(String youtubeLink) {
+            this.youtubeLink = youtubeLink;
+            return this;
+        }
+
+        public EventBuilder published(boolean published) {
+            this.published = published;
+            return this;
+        }
+
+        public EventBuilder freeEntrance(boolean freeEntrance) {
+            this.freeEntrance = freeEntrance;
+            return this;
+        }
+
+        public EventBuilder registerEnabled(boolean registerEnabled) {
+            this.registerEnabled = registerEnabled;
+            return this;
+        }
+
+        public Event createEvent() {
+            return new Event(title, description, place, startTime, endTime, createDate, capacity, visits, image, eventStatus, user, eventType, template);
+        }
+    }
 }

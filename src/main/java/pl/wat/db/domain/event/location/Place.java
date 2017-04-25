@@ -3,7 +3,6 @@ package pl.wat.db.domain.event.location;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import pl.wat.db.domain.event.location.City;
 
 @Entity
 @Table(name = "EVE_Places")
@@ -100,5 +99,42 @@ public class Place {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public static class PlaceBuilder {
+        private String streetName;
+        private String streetNo;
+        private City city;
+        private String geoLength;
+        private String geoWidth;
+
+        public PlaceBuilder streetName(String streetName) {
+            this.streetName = streetName;
+            return this;
+        }
+
+        public PlaceBuilder streetNo(String streetNo) {
+            this.streetNo = streetNo;
+            return this;
+        }
+
+        public PlaceBuilder city(City city) {
+            this.city = city;
+            return this;
+        }
+
+        public PlaceBuilder geoLength(String geoLength) {
+            this.geoLength = geoLength;
+            return this;
+        }
+
+        public PlaceBuilder geoWidth(String geoWidth) {
+            this.geoWidth = geoWidth;
+            return this;
+        }
+
+        public Place createPlace() {
+            return new Place(streetName, streetNo, city);
+        }
     }
 }

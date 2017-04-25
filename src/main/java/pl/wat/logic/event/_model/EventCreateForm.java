@@ -11,6 +11,7 @@ public class EventCreateForm {
     private String description;
     private Timestamp startTime;
     private Timestamp endTime;
+    private String eventTypeName;
 
     private int capacity;
     private boolean freeEntrance;
@@ -52,6 +53,14 @@ public class EventCreateForm {
 
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
+    }
+
+    public String getEventTypeName() {
+        return eventTypeName;
+    }
+
+    public void setEventTypeName(String eventTypeName) {
+        this.eventTypeName = eventTypeName;
     }
 
     public int getCapacity() {

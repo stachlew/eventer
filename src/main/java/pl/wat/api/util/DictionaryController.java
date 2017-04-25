@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.db.domain.event.EventType;
+import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Region;
 import pl.wat.logic.util.DictionaryService;
 
@@ -32,5 +33,11 @@ public class DictionaryController {
     @GetMapping("/eventTypes")
     public List<EventType> getEventType() {
         return dictionaryService.getAllEventTypes();
+    }
+
+    @ResponseBody
+    @GetMapping("/cities")
+    public List<City> getCities() {
+        return dictionaryService.getAllCities();
     }
 }
