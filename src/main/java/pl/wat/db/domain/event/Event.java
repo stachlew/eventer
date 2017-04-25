@@ -35,13 +35,13 @@ public class Event {
     private Place place;
 
     @NotNull
-    private Timestamp startTime;
+    private String startTime;
 
     @NotNull
-    private Timestamp endTime;
+    private String endTime;
 
     @NotNull
-    private Timestamp createDate;
+    private String createDate;
 
     private int capacity;
 
@@ -94,7 +94,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, String startTime, String endTime, String createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -196,19 +196,19 @@ public class Event {
         this.place = place;
     }
 
-    public Timestamp getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -268,11 +268,11 @@ public class Event {
         this.template = template;
     }
 
-    public Timestamp getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -280,9 +280,9 @@ public class Event {
         private String title;
         private String description;
         private Place place;
-        private Timestamp startTime;
-        private Timestamp endTime;
-        private Timestamp createDate;
+        private String startTime;
+        private String endTime;
+        private String createDate;
         private int capacity;
         private int visits;
         private Blob image;
@@ -310,17 +310,17 @@ public class Event {
             return this;
         }
 
-        public EventBuilder startTime(Timestamp startTime) {
+        public EventBuilder startTime(String startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public EventBuilder endTime(Timestamp endTime) {
+        public EventBuilder endTime(String endTime) {
             this.endTime = endTime;
             return this;
         }
 
-        public EventBuilder createDate(Timestamp createDate) {
+        public EventBuilder createDate(String createDate) {
             this.createDate = createDate;
             return this;
         }
