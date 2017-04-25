@@ -17,19 +17,19 @@
       </div>
       <div class="form-group">
         <label for="regionName">Wybierz region:</label>
-        <select class="form-control" required [(ngModel)]="addEventClass.regionName" name="regionName" id="regionName" (click)="getEventCities()">
+        <select class="form-control" required [(ngModel)]="addEventClass.region" name="regionName" id="regionName" (click)="getEventCities()">
           <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="cityName">Wybierz region:</label>
-        <select class="form-control" required [(ngModel)]="addEventClass.cityName" name="cityName" id="cityName">
-          <option *ngFor="let i of cityNames" [ngValue]="i">{{i.cityName}}</option>
+        <label for="cityName">Wybierz miasto:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.city" name="cityName" id="cityName">
+          <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="eventTypeName">Wybierz typ wydarzenia:</label>
-        <select class="form-control" required [(ngModel)]="addEventClass.eventTypeName" name="regionName" id="eventTypeName">
+        <select class="form-control" required [(ngModel)]="addEventClass.eventType" name="regionName" id="eventTypeName">
           <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
         </select>
       </div>
@@ -44,8 +44,8 @@
       <div class="form-group">
         <label for="freeEntrance">Czy wstęp wolny?</label>
         <select class="form-control" required [(ngModel)]="addEventClass.freeEntrance" name="freeEntrance" id="freeEntrance">
-          <option label="Tak">1</option>
-          <option label="Nie">0</option>
+          <option label="Tak">true</option>
+          <option label="Nie">false</option>
         </select>
       </div>
       <div class="form-group">
@@ -57,13 +57,11 @@
         <input type="text" class="form-control" id="streetNo" required [(ngModel)]="addEventClass.streetNo" name="streetNo">
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" id="geoLength" required [(ngModel)]="addEventClass.geoLength" name="geoLength">
+        <input type="hidden" class="form-control" id="geoLength" required [(ngModel)]="addEventClass.geoLength" name="geoLength">
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" id="geoWidth" required [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
+        <input type="hidden" class="form-control" id="geoWidth" required [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
       </div>
-
-
 
       <button (click)="postAddEvent()" type="" class="btn btn-success">Submit z odpowiedzia</button>
 
@@ -74,14 +72,14 @@
 
 <!-- MAPA -->
 <div class="row">
-  <div class="col-sm-9">
+  <div class="col-sm-12">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"
       [zoom]="zoom"
       [disableDefaultUI]="false"
       [zoomControl]="false"
-      (mapClick)="mapClicked($event)">
+      (mapClick)="mapClicked($event) ">
 
       <sebm-google-map-marker
         *ngFor="let m of markers; let i = index"
@@ -93,20 +91,12 @@
         (dragEnd)="markerDragEnd(m, $event)">
 
         <sebm-google-map-info-window>
-          <strong>Treść znacznika {{i}}:{{m.label}}</strong>
-          <p>
-            Miejsce Twojego wydarzenia!
-          </p>
+          <strong>Miejsce Twojego wydarzenia!</strong>
         </sebm-google-map-info-window>
 
       </sebm-google-map-marker>
 
     </sebm-google-map>
-  </div>
-  <div class="col-sm-2 col-sm-offset-1">
-    <ul>
-      <li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>
-    </ul>
   </div>
 </div>
 <!--END: MAPA -->
