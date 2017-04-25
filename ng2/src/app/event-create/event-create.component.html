@@ -10,3 +10,53 @@ FORMULARZE:
 <ul>
   <li>Formularz podstawowych danych wydarzenia</li>
 </ul>
+
+<!-- FORMULARZE I POBIERANIE LIST -->
+
+<div class="row">
+  <!-- FORMULARZ USER -->
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <h1>USER Form</h1>
+    <form>
+      <div class="form-group">
+        <label for="numer">NUMER</label>
+        <input type="text" class="form-control" id="nazwaWydarzenia" required [(ngModel)]="demoClass.nazwaWydarzenia" name="nazwaWydarzenia">
+      </div>
+      <div class="form-group">
+        <label for="napis">NAPIS</label>
+        <input type="text" class="form-control" id="napis1" required [(ngModel)]="demoClass.napis" name="napis">
+      </div>
+      <button (click)="postGuest()" type="" class="btn btn-success">Submit bez odpowiedzi</button>
+      <button (click)="postDemoData()" type="" class="btn btn-success">Submit z odpowiedzia</button>
+
+      <div>Odpowiedź: {{demoResponse}}</div>
+    </form>
+  </div>
+  <!-- FORMULARZ ADMIN -->
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <h1>ADMIN Form</h1>
+    <form>
+      <div class="form-group">
+        <label for="numer">NUMER</label>
+        <input type="text" class="form-control" id="numer" required [(ngModel)]="demoClass.nazwaWydarzenia" name="numer">
+      </div>
+      <div class="form-group">
+        <label for="napis">NAPIS</label>
+        <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
+      </div>
+      <button (click)="postAdmin()" type="" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+  <!--<div class="col-sm-12 col-md-6 col-lg-4">-->
+    <!--&lt;!&ndash; POBIERANIE DANYCH LISTA &ndash;&gt;-->
+    <!--POBIERANIE DANYCH DLA WSZYSTKICH: <button class="btn btn-danger" (click)="getCustomers()">Pobierz dane!</button>-->
+    <!--<ul>-->
+      <!--<li *ngFor="let i of customers"> {{i.name}} {{i.id}}</li>-->
+    <!--</ul>-->
+    <!--POBIERANIE DANYCH DLA ADMINA: <button class="btn btn-danger" (click)="getCustomersAdmin()">Pobierz dane!</button>-->
+    <!--<ul>-->
+      <!--<li *ngFor="let i of customersAdmin"> {{i.name}} {{i.email}}</li>-->
+    <!--</ul>-->
+    <!--&lt;!&ndash; END: POBIERANIE DANYCH &ndash;&gt;-->
+  <!--</div>-->
+</div>
