@@ -1,62 +1,112 @@
-ZAWARTOSC:
-<ul>
-  <li>Nazwa i data wydarzenia, formularz rejestracyjny, mapa</li>
-</ul>
-DANE:
-<ul>
-  <li>BRAK</li>
-</ul>
-FORMULARZE:
-<ul>
-  <li>Formularz podstawowych danych wydarzenia</li>
-</ul>
-
-<!-- FORMULARZE I POBIERANIE LIST -->
-
 <div class="row">
   <!-- FORMULARZ USER -->
   <div class="col-sm-12 col-md-6 col-lg-4">
-    <h1>USER Form</h1>
+    <h1>Formularz tworzenia wydarzenia:</h1>
     <form>
       <div class="form-group">
-        <label for="numer">NUMER</label>
-        <input type="text" class="form-control" id="nazwaWydarzenia" required [(ngModel)]="demoClass.nazwaWydarzenia" name="nazwaWydarzenia">
+        <label for="nazwaWydarzenia">Podaj nazwę wydarzenia:</label>
+        <input type="text" class="form-control" id="nazwaWydarzenia" required [(ngModel)]="addEventClass.title" name="nazwaWydarzenia">
       </div>
       <div class="form-group">
-        <label for="napis">NAPIS</label>
-        <input type="text" class="form-control" id="napis1" required [(ngModel)]="demoClass.napis" name="napis">
+        <label for="startTime">Podaj datę i godzinę rozpoczęcia:</label>
+        <input type="datetime-local" class="form-control" id="startTime" required [(ngModel)]="addEventClass.startTime" name="startTime">
       </div>
-      <button (click)="postGuest()" type="" class="btn btn-success">Submit bez odpowiedzi</button>
-      <button (click)="postDemoData()" type="" class="btn btn-success">Submit z odpowiedzia</button>
+      <div class="form-group">
+        <label for="endTime">Podaj datę i godzinę zakończenia:</label>
+        <input type="datetime-local" class="form-control" id="endTime" required [(ngModel)]="addEventClass.endTime" name="endTime">
+      </div>
+      <div class="form-group">
+        <label for="regionName">Wybierz region:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.regionName" name="regionName" id="regionName" (click)="getEventCities()">
+          <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cityName">Wybierz region:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.cityName" name="cityName" id="cityName">
+          <option *ngFor="let i of cityNames" [ngValue]="i">{{i.cityName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="eventTypeName">Wybierz typ wydarzenia:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.eventTypeName" name="regionName" id="eventTypeName">
+          <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="endTime">Opisz swoje wydarzenie:</label>
+        <textarea rows="5" class="form-control" id="description" required [(ngModel)]="addEventClass.description" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="capacity">Wpisz przewidywaną liczbę uczestników:</label>
+        <input type="number" class="form-control" id="capacity" required [(ngModel)]="addEventClass.capacity" name="capacity">
+      </div>
+      <div class="form-group">
+        <label for="freeEntrance">Czy wstęp wolny?</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.freeEntrance" name="freeEntrance" id="freeEntrance">
+          <option label="Tak">1</option>
+          <option label="Nie">0</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="streetName">Podaj nazwę ulicy:</label>
+        <input type="text" class="form-control" id="streetName" required [(ngModel)]="addEventClass.streetName" name="streetName">
+      </div>
+      <div class="form-group">
+        <label for="streetNo">Podaj numer budynku/lokalu:</label>
+        <input type="text" class="form-control" id="streetNo" required [(ngModel)]="addEventClass.streetNo" name="streetNo">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="geoLength" required [(ngModel)]="addEventClass.geoLength" name="geoLength">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="geoWidth" required [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
+      </div>
+
+
+
+      <button (click)="postAddEvent()" type="" class="btn btn-success">Submit z odpowiedzia</button>
 
       <div>Odpowiedź: {{demoResponse}}</div>
     </form>
   </div>
-  <!-- FORMULARZ ADMIN -->
-  <div class="col-sm-12 col-md-6 col-lg-4">
-    <h1>ADMIN Form</h1>
-    <form>
-      <div class="form-group">
-        <label for="numer">NUMER</label>
-        <input type="text" class="form-control" id="numer" required [(ngModel)]="demoClass.nazwaWydarzenia" name="numer">
-      </div>
-      <div class="form-group">
-        <label for="napis">NAPIS</label>
-        <input type="text" class="form-control" id="napis" required [(ngModel)]="demoClass.napis" name="napis">
-      </div>
-      <button (click)="postAdmin()" type="" class="btn btn-success">Submit</button>
-    </form>
-  </div>
-  <!--<div class="col-sm-12 col-md-6 col-lg-4">-->
-    <!--&lt;!&ndash; POBIERANIE DANYCH LISTA &ndash;&gt;-->
-    <!--POBIERANIE DANYCH DLA WSZYSTKICH: <button class="btn btn-danger" (click)="getCustomers()">Pobierz dane!</button>-->
-    <!--<ul>-->
-      <!--<li *ngFor="let i of customers"> {{i.name}} {{i.id}}</li>-->
-    <!--</ul>-->
-    <!--POBIERANIE DANYCH DLA ADMINA: <button class="btn btn-danger" (click)="getCustomersAdmin()">Pobierz dane!</button>-->
-    <!--<ul>-->
-      <!--<li *ngFor="let i of customersAdmin"> {{i.name}} {{i.email}}</li>-->
-    <!--</ul>-->
-    <!--&lt;!&ndash; END: POBIERANIE DANYCH &ndash;&gt;-->
-  <!--</div>-->
 </div>
+
+<!-- MAPA -->
+<div class="row">
+  <div class="col-sm-9">
+    <sebm-google-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false"
+      (mapClick)="mapClicked($event)">
+
+      <sebm-google-map-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+
+        <sebm-google-map-info-window>
+          <strong>Treść znacznika {{i}}:{{m.label}}</strong>
+          <p>
+            Miejsce Twojego wydarzenia!
+          </p>
+        </sebm-google-map-info-window>
+
+      </sebm-google-map-marker>
+
+    </sebm-google-map>
+  </div>
+  <div class="col-sm-2 col-sm-offset-1">
+    <ul>
+      <li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>
+    </ul>
+  </div>
+</div>
+<!--END: MAPA -->

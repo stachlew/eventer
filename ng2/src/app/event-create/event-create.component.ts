@@ -10,9 +10,7 @@ import 'rxjs/Rx' ;
 
 import {Customer} from "./customer";
 import {AddEventClass} from "./addEventClass";
-
-import { FileUploader } from 'ng2-file-upload'; //UPLOAD PLIKU
-import {SafeResourceUrl, DomSanitizer} from "@angular/platform-browser"; //iFRAME
+import {City, EventType, Region} from "../_model/domainClass";
 
 @Component({
   selector: 'app-event-create',
@@ -23,6 +21,9 @@ export class EventCreateComponent implements OnInit {
 
   customers : Customer[];
   customersAdmin: Customer[];
+  regions: Region[];
+  eventTypes: EventType[];
+  cityNames: City[];
   addEventClass: AddEventClass;
 
   demoResponse: string = "nie wywolano pobrania odpowiedzi"
@@ -33,34 +34,69 @@ export class EventCreateComponent implements OnInit {
     this.addEventClass = new AddEventClass();
   }
 
-  ngOnInit() { }
-
-// Wysylanie danych na serwer z autoryzacja i bez sprowadzone do jednej postConfig() z wbudowanymi parametrami. Dostepu broni znacznik metody na serwerze
-  postGuest() {
-    console.info("postGuest(): "+ this.addEventClass.nazwaWydarzenia + " "+ this.addEventClass.napis);
-    return this.http.post(this.myHttp.getUrl()+'/api/postGuest',this.addEventClass,this.myHttp.postConfig()).toPromise();
+  ngOnInit() {
+    this.getEventRegions();
+    this.getEventTypes();
   }
 
-  postAdmin() {
-    console.info("postAdmin(): "+ this.addEventClass.nazwaWydarzenia + " "+ this.addEventClass.napis);
-    return this.http.post(this.myHttp.getUrl()+'/api/postAdmin',this.addEventClass,this.myHttp.postConfig()).toPromise();
+  //Wyslanie zadania na serwer i oczekiwanie na zwrot danych dla goscia
+  getEventRegions() {
+    console.info("Pobieranie regionow");
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response)=> this.regions = data.json());
   }
 
-  // //Wyslanie zadania na serwer przez goscia. Brak oczekiwania na dane zwrotne
-  // clickedGuest() {
-  //   console.info("Przycisk gosc");
-  //   this.http.get(this.myHttp.getUrl()+'/api/getGuest').subscribe((data :Response)=> console.log(data));
-  // }
-  //
-  // //Wyslanie zadania na serwer przez usera i admina (autoryzacja). Brak oczekiwania na dane zwrotne
-  // clickedUser() {
-  //   console.info("Przycisk user");
-  //   this.http.get(this.myHttp.getUrl()+'/api/getUser',this.myHttp.getConfig()).subscribe();
-  // }
-  //
-  // clickedAdmin() {
-  //   console.info("Przycisk admin");
-  //   this.http.get(this.myHttp.getUrl()+'/api/getAdmin',this.myHttp.getConfig()).subscribe();
-  // }
+  getEventTypes() {
+    console.info("Pobieranie eventTypes");
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response)=> this.eventTypes = data.json());
+  }
+  //TODO: napisać wyszukiwanie po parametrze regionu!
+  getEventCities() {
+    console.info("Pobieranie nazw miast");
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities').subscribe((data: Response)=> this.cityNames = data.json());
+  }
 
+//Wyslanie zadania na serwer i zapisanie zwroconych danych zaleznych od typu uzytkownika
+  postAddEvent(){
+    // postEventDashboardCreate
+    return this.http.post(this.myHttp.getUrl()+'/api/postTest',this.addEventClass,this.myHttp.postConfig())
+      .subscribe((data: Response)=> this.demoResponse = data.text()); //Zwykly string wiec .text
+    // .subscribe((data: Response)=> this.demoResponse = data.json()); GDYBY OBIEKT
+  }
+
+  /* MAPA */
+  zoom: number = 12;
+  lat: number = 52.25353;
+  lng: number = 20.90067;
+
+  clickedMarker(label: string, index: number) {
+    console.log(`clicked the marker: ${label || index}`)
+  }
+
+  mapClicked($event: any) {
+    this.markers.push({
+      lat: $event.coords.lat,
+      lng: $event.coords.lng,
+      draggable: true
+    });
+    console.info("sze/dlu "+$event.coords.lat+" "+$event.coords.lng);
+  }
+
+  markerDragEnd(m: marker, $event: any) {
+    m.lat = $event.coords.lat;
+    m.lng = $event.coords.lng;
+    console.log('dragEnd', m, $event);
+  }
+
+  markers: marker[] = [
+  ]
+  /* END: MAPA */
+
+}
+
+/*DO MAPY*/
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
 }
