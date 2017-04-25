@@ -39,4 +39,23 @@ public class Region {
     public void setRegionName(String regionName) {
         this.regionName = regionName;
     }
+
+    public static class RegionBuilder {
+        private int idRegion;
+        private String regionName;
+
+        public RegionBuilder idRegion(int idRegion) {
+            this.idRegion = idRegion;
+            return this;
+        }
+
+        public RegionBuilder regionName(String regionName) {
+            this.regionName = regionName;
+            return this;
+        }
+
+        public Region createRegion() {
+            return new Region(idRegion, regionName);
+        }
+    }
 }
