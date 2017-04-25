@@ -8,9 +8,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'; //bez tego co jakis czas nie dziala http.post powodujac przeladowanie strony
 import 'rxjs/Rx' ;
 
-import {Customer} from "./customer";
 import {AddEventClass} from "./addEventClass";
 import {City, EventType, Region} from "../_model/domainClass";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-create',
@@ -19,18 +19,16 @@ import {City, EventType, Region} from "../_model/domainClass";
 })
 export class EventCreateComponent implements OnInit {
 
-  customers : Customer[];
-  customersAdmin: Customer[];
   regions: Region[];
   eventTypes: EventType[];
-  cityNames: City[];
+  cities: City[];
   addEventClass: AddEventClass;
 
-  demoResponse: string = "nie wywolano pobrania odpowiedzi"
+  addEventResponse: string = "nie wywolano pobrania odpowiedzi"
 
   imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
 
-  constructor(private http: Http, private myHttp: HttpSecService/*API*/) {
+  constructor(private http: Http, private myHttp: HttpSecService/*API*/, private router: Router) {
     this.addEventClass = new AddEventClass();
   }
 
@@ -52,15 +50,16 @@ export class EventCreateComponent implements OnInit {
   //TODO: napisać wyszukiwanie po parametrze regionu!
   getEventCities() {
     console.info("Pobieranie nazw miast");
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities').subscribe((data: Response)=> this.cityNames = data.json());
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities').subscribe((data: Response)=> this.cities = data.json());
   }
 
 //Wyslanie zadania na serwer i zapisanie zwroconych danych zaleznych od typu uzytkownika
   postAddEvent(){
     // postEventDashboardCreate
-    return this.http.post(this.myHttp.getUrl()+'/api/postTest',this.addEventClass,this.myHttp.postConfig())
-      .subscribe((data: Response)=> this.demoResponse = data.text()); //Zwykly string wiec .text
+    return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
+      .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
     // .subscribe((data: Response)=> this.demoResponse = data.json()); GDYBY OBIEKT
+
   }
 
   /* MAPA */
@@ -73,11 +72,14 @@ export class EventCreateComponent implements OnInit {
   }
 
   mapClicked($event: any) {
+    this.markers = [];
     this.markers.push({
       lat: $event.coords.lat,
       lng: $event.coords.lng,
       draggable: true
     });
+    this.addEventClass.geoLength=this.markers[0].lng.toString();
+    this.addEventClass.geoWidth=this.markers[0].lat.toString();
     console.info("sze/dlu "+$event.coords.lat+" "+$event.coords.lng);
   }
 

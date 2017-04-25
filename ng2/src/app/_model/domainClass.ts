@@ -21,12 +21,12 @@ export class AddEventClass {
   description: string;
   startTime: string;
   endTime: string;
-  eventTypeName: string;
+  eventType: string;
   capacity: number;
   freeEntrance: boolean;
 
-  regionName: string;
-  cityName: string;
+  region: string;
+  city: string;
   streetName: string;
   streetNo: string;
   geoLength: string;
