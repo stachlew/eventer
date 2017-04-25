@@ -6,6 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.EventStatus;
 import pl.wat.db.domain.event.Template;
 import pl.wat.db.domain.event.location.Place;
+import pl.wat.db.repository.user.UserRepository;
 import pl.wat.logic.event._model.EventCreateForm;
 import pl.wat.logic.event.create.EventCreateService;
 
@@ -19,22 +20,26 @@ public class EventDashboardCreateCtrl {
     @Autowired
     private EventCreateService eventCreateService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     public int CreateEvent(@RequestBody EventCreateForm ev) {
         Event event = new Event.EventBuilder()
                 .title(ev.getTitle())
-                .eventStatus(EventStatus.PUBLISHED_AND_NOT_AVAILABLE)
-                .template(new Template(1, "Szablon1"))
-                .published(true)
-                .registerEnabled(true)
-                .visits(0)
-                .capacity(ev.getCapacity())
-                .createDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
                 .description(ev.getDescription())
-                .startTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
-                .endTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
-                .freeEntrance(ev.isFreeEntrance())
                 .eventType(ev.getEventType())
+                .eventStatus(EventStatus.PUBLISHED_AND_NOT_AVAILABLE)
+                .startTime(ev.getStartTime().replace("T", " "))
+                .endTime(ev.getEndTime().replace("T", " "))
+                .createDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
+                .capacity(ev.getCapacity())
+                .freeEntrance(ev.isFreeEntrance())
+                .visits(0)
+                .registerEnabled(true)
+                .published(true)
+                .user(userRepository.findOne(2))
+                .template(new Template(1, "Szablon1"))
                 .place(new Place.PlaceBuilder()
                         .streetName(ev.getStreetName())
                         .streetNo(ev.getStreetNo())
