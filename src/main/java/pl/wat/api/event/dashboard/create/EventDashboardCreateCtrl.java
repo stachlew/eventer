@@ -20,7 +20,6 @@ public class EventDashboardCreateCtrl {
     @PostMapping
     public int CreateEvent(@RequestBody EventCreateForm ev) {
         Event event = new Event.EventBuilder()
-                .id(5)
                 .title(ev.getTitle())
                 .capacity(ev.getCapacity())
                 .createDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
@@ -37,8 +36,7 @@ public class EventDashboardCreateCtrl {
                         .city(ev.getCity())
                         .build())
                 .build();
-        //Event saved = eventCreateService.save(event);
-        System.out.println(event.toString());
-        return event.getIdEvent();
+        Event saved = eventCreateService.save(event);
+        return saved.getIdEvent();
     }
 }
