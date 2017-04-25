@@ -111,6 +111,7 @@ public class Event {
     }
 
     public Event(EventBuilder eventBuilder) {
+        this.idEvent = eventBuilder.idEvent;
         this.title = eventBuilder.title;
         this.description = eventBuilder.description;
         this.place = eventBuilder.place;
@@ -277,6 +278,7 @@ public class Event {
     }
 
     public static class EventBuilder {
+        private int idEvent;
         private String title;
         private String description;
         private Place place;
@@ -294,6 +296,11 @@ public class Event {
         private boolean published;
         private boolean freeEntrance;
         private boolean registerEnabled;
+
+        public EventBuilder id(int idEvent) {
+            this.idEvent = idEvent;
+            return this;
+        }
 
         public EventBuilder title(String title) {
             this.title = title;

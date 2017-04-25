@@ -7,6 +7,8 @@ import pl.wat.db.domain.event.location.Place;
 import pl.wat.logic.event._model.EventCreateForm;
 import pl.wat.logic.event.create.EventCreateService;
 
+import java.text.DateFormat;
+
 @RestController
 @RequestMapping("/api/event/dashboard/create")
 public class EventDashboardCreateCtrl {
@@ -17,7 +19,10 @@ public class EventDashboardCreateCtrl {
     @PostMapping
     public int CreateEvent(@RequestBody EventCreateForm ev) {
         Event event = new Event.EventBuilder()
+                .id(5)
+                .title(ev.getTitle())
                 .capacity(ev.getCapacity())
+                .createDate(DateFormat.getInstance().format(System.currentTimeMillis()).replace("T"," "))
                 .description(ev.getDescription())
                 .startTime(ev.getStartTime().replace("T"," "))
                 .endTime(ev.getEndTime().replace("T"," "))
