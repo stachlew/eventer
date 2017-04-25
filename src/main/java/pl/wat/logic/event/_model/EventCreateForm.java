@@ -15,6 +15,7 @@ public class EventCreateForm {
     private String description;
     private String startTime;
     private String endTime;
+    private String createDate;
     private EventType eventType;
 
     private int capacity;
@@ -59,11 +60,19 @@ public class EventCreateForm {
         this.endTime = endTime;
     }
 
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
     public EventType getEventType() {
         return eventType;
     }
 
-    public void setEventTypeName(EventType eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 
