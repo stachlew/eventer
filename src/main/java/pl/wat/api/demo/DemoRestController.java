@@ -71,7 +71,7 @@ public class DemoRestController {
         boolean status1=false;
         boolean status2=false;
         //Deklaracja
-       //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
 
 //        for (Integer s: distinctSpeakersByIdEvent
 //             ) {
@@ -86,7 +86,7 @@ public class DemoRestController {
         //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
 
         //Wykonywanie
-       // status1 = userRegisterService.createUser(newUser);
+        // status1 = userRegisterService.createUser(newUser);
         //status2 = userAccountService.deleteUser("user");
 
         //Zwrot wyniku
@@ -195,7 +195,7 @@ public class DemoRestController {
                 eventImageService.saveImageToEvent(1,bytes);
 
                 /* DLA ZAPISU NA LOKALNYM DYSKU
-                File serverFile = new File("D:\\Projekty\\PzPro\\uploadTest"    //ZMIENIC NA SWOJA SCIEZKE DLA ZAPISU UPLOADOWANYCH PLIKO!!!
+                File serverFile = new File("D:\Projekt PZ - Eventer\eventer\\uploadTest"    //ZMIENIC NA SWOJA SCIEZKE DLA ZAPISU UPLOADOWANYCH PLIKO!!!
                         + File.separator  + nrPliku + ".jpg");
                 nrPliku++;
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
