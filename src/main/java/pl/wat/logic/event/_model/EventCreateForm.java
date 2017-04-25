@@ -1,5 +1,9 @@
 package pl.wat.logic.event._model;
 
+import pl.wat.db.domain.event.EventType;
+import pl.wat.db.domain.event.location.City;
+import pl.wat.db.domain.event.location.Region;
+
 import java.sql.Timestamp;
 
 /**
@@ -11,13 +15,13 @@ public class EventCreateForm {
     private String description;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String eventTypeName;
+    private EventType eventType;
 
     private int capacity;
     private boolean freeEntrance;
 
-    private String regionName;
-    private String cityName;
+    private Region region;
+    private City city;
     private String streetName;
     private String streetNo;
     private String geoLength;
@@ -55,12 +59,12 @@ public class EventCreateForm {
         this.endTime = endTime;
     }
 
-    public String getEventTypeName() {
-        return eventTypeName;
+    public EventType getEventType() {
+        return eventType;
     }
 
-    public void setEventTypeName(String eventTypeName) {
-        this.eventTypeName = eventTypeName;
+    public void setEventTypeName(EventType eventType) {
+        this.eventType = eventType;
     }
 
     public int getCapacity() {
@@ -79,20 +83,20 @@ public class EventCreateForm {
         this.freeEntrance = freeEntrance;
     }
 
-    public String getRegionName() {
-        return regionName;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
-    public String getCityName() {
-        return cityName;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getStreetName() {
