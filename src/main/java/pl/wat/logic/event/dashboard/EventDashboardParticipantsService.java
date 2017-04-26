@@ -6,7 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Participant;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.ParticipantRepository;
-import pl.wat.logic.event._model.ParticipantsInfo;
+import pl.wat.logic.event._model.EventDashboardParticipantsInfo;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ public class EventDashboardParticipantsService {
     ParticipantRepository participantRepository;
 
     // Zwrot uczestników wydarzenia
-    public ParticipantsInfo getParticipants(int id) {
+    public EventDashboardParticipantsInfo getParticipants(int id) {
         if(eventRepository.exists(id)) {
             Event event = eventRepository.getOne(id);
             int eventId = event.getIdEvent();
             List<Participant> participants = participantRepository.findAllByEvent(event);
 
-            return new ParticipantsInfo(participants, eventId);
+            return new EventDashboardParticipantsInfo(participants, eventId);
         }
         return null;
     }

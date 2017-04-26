@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * Created by Wojciech on 2017-04-26.
  */
-public class ParticipantsInfo {
+public class EventDashboardParticipantsInfo {
     private int idEvent;
     private List<EventViewPartcipant> partcipants;
 
-    public ParticipantsInfo() {
+    public EventDashboardParticipantsInfo() {
     }
 
-    public ParticipantsInfo(List<Participant> partcipants, int idEvent) {
+    public EventDashboardParticipantsInfo(List<Participant> partcipants, int idEvent) {
         this.partcipants = new LinkedList<>();
         for(Participant participant : partcipants) {
             this.partcipants.add(new EventViewPartcipant(participant));

@@ -15,7 +15,9 @@ import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
-import pl.wat.logic.event._model.ParticipantsInfo;
+import pl.wat.logic.event._model.EventDashboardLecturesInfo;
+import pl.wat.logic.event._model.EventDashboardParticipantsInfo;
+import pl.wat.logic.event.dashboard.EventDashboardLecturesService;
 import pl.wat.logic.event.dashboard.EventDashboardParticipantsService;
 import pl.wat.logic.event.dashboard.EventDashboardInfoService;
 import pl.wat.logic.event.image.EventImageService;
@@ -64,6 +66,9 @@ public class DemoRestController {
     @Autowired
     EventDashboardParticipantsService eventDashboardParticipantsService;
 
+    @Autowired
+    EventDashboardLecturesService eventDashboardLecturesService;
+
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test",method = RequestMethod.GET)
@@ -103,14 +108,14 @@ public class DemoRestController {
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
     @ResponseBody
-    ParticipantsInfo getParticipantInfo(@PathVariable String id){
+    EventDashboardLecturesInfo getParticipantInfo(@PathVariable String id){
         System.out.println("URUCHOMIENIE TESTU");
 //        boolean status1=false;
 //        boolean status2=false;
         int intId = Integer.parseInt(id);
-        ParticipantsInfo participantsInfo = eventDashboardParticipantsService.getParticipants(intId);
+        EventDashboardLecturesInfo eventDashboardLecturesInfo = eventDashboardLecturesService.getEventDashboardLecturesInfo(intId);
 
-        return participantsInfo;
+        return eventDashboardLecturesInfo;
 
 
         //Deklaracja
