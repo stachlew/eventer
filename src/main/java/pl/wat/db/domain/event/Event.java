@@ -70,11 +70,7 @@ public class Event {
     private Blob image;
 
 
-    @Column(length = 50)
-    @NotNull
-    //  @ColumnDefault(value = "UNPUBLISHED")
-    @Enumerated(EnumType.STRING)
-    private EventStatus eventStatus;
+
 
 
     @JoinColumn(name = "id_user")
@@ -86,15 +82,11 @@ public class Event {
     @ManyToOne
     private EventType eventType;
 
-    @NotNull
-    @JoinColumn(name = "id_template")
-    @ManyToOne
-    private Template template;
 
     public Event() {
     }
 
-    public Event(String title, String description, Place place, String startTime, String endTime, String createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, String startTime, String endTime, String createDate, int capacity, int visits, Blob image, User user, EventType eventType) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -104,10 +96,9 @@ public class Event {
         this.capacity = capacity;
         this.visits = visits;
         this.image = image;
-        this.eventStatus = eventStatus;
+
         this.user = user;
         this.eventType = eventType;
-        this.template = template;
     }
 
     public Event(EventBuilder eventBuilder) {
@@ -121,10 +112,8 @@ public class Event {
         this.capacity = eventBuilder.capacity;
         this.visits = eventBuilder.visits;
         this.image = eventBuilder.image;
-        this.eventStatus = eventBuilder.eventStatus;
         this.user = eventBuilder.user;
         this.eventType = eventBuilder.eventType;
-        this.template = eventBuilder.template;
         this.youtubeLink = eventBuilder.youtubeLink;
         this.published = eventBuilder.published;
         this.freeEntrance = eventBuilder.freeEntrance;
@@ -237,13 +226,6 @@ public class Event {
         this.image = image;
     }
 
-    public EventStatus getEventStatus() {
-        return eventStatus;
-    }
-
-    public void setEventStatus(EventStatus eventStatus) {
-        this.eventStatus = eventStatus;
-    }
 
     public User getUser() {
         return user;
@@ -261,13 +243,6 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public Template getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(Template template) {
-        this.template = template;
-    }
 
     public String getCreateDate() {
         return createDate;
@@ -288,7 +263,6 @@ public class Event {
         private int capacity;
         private int visits;
         private Blob image;
-        private EventStatus eventStatus;
         private User user;
         private EventType eventType;
         private Template template;
@@ -347,10 +321,7 @@ public class Event {
             return this;
         }
 
-        public EventBuilder eventStatus(EventStatus eventStatus) {
-            this.eventStatus = eventStatus;
-            return this;
-        }
+
 
         public EventBuilder user(User user) {
             this.user = user;
@@ -409,10 +380,8 @@ public class Event {
                 ", registerEnabled=" + registerEnabled +
                 ", visits=" + visits +
                 ", image=" + image +
-                ", eventStatus=" + eventStatus +
                 ", user=" + user +
                 ", eventType=" + eventType +
-                ", template=" + template +
                 '}';
     }
 }

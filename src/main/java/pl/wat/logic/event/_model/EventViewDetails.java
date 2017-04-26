@@ -13,7 +13,6 @@ public class EventViewDetails {
 
     private int idEvent;
     private String eventTypeName;
-    private String eventStatus;
     private String username;
 
     private String title;
@@ -49,7 +48,6 @@ public class EventViewDetails {
     public EventViewDetails(Event event, List<Lecture> lectures,List<Speaker> speakers){
         this.idEvent=event.getIdEvent();
         this.eventTypeName=event.getEventType().getEventTypeName();
-        this.eventStatus=event.getEventStatus().name();
         this.username=event.getUser().getUsername();
 
         this.title=event.getTitle();
@@ -110,13 +108,6 @@ public class EventViewDetails {
         this.eventTypeName = eventTypeName;
     }
 
-    public String getEventStatus() {
-        return eventStatus;
-    }
-
-    public void setEventStatus(String eventStatus) {
-        this.eventStatus = eventStatus;
-    }
 
     public String getUsername() {
         return username;
