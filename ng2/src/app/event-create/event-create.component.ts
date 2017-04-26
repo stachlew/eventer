@@ -10,7 +10,9 @@ import 'rxjs/Rx' ;
 
 import {AddEventClass} from "./addEventClass";
 import {City, EventType, Region} from "../_model/domainClass";
-import {Route, Router} from "@angular/router";
+import {Route, Router, Data} from "@angular/router";
+import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
+import {findIndex} from "rxjs/operator/findIndex";
 
 @Component({
   selector: 'app-event-create',
@@ -24,12 +26,27 @@ export class EventCreateComponent implements OnInit {
   cities: City[];
   addEventClass: AddEventClass;
 
-  addEventResponse: string = "nie wywolano pobrania odpowiedzi"
+  complexForm: FormGroup;
+  isMapValid: number;
+  isDateValid: number;
 
-  imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
+  dataRozpoczeciaPomoc: Date;
+  dataZakonczeniaPomoc: Date;
 
-  constructor(private http: Http, private myHttp: HttpSecService/*API*/, private router: Router) {
+  constructor(private http: Http, private myHttp: HttpSecService, private router: Router, public fb: FormBuilder) {
+    this.complexForm = fb.group({
+      'title':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)])),
+      'startTime':new FormControl(null, Validators.compose([Validators.required])),
+      'endTime':new FormControl(null, Validators.compose([Validators.required])),
+      'description':new FormControl(null, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(1000)])),
+      'streetName':new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
+      'streetNo':new FormControl(null, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(20)])),
+      'geoLength':new FormControl(null, Validators.compose([Validators.required]))
+    })
+
     this.addEventClass = new AddEventClass();
+    this.isDateValid = -1;
+    this.isMapValid = -1;
   }
 
   ngOnInit() {
@@ -37,7 +54,6 @@ export class EventCreateComponent implements OnInit {
     this.getEventTypes();
   }
 
-  //Wyslanie zadania na serwer i oczekiwanie na zwrot danych dla goscia
   getEventRegions() {
     console.info("Pobieranie regionow");
     this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response)=> this.regions = data.json());
@@ -54,13 +70,28 @@ export class EventCreateComponent implements OnInit {
      this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> this.cities = data.json());
   }
 
-//Wyslanie zadania na serwer i zapisanie zwroconych danych zaleznych od typu uzytkownika
-  postAddEvent(){
-    // postEventDashboardCreate
-    return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
-      .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
-    // .subscribe((data: Response)=> this.demoResponse = data.json()); GDYBY OBIEKT
+  validDates() {
+    if(this.dataZakonczeniaPomoc > this.dataRozpoczeciaPomoc) this.isDateValid = 1;
+    else this.isDateValid = 0;
+  }
 
+  validMap() {
+    if (this.addEventClass.geoLength) this.isMapValid = 1;
+    else this.isMapValid = 0;
+  }
+
+
+  postAddEvent(){
+    console.log("sprawdzenme");
+    this.validDates();
+    this.validMap();
+    if(this.isDateValid==1 && this.isMapValid==1) {
+      this.addEventClass.startTime = this.dataRozpoczeciaPomoc.toString();
+      this.addEventClass.endTime = this.dataZakonczeniaPomoc.toString();
+console.log("walidacja !")
+      // return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
+      //   .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
+    }
   }
 
   /* MAPA */
@@ -79,6 +110,7 @@ export class EventCreateComponent implements OnInit {
       lng: $event.coords.lng,
       draggable: true
     });
+    this.isMapValid = 1;
     this.addEventClass.geoLength=this.markers[0].lng.toString();
     this.addEventClass.geoWidth=this.markers[0].lat.toString();
     console.info("sze/dlu "+$event.coords.lat+" "+$event.coords.lng);
