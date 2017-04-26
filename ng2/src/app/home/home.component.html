@@ -27,20 +27,20 @@ DANE:
 
 <!--<h1>Podglad wydarzeń</h1>-->
 
-<div class="row">
-  <div class="col-lg-3 col-md-3 col-sm-6 myTile" *ngFor="let i of latestEvents">
+<div class="row" class="padding0">
+  <div class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of latestEvents">
     <div class="row">
-      <div class="col-lg-12">
-      OBRAZ
+      <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" id="obrazek" (click)="goToEvent(i.idEvent)">
+        <img [src]="imageUrl" class="img-rounded img-responsive" alt=""/>
+        <div class="napis col-lg-12 col-md-12 col-sm-12" style="width: 94%; margin-top: 11% ">
+          <h3>{{i.title}}</h3>
+          Data utworzenia: {{i.createDate | date}}
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        Podgląd eventu id:{{i.idEvent}}, tytuł: {{i.title}}, data utworzenia: {{i.createDate| date}}
-      </div>
-    </div>
-
   </div>
 </div>
+
+
 
 

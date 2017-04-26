@@ -7,4 +7,5 @@ import pl.wat.db.domain.event.EventType;
  * Created by K on 2017-04-10.
  */
 public interface EventTypeRepository extends JpaRepository<EventType,Integer> {
+    EventType findByEventTypeName(String eventTypeName);
 }

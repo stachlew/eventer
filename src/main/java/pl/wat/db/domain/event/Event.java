@@ -5,10 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
-import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.user.User;
 
@@ -37,13 +35,13 @@ public class Event {
     private Place place;
 
     @NotNull
-    private Timestamp startTime;
+    private String startTime;
 
     @NotNull
-    private Timestamp endTime;
+    private String endTime;
 
     @NotNull
-    private Timestamp createDate;
+    private String createDate;
 
     private int capacity;
 
@@ -96,7 +94,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
+    public Event(String title, String description, Place place, String startTime, String endTime, String createDate, int capacity, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -112,25 +110,28 @@ public class Event {
         this.template = template;
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, String youtubeLink, boolean published, boolean freeEntrance, boolean registerEnabled, int visits, Blob image, EventStatus eventStatus, User user, EventType eventType, Template template) {
-        this.title = title;
-        this.description = description;
-        this.place = place;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.createDate = createDate;
-        this.capacity = capacity;
-        this.youtubeLink = youtubeLink;
-        this.published = published;
-        this.freeEntrance = freeEntrance;
-        this.registerEnabled = registerEnabled;
-        this.visits = visits;
-        this.image = image;
-        this.eventStatus = eventStatus;
-        this.user = user;
-        this.eventType = eventType;
-        this.template = template;
+    public Event(EventBuilder eventBuilder) {
+        this.idEvent = eventBuilder.idEvent;
+        this.title = eventBuilder.title;
+        this.description = eventBuilder.description;
+        this.place = eventBuilder.place;
+        this.startTime = eventBuilder.startTime;
+        this.endTime = eventBuilder.endTime;
+        this.createDate = eventBuilder.createDate;
+        this.capacity = eventBuilder.capacity;
+        this.visits = eventBuilder.visits;
+        this.image = eventBuilder.image;
+        this.eventStatus = eventBuilder.eventStatus;
+        this.user = eventBuilder.user;
+        this.eventType = eventBuilder.eventType;
+        this.template = eventBuilder.template;
+        this.youtubeLink = eventBuilder.youtubeLink;
+        this.published = eventBuilder.published;
+        this.freeEntrance = eventBuilder.freeEntrance;
+        this.registerEnabled = eventBuilder.registerEnabled;
     }
+
+
 
     public String getYoutubeLink() {
         return youtubeLink;
@@ -196,19 +197,19 @@ public class Event {
         this.place = place;
     }
 
-    public Timestamp getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -268,12 +269,150 @@ public class Event {
         this.template = template;
     }
 
-    public Timestamp getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
+    public static class EventBuilder {
+        private int idEvent;
+        private String title;
+        private String description;
+        private Place place;
+        private String startTime;
+        private String endTime;
+        private String createDate;
+        private int capacity;
+        private int visits;
+        private Blob image;
+        private EventStatus eventStatus;
+        private User user;
+        private EventType eventType;
+        private Template template;
+        private String youtubeLink;
+        private boolean published;
+        private boolean freeEntrance;
+        private boolean registerEnabled;
+
+        public EventBuilder id(int idEvent) {
+            this.idEvent = idEvent;
+            return this;
+        }
+
+        public EventBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public EventBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public EventBuilder place(Place place) {
+            this.place = place;
+            return this;
+        }
+
+        public EventBuilder startTime(String startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public EventBuilder endTime(String endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        public EventBuilder createDate(String createDate) {
+            this.createDate = createDate;
+            return this;
+        }
+
+        public EventBuilder capacity(int capacity) {
+            this.capacity = capacity;
+            return this;
+        }
+
+        public EventBuilder visits(int visits) {
+            this.visits = visits;
+            return this;
+        }
+
+        public EventBuilder image(Blob image) {
+            this.image = image;
+            return this;
+        }
+
+        public EventBuilder eventStatus(EventStatus eventStatus) {
+            this.eventStatus = eventStatus;
+            return this;
+        }
+
+        public EventBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public EventBuilder eventType(EventType eventType) {
+            this.eventType = eventType;
+            return this;
+        }
+
+        public EventBuilder template(Template template) {
+            this.template = template;
+            return this;
+        }
+
+        public EventBuilder youtubeLink(String youtubeLink) {
+            this.youtubeLink = youtubeLink;
+            return this;
+        }
+
+        public EventBuilder published(boolean published) {
+            this.published = published;
+            return this;
+        }
+
+        public EventBuilder freeEntrance(boolean freeEntrance) {
+            this.freeEntrance = freeEntrance;
+            return this;
+        }
+
+        public EventBuilder registerEnabled(boolean registerEnabled) {
+            this.registerEnabled = registerEnabled;
+            return this;
+        }
+
+        public Event build() {
+            return new Event(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "idEvent=" + idEvent +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", place=" + place +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                //", createDate='" + createDate + '\'' +
+                ", capacity=" + capacity +
+                ", youtubeLink='" + youtubeLink + '\'' +
+                ", published=" + published +
+                ", freeEntrance=" + freeEntrance +
+                ", registerEnabled=" + registerEnabled +
+                ", visits=" + visits +
+                ", image=" + image +
+                ", eventStatus=" + eventStatus +
+                ", user=" + user +
+                ", eventType=" + eventType +
+                ", template=" + template +
+                '}';
+    }
 }

@@ -54,4 +54,23 @@ public class City {
     public void setRegion(Region region) {
         this.region = region;
     }
+
+    public static class CityBuilder {
+        private String cityName;
+        private Region region;
+
+        public CityBuilder cityName(String cityName) {
+            this.cityName = cityName;
+            return this;
+        }
+
+        public CityBuilder region(Region region) {
+            this.region = region;
+            return this;
+        }
+
+        public City createCity() {
+            return new City(cityName, region);
+        }
+    }
 }

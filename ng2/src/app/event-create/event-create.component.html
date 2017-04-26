@@ -1,12 +1,132 @@
-ZAWARTOSC:
-<ul>
-  <li>Nazwa i data wydarzenia, formularz rejestracyjny, mapa</li>
-</ul>
-DANE:
-<ul>
-  <li>BRAK</li>
-</ul>
-FORMULARZE:
-<ul>
-  <li>Formularz podstawowych danych wydarzenia</li>
-</ul>
+<div class="row glownyDiv">
+  <!-- FORMULARZ USER -->
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <h1>Formularz tworzenia wydarzenia:</h1>
+    <form>
+      <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['title'].valid && complexForm.controls['title'].touched}">
+        <label for="nazwaWydarzenia">Podaj nazwę wydarzenia:</label>
+        <input type="text" class="form-control" id="nazwaWydarzenia" [(ngModel)]="addEventClass.title" name="nazwaWydarzenia" [formControl]="complexForm.controls['title']">
+        <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['title'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <div *ngIf="complexForm.controls['title'].hasError('minlength') && complexForm.controls['title'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+        <div *ngIf="complexForm.controls['title'].hasError('maxlength') && complexForm.controls['title'].touched" class="alert alert-danger">Maksimum 100 znaków.</div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <div *ngIf="isDateValid==0" class="list-group-item list-group-item-danger">
+          Błędna data!
+        </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['startTime'].valid && complexForm.controls['startTime'].touched}">
+        <label for="startTime">Podaj datę i godzinę rozpoczęcia:</label>
+        <input type="datetime-local" class="form-control" id="startTime" [(ngModel)]="dataRozpoczeciaPomoc" name="startTime" [formControl]="complexForm.controls['startTime']">
+        <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['startTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['endTime'].valid && complexForm.controls['endTime'].touched}">
+        <label for="endTime">Podaj datę i godzinę zakończenia:</label>
+        <input type="datetime-local" class="form-control" id="endTime" [(ngModel)]="dataZakonczeniaPomoc" name="endTime" [formControl]="complexForm.controls['endTime']">
+        <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['endTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
+        <label for="regionName">Wybierz region:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.region" name="regionName" id="regionName" (click)="getEventCities(addEventClass.region)">
+          <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm">
+        <label for="cityName">Wybierz miasto:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.city" name="cityName" id="cityName">
+          <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
+        </select>
+      </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingLeftForm">
+        <label for="eventTypeName">Wybierz typ wydarzenia:</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.eventType" name="regionName" id="eventTypeName">
+          <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingCenterForm">
+        <label for="capacity">Liczba uczestników:</label>
+        <input type="number" class="form-control" id="capacity" required [(ngModel)]="addEventClass.capacity" name="capacity">
+      </div>
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingRightForm">
+        <label for="freeEntrance">Czy wstęp wolny?</label>
+        <select class="form-control" required [(ngModel)]="addEventClass.freeEntrance" name="freeEntrance" id="freeEntrance">
+          <option label="Tak">true</option>
+          <option label="Nie">false</option>
+        </select>
+      </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['description'].valid && complexForm.controls['description'].touched}">
+        <label for="endTime">Opisz swoje wydarzenie:</label>
+        <textarea rows="5" class="form-control" id="description" [(ngModel)]="addEventClass.description" name="description" [formControl]="complexForm.controls['description']"></textarea>
+        <div *ngIf="complexForm.controls['description'].hasError('required') && complexForm.controls['description'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <div *ngIf="complexForm.controls['description'].hasError('minlength') && complexForm.controls['description'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+        <div *ngIf="complexForm.controls['description'].hasError('maxlength') && complexForm.controls['description'].touched" class="alert alert-danger">Maksimum 1000 znaków.</div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['streetName'].valid && complexForm.controls['streetName'].touched}">
+        <label for="streetName">Podaj nazwę ulicy:</label>
+        <input type="text" class="form-control" id="streetName" [(ngModel)]="addEventClass.streetName" name="streetName" [formControl]="complexForm.controls['streetName']">
+        <div *ngIf="complexForm.controls['streetName'].hasError('required') && complexForm.controls['streetName'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <div *ngIf="complexForm.controls['streetName'].hasError('minlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+        <div *ngIf="complexForm.controls['streetName'].hasError('maxlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['streetNo'].valid && complexForm.controls['streetNo'].touched}">
+        <label for="streetNo">Podaj numer budynku/lokalu:</label>
+        <input type="text" class="form-control" id="streetNo" [(ngModel)]="addEventClass.streetNo" name="streetNo" [formControl]="complexForm.controls['streetNo']">
+        <div *ngIf="complexForm.controls['streetNo'].hasError('required') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <div *ngIf="complexForm.controls['streetNo'].hasError('minlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Minimum 1 znaki.</div>
+        <div *ngIf="complexForm.controls['streetNo'].hasError('maxlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Maksimum 20 znaków.</div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoLength" [(ngModel)]="addEventClass.geoLength" name="geoLength" >
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoWidth" [(ngModel)]="addEventClass.geoWidth" name="geoWidth">
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+      <button (click)="postAddEvent()" type="" class="btn btn-success btn-block">Utwórz wydarzenie!</button>
+      </div>
+
+    </form>
+  </div>
+
+
+<!-- MAPA -->
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <div *ngIf="isMapValid==0" class="list-group-item list-group-item-danger">
+      Zaznacz punkt na mapie!
+    </div>
+    <sebm-google-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false"
+      (mapClick)="mapClicked($event)" style="width: auto; height: 734px">
+
+      <sebm-google-map-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+
+        <sebm-google-map-info-window>
+          <strong>Miejsce Twojego wydarzenia!</strong>
+        </sebm-google-map-info-window>
+
+      </sebm-google-map-marker>
+
+    </sebm-google-map>
+  </div>
+<!--END: MAPA -->
+</div>

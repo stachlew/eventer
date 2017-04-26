@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { AuthenticationModule } from './_service/authentication/authentication.module';
 import { AppRoutingModule, routingComponents, routingGuards } from './app.routing';
 import { Ng2PageTransitionModule } from 'ng2-page-transition';
+// import { DateTimePickerDirective } from 'ng2-eonasdan-datetimepicker';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent} from './navigation/navigation.component';
@@ -91,6 +92,7 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
     LectureViewComponent,
     SpeakerViewComponent,
     CreateOpinionComponent,
+    // DateTimePickerDirective,
   ],
   imports: [
     BrowserModule,
@@ -112,3 +114,5 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// export class SomeModule { }

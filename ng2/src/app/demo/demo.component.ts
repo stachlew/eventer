@@ -91,7 +91,6 @@ export class DemoComponent implements OnInit {
       // .subscribe((data: Response)=> this.demoResponse = data.json()); GDYBY OBIEKT
   }
 
-
   //wystarczy tyle by uploadowac plik. Nalezy odpowiednio przystroic formularz tak jak to jest na przykladzie
   public uploader:FileUploader = new FileUploader({url:this.myHttp.getUrl() + 'api/postFile',authToken:this.myHttp.getToken()});
 
