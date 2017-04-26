@@ -72,10 +72,6 @@ export class  EventTypeDocument {
   document: Document;
 }
 
-export class  Template {
-  idTemplate: number;
-  templateName: string;
-}
 
 export class  EventViewSpeaker {
   idSpeaker: number;
@@ -106,7 +102,7 @@ export class  EventViewLecture {
 export class EventViewDetails{
   idEvent: number;
   eventTypeName: string;
-  eventStatus: string;
+
   username: string;
 
   title: string;
@@ -157,10 +153,8 @@ export class  Event {
   registerEnabled: boolean;
   visits: number;
   image: Blob;
-  eventStatus: EventStatus;
   user: User;
   eventType: EventType;
-  template: Template;
 }
 
 export class EventViewOpinion {
@@ -263,11 +257,6 @@ export class  Blob {
     }
 
 
-
-
-
-
-    type EventStatus = "DELETED" | "UNPUBLISHED" | "PUBLISHED_AND_AVAILABLE" | "PUBLISHED_AND_NOT_AVAILABLE";
 
     type AuthorityName = "ROLE_USER" | "ROLE_ADMIN";
 

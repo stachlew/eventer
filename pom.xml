@@ -126,8 +126,15 @@
 			<version>4.2.4.RELEASE</version>
 		</dependency>
 
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>4.1.4</version>
+        </dependency>
 
-		<!--Do czeskiej maszyny generujacej type-script z klas javy-->
+
+
+        <!--Do czeskiej maszyny generujacej type-script z klas javy-->
         <!--<dependency>-->
             <!--<groupId>com.fasterxml.jackson.jaxrs</groupId>-->
             <!--<artifactId>jackson-jaxrs-json-provider</artifactId>-->
@@ -148,6 +155,32 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>2.2.4</version>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<processors>
+								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+							</processors>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-jpamodelgen</artifactId>
+						<version>4.3.8.Final</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 
 			<!--<plugin>-->
 				<!--<groupId>cz.habarta.typescript-generator</groupId>-->

@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 //[DEMO][DEMO][DEMO]
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
+
     List<Customer> findByEmail(String email);
 
     @Query("select c from Customer c where c.email = :email")
