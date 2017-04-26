@@ -18,6 +18,7 @@ import { UnauthorizedComponent } from './_component/unauthorized/unauthorized.co
 import { DemoComponent } from './demo/demo.component';
 import { LoginComponent } from './login/login.component';
 import { HttpSecService } from "./_service/util/http-sec.service";
+import { CustomDateService } from "./_service/util/custom-date.service";
 import { FooterComponent } from './footer/footer.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AccountComponent } from './account/account.component';
@@ -109,7 +110,8 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
   providers: [
     AuthenticationService,
     HttpSecService,
-    routingGuards
+    routingGuards,
+    CustomDateService
   ],
   bootstrap: [AppComponent]
 })

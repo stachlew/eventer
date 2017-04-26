@@ -46,15 +46,15 @@ public class EventRegisterService {
             try {
                 savedParticipant=participantRepository.save(participant);
                 if(savedParticipant!=null){
-                    //WYSYLANIE MEJLA PO REJESTRACJI NA WYDARZENIE
-
+//WYSYLANIE MEJLA PO REJESTRACJI NA WYDARZENIE
+/*
                     sendEventRegistrationMail(participantForm.getEmail(),"Rejestracja na wydarzenie: "+event.getTitle(),
                             "Dokonano rejestracji na wydarzenie "
                             + event.getTitle()
                             + "\nTwój identyfikator gościa: \n"
                             + savedParticipant.getIdParticipant()
                             + "\nPozdrawiamy, \n Zespół EVenter");
-
+*/
                 }
             } catch (Exception e) {
                 return false;

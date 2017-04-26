@@ -1,9 +1,10 @@
+import {Timestamp} from "../_model/domainClass";
 export class AddEventClass {
 
   title: string;
   description: string;
-  startTime: string;
-  endTime: string;
+  startTime: Timestamp;
+  endTime: Timestamp;
   eventType: string;
   capacity: number;
   freeEntrance: boolean;

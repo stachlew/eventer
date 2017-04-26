@@ -134,7 +134,7 @@ public class Place {
         }
 
         public Place build() {
-            return new Place(streetName, streetNo, city);
+            return new Place(streetName, streetNo, geoLength, geoWidth, city);
         }
     }
 }

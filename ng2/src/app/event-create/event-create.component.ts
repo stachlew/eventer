@@ -8,9 +8,10 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx' ;
 
 import {AddEventClass} from "./addEventClass";
-import {City, EventType, Region} from "../_model/domainClass";
+import {City, EventType, Region, Timestamp} from "../_model/domainClass";
 import {Route, Router, Data} from "@angular/router";
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
+import {CustomDateService} from "../_service/util/custom-date.service";
 
 @Component({
   selector: 'app-event-create',
@@ -31,7 +32,7 @@ export class EventCreateComponent implements OnInit {
   dataRozpoczeciaPomoc: Date;
   dataZakonczeniaPomoc: Date;
 
-  constructor(private http: Http, private myHttp: HttpSecService, private router: Router, public fb: FormBuilder) {
+  constructor(private http: Http, private myHttp: HttpSecService, private router: Router, public fb: FormBuilder, public dateService: CustomDateService) {
     this.complexForm = fb.group({
       'title':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(100)])),
       'startTime':new FormControl(null, Validators.compose([Validators.required])),
@@ -77,20 +78,27 @@ export class EventCreateComponent implements OnInit {
 
   validMap() {
     if (this.addEventClass.geoLength != null) {
-    if (this.addEventClass.geoLength) this.isMapValid = 1;
-    else this.isMapValid = 0;
-  } else { this.isMapValid=0; }
+      if (this.addEventClass.geoLength)
+        this.isMapValid = 1;
+      else
+        this.isMapValid = 0;
+    }
+    else {
+      this.isMapValid=0;
+    }
   }
 
 
+
   postAddEvent(){
-    console.log("sprawdzenme");
+    console.log("postAddEvent()");
+
     this.validDates();
     this.validMap();
     if(this.isDateValid==1 && this.isMapValid==1) {
-      this.addEventClass.startTime = this.dataRozpoczeciaPomoc.toString();
-      this.addEventClass.endTime = this.dataZakonczeniaPomoc.toString();
-      return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
+      this.addEventClass.startTime = this.dateService.convDatePickerToTimestamp(this.dataRozpoczeciaPomoc);
+      this.addEventClass.endTime = this.dateService.convDatePickerToTimestamp(this.dataZakonczeniaPomoc);
+      return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create/postCreateEvent',this.addEventClass,this.myHttp.postConfig())
         .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
     }
   }
@@ -112,9 +120,10 @@ export class EventCreateComponent implements OnInit {
       draggable: true
     });
     this.isMapValid = 1;
-    this.addEventClass.geoLength=this.markers[0].lng.toString();
-    this.addEventClass.geoWidth=this.markers[0].lat.toString();
+    this.addEventClass.geoLength=this.markers[0].lng.toString().substring(0,11);
+    this.addEventClass.geoWidth=this.markers[0].lat.toString().substring(0,11);
     console.info("sze/dlu "+$event.coords.lat+" "+$event.coords.lng);
+    console.info("sze/dlu "+this.addEventClass.geoWidth+" "+this.addEventClass.geoLength);
   }
 
   markerDragEnd(m: marker, $event: any) {

@@ -124,9 +124,7 @@ public class EventCreateForm {
         this.streetNo = streetNo;
     }
 
-    public String getGeoLength() {
-        return geoLength;
-    }
+    public String getGeoLength() { return geoLength; }
 
     public void setGeoLength(String geoLength) {
         this.geoLength = geoLength;
