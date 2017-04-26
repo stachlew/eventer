@@ -15,15 +15,16 @@
         <div *ngIf="isDateValid==0" class="list-group-item list-group-item-danger">
           Błędna data!
         </div>
+        <div *ngIf="isDateValid==0" class="alert alert-danger">Data zakończenia znajduje się przed datą rozpoczęcia!</div>
       <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['startTime'].valid && complexForm.controls['startTime'].touched}">
         <label for="startTime">Podaj datę i godzinę rozpoczęcia:</label>
-        <input type="datetime-local" class="form-control" id="startTime" [(ngModel)]="dataRozpoczeciaPomoc" name="startTime" [formControl]="complexForm.controls['startTime']">
-        <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['startTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <input type="datetime-local" class="form-control" id="startTime" [(ngModel)]="dataRozpoczeciaPomoc" name="startTime" [formControl]="complexForm.controls['startTime']" (change)="validDates()">
+        <div *ngIf="complexForm.controls['startTime'].hasError('required') && complexForm.controls['startTime'].touched && isDateValid==0" class="alert alert-danger">Pole obowiązkowe.</div>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['endTime'].valid && complexForm.controls['endTime'].touched}">
         <label for="endTime">Podaj datę i godzinę zakończenia:</label>
-        <input type="datetime-local" class="form-control" id="endTime" [(ngModel)]="dataZakonczeniaPomoc" name="endTime" [formControl]="complexForm.controls['endTime']">
-        <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['endTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+        <input type="datetime-local" class="form-control" id="endTime" [(ngModel)]="dataZakonczeniaPomoc" name="endTime" [formControl]="complexForm.controls['endTime']" (change)="validDates()">
+        <div *ngIf="complexForm.controls['endTime'].hasError('required') && complexForm.controls['endTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
         <label for="regionName">Wybierz region:</label>
@@ -100,7 +101,7 @@
 
 <!-- MAPA -->
   <div class="col-sm-6 col-md-6 col-lg-6">
-    <div *ngIf="isMapValid==0" class="list-group-item list-group-item-danger">
+    <div *ngIf="isMapValid==0" class="list-group-item list-group-item-danger" (change)="validMap()">
       Zaznacz punkt na mapie!
     </div>
     <sebm-google-map

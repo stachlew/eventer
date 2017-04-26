@@ -2,17 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {Http, Response, Headers, ResponseContentType, RequestOptions} from '@angular/http';
 import {HttpSecService} from "../_service/util/http-sec.service";
 
-import {Observable} from "rxjs";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise'; //bez tego co jakis czas nie dziala http.post powodujac przeladowanie strony
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx' ;
 
 import {AddEventClass} from "./addEventClass";
 import {City, EventType, Region} from "../_model/domainClass";
 import {Route, Router, Data} from "@angular/router";
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
-import {findIndex} from "rxjs/operator/findIndex";
 
 @Component({
   selector: 'app-event-create',
@@ -71,13 +69,17 @@ export class EventCreateComponent implements OnInit {
   }
 
   validDates() {
-    if(this.dataZakonczeniaPomoc > this.dataRozpoczeciaPomoc) this.isDateValid = 1;
-    else this.isDateValid = 0;
+    if((this.dataZakonczeniaPomoc!=null) && (this.dataRozpoczeciaPomoc!=null)) {
+      if (this.dataZakonczeniaPomoc > this.dataRozpoczeciaPomoc) this.isDateValid = 1;
+      else this.isDateValid = 0;
+    } else { this.isDateValid = 0; }
   }
 
   validMap() {
+    if (this.addEventClass.geoLength != null) {
     if (this.addEventClass.geoLength) this.isMapValid = 1;
     else this.isMapValid = 0;
+  } else { this.isMapValid=0; }
   }
 
 
@@ -88,7 +90,6 @@ export class EventCreateComponent implements OnInit {
     if(this.isDateValid==1 && this.isMapValid==1) {
       this.addEventClass.startTime = this.dataRozpoczeciaPomoc.toString();
       this.addEventClass.endTime = this.dataZakonczeniaPomoc.toString();
-console.log("walidacja !")
       return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
         .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
     }
