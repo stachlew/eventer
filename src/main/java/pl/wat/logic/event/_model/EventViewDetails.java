@@ -34,9 +34,9 @@ public class EventViewDetails {
     private int capacity;
     private int visits;
 
-    private String startTime;
-    private String endTime;
-    private String createDate;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private Timestamp createDate;
 
     private List<EventViewLecture> lectures;
 
@@ -229,27 +229,27 @@ public class EventViewDetails {
         this.visits = visits;
     }
 
-    public String getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
-    public String getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 

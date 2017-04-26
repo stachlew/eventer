@@ -10,7 +10,7 @@ public class EventHeader {
     private int idEvent;
     private String title;
     private String description;
-    private String createDate;
+    private Timestamp createDate;
 
     public EventHeader(Event event) {
         this.idEvent=event.getIdEvent();
@@ -43,11 +43,11 @@ public class EventHeader {
         this.description = description;
     }
 
-    public String getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 }

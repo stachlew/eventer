@@ -9,6 +9,7 @@ import pl.wat.db.repository.user.UserRepository;
 import pl.wat.logic.event._model.EventCreateForm;
 import pl.wat.logic.event.create.EventCreateService;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,9 +29,9 @@ public class EventDashboardCreateCtrl {
                 .title(ev.getTitle())
                 .description(ev.getDescription())
                 .eventType(ev.getEventType())
-                .startTime(ev.getStartTime().replace("T", " "))
-                .endTime(ev.getEndTime().replace("T", " "))
-                .createDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()))
+                .startTime(ev.getStartTime())
+                .endTime(ev.getEndTime())
+                .createDate(new Timestamp(System.currentTimeMillis()))
                 .capacity(ev.getCapacity())
                 .freeEntrance(ev.isFreeEntrance())
                 .visits(0)

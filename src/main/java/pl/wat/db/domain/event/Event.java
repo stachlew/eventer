@@ -35,13 +35,13 @@ public class Event {
     private Place place;
 
     @NotNull
-    private String startTime;
+    private Timestamp startTime;
 
     @NotNull
-    private String endTime;
+    private Timestamp endTime;
 
     @NotNull
-    private String createDate;
+    private Timestamp createDate;
 
     private int capacity;
 
@@ -86,7 +86,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, String startTime, String endTime, String createDate, int capacity, int visits, Blob image, User user, EventType eventType) {
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, Blob image, User user, EventType eventType) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -186,19 +186,19 @@ public class Event {
         this.place = place;
     }
 
-    public String getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(String Timestamp) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -226,7 +226,6 @@ public class Event {
         this.image = image;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -244,11 +243,11 @@ public class Event {
     }
 
 
-    public String getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 
@@ -257,15 +256,14 @@ public class Event {
         private String title;
         private String description;
         private Place place;
-        private String startTime;
-        private String endTime;
-        private String createDate;
+        private Timestamp startTime;
+        private Timestamp endTime;
+        private Timestamp createDate;
         private int capacity;
         private int visits;
         private Blob image;
         private User user;
         private EventType eventType;
-        private Template template;
         private String youtubeLink;
         private boolean published;
         private boolean freeEntrance;
@@ -291,17 +289,17 @@ public class Event {
             return this;
         }
 
-        public EventBuilder startTime(String startTime) {
+        public EventBuilder startTime(Timestamp startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public EventBuilder endTime(String endTime) {
+        public EventBuilder endTime(Timestamp endTime) {
             this.endTime = endTime;
             return this;
         }
 
-        public EventBuilder createDate(String createDate) {
+        public EventBuilder createDate(Timestamp createDate) {
             this.createDate = createDate;
             return this;
         }
@@ -333,10 +331,6 @@ public class Event {
             return this;
         }
 
-        public EventBuilder template(Template template) {
-            this.template = template;
-            return this;
-        }
 
         public EventBuilder youtubeLink(String youtubeLink) {
             this.youtubeLink = youtubeLink;
