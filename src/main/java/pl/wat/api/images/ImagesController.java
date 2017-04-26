@@ -2,6 +2,8 @@ package pl.wat.api.images;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,20 +31,18 @@ public class ImagesController {
             intId = Integer.parseInt(id);
         }catch (NumberFormatException e){
         }
-        //default
-        Path path = FileSystems.getDefault().getPath("","D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\images\\stock.jpg");
 
         try{
             byte [] dbImage = null;
             dbImage = eventImageService.findImageByIdEvent(intId);
             if(dbImage==null){ // brak obrazka = stockowy obrazek z dysku
-                dbImage = Files.readAllBytes(path);
+                dbImage = StreamUtils.copyToByteArray(new ClassPathResource("images/stock.jpg").getInputStream());
             }
             resp.setContentType("image/jpeg");
             resp.getOutputStream().write(dbImage);
         }
         catch (IOException ioe){
-            System.out.println("IOException");
+            System.out.println("IOException Event Image");
         }
     }
 
@@ -55,20 +55,18 @@ public class ImagesController {
             intId = Integer.parseInt(id);
         }catch (NumberFormatException e){
         }
-        //default
-        Path path = FileSystems.getDefault().getPath("","D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\images\\defaultProfile.png");
 
         try{
             byte [] dbImage = null;
             dbImage = eventImageService.findImageByIdSpeaker(intId);
             if(dbImage==null){ // brak obrazka = stockowy obrazek z dysku
-                dbImage = Files.readAllBytes(path);
+                dbImage = StreamUtils.copyToByteArray(new ClassPathResource("images/defaultProfile.jpg").getInputStream());
             }
             resp.setContentType("image/jpeg");
             resp.getOutputStream().write(dbImage);
         }
         catch (IOException ioe){
-            System.out.println("IOException");
+            System.out.println("IOException Speaker Image");
         }
     }
 

@@ -31,7 +31,7 @@ DANE:
   <div class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of latestEvents">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" id="obrazek" (click)="goToEvent(i.idEvent)">
-        <img [src]="imageUrl" class="img-rounded img-responsive" alt=""/>
+        <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive" alt=""/>
         <div class="napis col-lg-12 col-md-12 col-sm-12" style="width: 94%; margin-top: 11% ">
           <h3>{{i.title}}</h3>
           Data utworzenia: {{i.createDate |  date }}

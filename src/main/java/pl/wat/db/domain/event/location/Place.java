@@ -124,12 +124,14 @@ public class Place {
         }
 
         public PlaceBuilder geoLength(String geoLength) {
-            this.geoLength = geoLength;
+            String dotSepStr = geoLength.replace(",",".");
+            this.geoLength = dotSepStr;
             return this;
         }
 
         public PlaceBuilder geoWidth(String geoWidth) {
-            this.geoWidth = geoWidth;
+            String dotSepStr = geoWidth.replace(",",".");
+            this.geoWidth = dotSepStr;
             return this;
         }
 

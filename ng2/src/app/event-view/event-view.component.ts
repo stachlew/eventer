@@ -83,20 +83,19 @@ export class EventViewComponent implements OnInit, OnDestroy {
   }
 
   public updateOpinionsList(){
-    console.info("METODA RODZICA "+this.event.idEvent);
     this.http.get(this.myHttp.getUrl() + '/api/event/view/opinion/getOpinions/'+this.id).subscribe((data: Response)=> {this.opinions = data.json();this.updateOpinionsFlag()});
   }
 
   updateSiteData(){
-    if(this.event.youtubeLink.length>0){
+    if(this.event.youtubeLink!=null && this.event.youtubeLink.length>0){
       this.isLiveYT=true;
       this.videoUrl=this.event.youtubeLink;
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.ytUrl+this.videoUrl); //iFrame
     }
-    if(this.event.lectures.length>0){
+    if(this.event.lectures!=null && this.event.lectures.length>0){
       this.isLectures=true;
     }
-    if(this.event.speakers.length>0){
+    if(this.event.speakers!=null && this.event.speakers.length>0){
       this.isSpeakers=true;
     }
   }

@@ -28,7 +28,7 @@ export class DemoComponent implements OnInit {
 
   demoResponse: string = "nie wywolano pobrania odpowiedzi"
 
-  imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
+  imageUrl: string = this.myHttp.getUrl()+ "/api/images/getEventImage/1";
 
   constructor(private http: Http, private myHttp: HttpSecService/*API*/, sanitizer: DomSanitizer/*iFRAME*/) {
     this.demoClass = new DemoClass();

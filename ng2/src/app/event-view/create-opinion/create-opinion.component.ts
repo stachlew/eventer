@@ -40,7 +40,6 @@ export class CreateOpinionComponent {
 
   public show(idEvent:number): void {
     this.idEvent=idEvent;
-    console.info("first: "+ this.firstLoad + " loadin: "+ this.loading + " success: "+ this.successAdd );
     this.opinion= new EventViewOpinionForm;
     this.visible = true;
     this.firstLoad = true;
@@ -62,7 +61,7 @@ export class CreateOpinionComponent {
     this.opinion.email = form.email;
     this.opinion.content = form.myContent;
     this.opinion.idEvent=this.idEvent;
-    console.info("ZAPISUJE: "+ this.opinion.idEvent + " "+ this.opinion.email + " " + this.opinion.content);
+    console.info("POST OPINION: "+ this.opinion.idEvent + " "+ this.opinion.email + " " + this.opinion.content);
 
 
     this.http.post(this.myHttp.getUrl()+'/api/event/view/opinion/postNewOpinion',this.opinion,this.myHttp.postConfig())

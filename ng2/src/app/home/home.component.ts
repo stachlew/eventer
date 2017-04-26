@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
 
   latestEvents : EventHeader[];
-  imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
+  imageUrl: string = this.myHttp.getUrl()+ "/api/images/getEventImage/";
 
   constructor(private http: Http, private myHttp: HttpSecService, private router: Router) {
 
