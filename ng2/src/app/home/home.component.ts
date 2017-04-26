@@ -11,6 +11,7 @@ import {HttpSecService} from "../_service/util/http-sec.service";
 export class HomeComponent implements OnInit {
 
   latestEvents : EventHeader[];
+  imageUrl: string = this.myHttp.getUrl()+ "/api/getImage";
 
   constructor(private http: Http, private myHttp: HttpSecService) {
 

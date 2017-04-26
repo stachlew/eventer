@@ -22,6 +22,21 @@
 
 /*KAFLE*/
 .myTile {
-  background-color: #2d6987;
-  padding: 3px;
+
+  border-color: #e15221;
+  border-radius: 5px;
+}
+
+.padding15{
+  padding: 15px;
+}
+
+.tekstObrazka {
+  text-align: center;
+  margin: 10px;
+  position: absolute;
+  color: white;
+  letter-spacing: -1px;
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.7);
 }
