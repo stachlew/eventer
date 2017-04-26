@@ -18,11 +18,12 @@
 }
 
 .napis {
+  margin: 0px;
+  padding: 0px;
   color: transparent;
   text-align: center;
-  margin: 10px;
   position: absolute;
-  top: 20px;
+  top: 25px;
   -webkit-transition: all 1s ease;
 }
 
