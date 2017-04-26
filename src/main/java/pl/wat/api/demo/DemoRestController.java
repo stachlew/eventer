@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
-import pl.wat.db.domain.event.Participant;
-import pl.wat.db.domain.event.lecture.Speaker;
-import pl.wat.db.domain.user.User;
 import pl.wat.db.repository.event.EventRepository;
-import pl.wat.db.repository.event.ParticipantRepository;
-import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
-import pl.wat.logic.event._model.ParticipantForm;
+import pl.wat.logic.event._model.ParticipantsInfo;
+import pl.wat.logic.event.dashboard.EventDashboardParticipantsService;
+import pl.wat.logic.event.dashboard.EventDashboardInfoService;
 import pl.wat.logic.event.image.EventImageService;
 import pl.wat.logic.event.view.EventRegisterService;
 import pl.wat.logic.user._model.SecurityInfo;
@@ -32,8 +29,6 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.SQLException;
-import java.util.List;
 
 //KONTROLER DEMO typu Ctrl+c, Ctrl+v dla dalszych metod kontrolerow w projekcie
 @RestController
@@ -63,6 +58,12 @@ public class DemoRestController {
     @Autowired
     EventRegisterService eventRegisterService;
 
+    @Autowired
+    EventDashboardInfoService eventDashboardInfoService;
+
+    @Autowired
+    EventDashboardParticipantsService eventDashboardParticipantsService;
+
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test",method = RequestMethod.GET)
@@ -70,6 +71,9 @@ public class DemoRestController {
         System.out.println("URUCHOMIENIE TESTU");
         boolean status1=false;
         boolean status2=false;
+
+
+
         //Deklaracja
         //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
 
@@ -94,6 +98,45 @@ public class DemoRestController {
             return "OK!";
         else
             return "FAIL";
+    }
+
+    //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
+    @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    ParticipantsInfo getParticipantInfo(@PathVariable String id){
+        System.out.println("URUCHOMIENIE TESTU");
+//        boolean status1=false;
+//        boolean status2=false;
+        int intId = Integer.parseInt(id);
+        ParticipantsInfo participantsInfo = eventDashboardParticipantsService.getParticipants(intId);
+
+        return participantsInfo;
+
+
+        //Deklaracja
+        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+
+//        for (Integer s: distinctSpeakersByIdEvent
+//             ) {
+//            System.out.println(s);
+//
+//        }
+//        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
+//        eventRegisterService.registeredParticipant(participantForm);
+
+
+        //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
+        //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
+
+        //Wykonywanie
+        // status1 = userRegisterService.createUser(newUser);
+        //status2 = userAccountService.deleteUser("user");
+
+        //Zwrot wyniku
+//        if(status1 && status2)
+//            return "OK!";
+//        else
+//            return "FAIL";
     }
 
     //Przyklad pobierania dokumentu
@@ -211,7 +254,7 @@ public class DemoRestController {
     //Odczyt obrazka z bazy
     @RequestMapping(value = "/getImage",method = RequestMethod.GET)
     public void findImage(HttpServletResponse resp){
-        Path path = FileSystems.getDefault().getPath("","D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\images\\stock.jpg");
+        Path path = FileSystems.getDefault().getPath("","C:\\Users\\Wojciech\\IdeaProjects\\eventer\\src\\main\\resources\\images\\stock.jpg");
 
         try{
             byte [] dbImage = null;

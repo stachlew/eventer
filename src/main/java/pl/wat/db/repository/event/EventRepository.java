@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface EventRepository extends JpaRepository<Event,Integer> {
 
-    @Query(value = "select * from (select * from eve_events order by create_date desc) where rownum < :limit",
+    @Query(value = "select * from (select * from eve_events order by create_date desc) where rownum <= :limit",
             nativeQuery = true)
     List<Event> findTopNOfLatestEvents(@Param("limit") int limit);
 
