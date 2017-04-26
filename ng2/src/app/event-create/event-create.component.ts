@@ -89,8 +89,8 @@ export class EventCreateComponent implements OnInit {
       this.addEventClass.startTime = this.dataRozpoczeciaPomoc.toString();
       this.addEventClass.endTime = this.dataZakonczeniaPomoc.toString();
 console.log("walidacja !")
-      // return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
-      //   .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
+      return this.http.post(this.myHttp.getUrl()+'/api/event/dashboard/create',this.addEventClass,this.myHttp.postConfig())
+        .subscribe((data: Response)=> this.router.navigate(['/event/view/'+data.text()]));
     }
   }
 
