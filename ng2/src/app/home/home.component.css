@@ -1,4 +1,5 @@
 .image {
+  text-align: center;
   position: relative;
   width: 100%; /* for IE 6 */
   margin-top: -30px;
