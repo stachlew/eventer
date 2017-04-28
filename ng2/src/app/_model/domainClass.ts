@@ -4,6 +4,11 @@
 export class  Timestamp extends Date {
 }
 
+export class SimpleUser{
+  idUser:number;
+  username:string;
+}
+
 export class  Customer {
   id: number;
   name: string;
