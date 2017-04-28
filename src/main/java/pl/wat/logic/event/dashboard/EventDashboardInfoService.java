@@ -22,10 +22,8 @@ public class EventDashboardInfoService {
             Event event = eventRepository.getOne(id);
             Place place = event.getPlace();
             EventType eventType = event.getEventType();
-            City city = place.getCity();
-            Region region = city.getRegion();
 
-            return new EventDashboardInfo(event, place, eventType, city, region);
+            return new EventDashboardInfo(event, place, eventType);
         }
         return null;
     }

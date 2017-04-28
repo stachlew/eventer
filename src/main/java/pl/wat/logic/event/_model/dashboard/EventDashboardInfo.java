@@ -25,24 +25,15 @@ public class EventDashboardInfo {
     private String youtubeLink;
 
     // Place
-    private String geoLenght;
-    private String geoWidth;
-    private String streetName;
-    private String streetNo;
+    private Place place;
 
     // EventType
-    private String eventType;
-
-    // City
-    private String cityName;
-
-    // Region
-    private String regionName;
+    private EventType eventType;
 
     public EventDashboardInfo() {
     }
 
-    public EventDashboardInfo(Event event, Place place, EventType eventType, City city, Region region) {
+    public EventDashboardInfo(Event event, Place place, EventType eventType) {
         this.idEvent = event.getIdEvent();
         this.capacity = event.getCapacity();
         this.description = event.getDescription();
@@ -55,16 +46,8 @@ public class EventDashboardInfo {
         this.visits = event.getVisits();
         this.youtubeLink = event.getYoutubeLink();
 
-        this.geoLenght = place.getGeoLength();
-        this.geoWidth = place.getGeoWidth();
-        this.streetName = place.getStreetName();
-        this.streetNo = place.getStreetNo();
-
-        this.eventType = eventType.getEventTypeName();
-
-        this.cityName = city.getCityName();
-
-        this.regionName = region.getRegionName();
+        this.place = place;
+        this.eventType = eventType;
     }
 
     public int getIdEvent() {
@@ -155,59 +138,19 @@ public class EventDashboardInfo {
         this.youtubeLink = youtubeLink;
     }
 
-    public String getGeoLenght() {
-        return geoLenght;
+    public Place getPlace() {
+        return place;
     }
 
-    public void setGeoLenght(String geoLenght) {
-        this.geoLenght = geoLenght;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
-    public String getGeoWidth() {
-        return geoWidth;
-    }
-
-    public void setGeoWidth(String geoWidth) {
-        this.geoWidth = geoWidth;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public String getStreetNo() {
-        return streetNo;
-    }
-
-    public void setStreetNo(String streetNo) {
-        this.streetNo = streetNo;
-    }
-
-    public String getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
-    public void setEventType(String eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getRegionName() {
-        return regionName;
-    }
-
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
     }
 }
