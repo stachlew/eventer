@@ -200,6 +200,10 @@ public class Event {
         this.startTime = startTime;
     }
 
+    public void setStartTime(Timestamp timestamp) {
+        this.startTime = timestamp;
+    }
+
     public Timestamp getEndTime() {
         return endTime;
     }

@@ -24,7 +24,6 @@ public class EventDashboardLecturesService {
         if(eventRepository.exists(id)) {
             List<EventViewLecture> eventLectures = new LinkedList<>();
             Event event = eventRepository.getOne(id);
-            int eventId = event.getIdEvent();
             List<Lecture> lectures = lectureRepository.findAllByEvent(event);
             for(Lecture lecture : lectures) {
                 eventLectures.add(new EventViewLecture(lecture));
