@@ -12,4 +12,8 @@ import java.util.List;
 public interface ParticipantRepository extends JpaRepository<Participant,Integer> {
 
         public List<Participant> findAllByEvent(Event event);
+
+        public Integer countByEvent(Event event);
+
+        public Integer countByEventAndPresenceIsTrue(Event event);
 }

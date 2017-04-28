@@ -16,4 +16,5 @@ public interface SpeakerRepository extends JpaRepository<Speaker,Integer> {
 
     @Query ("select distinct s.idSpeaker from Event e,Lecture l, Speaker s where e.idEvent=l.event.idEvent and l.speaker.idSpeaker=s.idSpeaker and e.idEvent=(:idEvent)")
     public List<Integer> getDistinctIdSpeakersByIdEvent(@Param("idEvent")int idEvent);
+
 }
