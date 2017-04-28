@@ -33,4 +33,48 @@ public class EventDashboardLecturesService {
         }
         return null;
     }
+
+    public boolean editLecture(EventViewLecture eventLecture) {
+        Lecture lecture = lectureRepository.findOne(eventLecture.getIdLecture());
+
+        lecture.setDescription(lecture.getDescription());
+        lecture.setStartTime(lecture.getStartTime());
+        lecture.setEndTime(lecture.getEndTime());
+        lecture.setLectureName(lecture.getLectureName());
+        lecture.setSpeaker(lecture.getSpeaker());
+
+        try {
+            lectureRepository.save(lecture);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean addLecture(EventViewLecture eventLecture) {
+        Lecture lecture = new Lecture();
+
+        lecture.setDescription(lecture.getDescription());
+        lecture.setStartTime(lecture.getStartTime());
+        lecture.setEndTime(lecture.getEndTime());
+        lecture.setLectureName(lecture.getLectureName());
+        lecture.setSpeaker(lecture.getSpeaker());
+        lecture.setEvent(lecture.getEvent());
+
+        try {
+            lectureRepository.save(lecture);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteLecture(EventViewLecture eventLecture) {
+        try {
+            lectureRepository.delete(eventLecture.getIdLecture());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

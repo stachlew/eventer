@@ -6,6 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Participant;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.ParticipantRepository;
+import pl.wat.logic.event._model.dashboard.EventDashboardAttendForm;
 import pl.wat.logic.event._model.view.EventViewPartcipant;
 
 import java.util.LinkedList;
@@ -33,5 +34,17 @@ public class EventDashboardParticipantsService {
             return eventParticipants;
         }
         return null;
+    }
+
+    public boolean editParticipantPresence(EventDashboardAttendForm attendForm) {
+        Participant participant = participantRepository.findOne(attendForm.getIdParticipant());
+        participant.setPresence(attendForm.isPresent());
+
+        try {
+            participantRepository.save(participant);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
