@@ -15,10 +15,11 @@ import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
-import pl.wat.logic.event._model.dashboard.EventDashboardLecturesInfo;
-import pl.wat.logic.event.dashboard.EventDashboardLecturesService;
-import pl.wat.logic.event.dashboard.EventDashboardParticipantsService;
-import pl.wat.logic.event.dashboard.EventDashboardInfoService;
+import pl.wat.logic.event._model.dashboard.EventDashboardInfo;
+import pl.wat.logic.event._model.dashboard.EventDashboardStatisticsInfo;
+import pl.wat.logic.event._model.view.EventViewLecture;
+import pl.wat.logic.event._model.view.EventViewPartcipant;
+import pl.wat.logic.event.dashboard.*;
 import pl.wat.logic.event.image.EventImageService;
 import pl.wat.logic.event.view.EventRegisterService;
 import pl.wat.logic.user._model.SecurityInfo;
@@ -30,6 +31,7 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 //KONTROLER DEMO typu Ctrl+c, Ctrl+v dla dalszych metod kontrolerow w projekcie
 @RestController
@@ -67,6 +69,12 @@ public class DemoRestController {
 
     @Autowired
     EventDashboardLecturesService eventDashboardLecturesService;
+
+    @Autowired
+    EventDashboardSpeakersService eventDashboardSpeakersService;
+
+    @Autowired
+    EventDashboardStatisticsService eventDashboardStatisticsService;
 
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
@@ -107,40 +115,11 @@ public class DemoRestController {
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
     @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
     @ResponseBody
-    EventDashboardLecturesInfo getParticipantInfo(@PathVariable String id){
+    public List<EventViewPartcipant> getLectures(@PathVariable String id){
         System.out.println("URUCHOMIENIE TESTU");
-//        boolean status1=false;
-//        boolean status2=false;
         int intId = Integer.parseInt(id);
-        EventDashboardLecturesInfo eventDashboardLecturesInfo = eventDashboardLecturesService.getEventDashboardLecturesInfo(intId);
 
-        return eventDashboardLecturesInfo;
-
-
-        //Deklaracja
-        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
-
-//        for (Integer s: distinctSpeakersByIdEvent
-//             ) {
-//            System.out.println(s);
-//
-//        }
-//        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
-//        eventRegisterService.registeredParticipant(participantForm);
-
-
-        //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
-        //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
-
-        //Wykonywanie
-        // status1 = userRegisterService.createUser(newUser);
-        //status2 = userAccountService.deleteUser("user");
-
-        //Zwrot wyniku
-//        if(status1 && status2)
-//            return "OK!";
-//        else
-//            return "FAIL";
+        return eventDashboardParticipantsService.getParticipants(intId);
     }
 
     //Przyklad pobierania dokumentu
