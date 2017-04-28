@@ -2,12 +2,16 @@ package pl.wat.logic.event.search;
 
 
 import com.querydsl.core.types.*;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.Template;
+import com.querydsl.core.types.dsl.*;
+import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.core.EntityMetadata;
 import org.springframework.stereotype.Controller;
-import pl.wat.db.domain.event.QEvent;
+import org.springframework.stereotype.Service;
+import pl.wat.db.domain.event.*;
+import pl.wat.db.repository.event.EventSearchRepository;
 import pl.wat.logic.event._model.EventSearchForm;
 
 import javax.annotation.Nullable;
@@ -15,14 +19,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.text.StyledEditorKit;
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
  * Created by K on 2017-04-26.
  */
+@Service
 public class EventExpressions {
+    @Autowired
+    EventSearchRepository eventSearchRepository;
 
-    public static Predicate createPredicateDependsOfEventSearchForm(EventSearchForm searchForm){
+    public Predicate createPredicateDependsOfEventSearchForm(EventSearchForm searchForm){
 
         BooleanExpression booleanExpression=QEvent.event.idEvent.isNotNull();
 
@@ -50,12 +59,17 @@ public class EventExpressions {
         if(searchForm.isRegisterEnabled()){
             booleanExpression=booleanExpression.and(QEvent.event.registerEnabled.isTrue());
         }
-//        if(searchForm.getFromGeoLenght()!=null){
-//            booleanExpression=booleanExpression.and(QEvent.event.place.geoLength.castToNum(Double.class).gt(Double.parseDouble(searchForm.getFromGeoLenght())));
-//        }
-//        if(searchForm.getToGeoLenght()!=null){
-//            booleanExpression=booleanExpression.and(QEvent.event.place.geoLength.castToNum(BigDecimal.class).lt(Double.parseDouble(searchForm.getToGeoLenght())));
-//        }
+        if(searchForm.getFromGeoLenght()!=null){
+            List<BigDecimal> idEventByGeoLocation = eventSearchRepository.findIdEventByGeoLocation(searchForm.getFromGeoLenght(), searchForm.getToGeoLenght(), searchForm.getFromGeoWidth(), searchForm.getToGeoWidth());
+            List<Integer> idEvents = new LinkedList<>();
+            for (BigDecimal i:idEventByGeoLocation
+                 ) {
+                idEvents.add(i.intValue());
+            }
+            if(!idEvents.isEmpty()) {
+                booleanExpression = booleanExpression.and(QEvent.event.idEvent.notIn(idEvents));
+            }
+        }
 
 
         return booleanExpression ;
