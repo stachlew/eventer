@@ -33,6 +33,10 @@ export class EventSearchResult {
   youtubeLink:string;
   geoLenght:string;
   geoWidth:string;
+
+  geoNbLength:number;
+  geoNbWidth:number;
+
   streetName:string;
   streetNo:string;
   eventType:string;

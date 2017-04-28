@@ -9,18 +9,18 @@
              (mapClick)="mapClicked($event)">
 
       <sebm-google-map-marker
-              *ngFor="let m of markers; let i = index"
-              (markerClick)="clickedMarker(m.label, i)"
-              [latitude]="m.lat"
-              [longitude]="m.lng"
-              [label]="m.label"
-              [markerDraggable]="m.draggable"
+              *ngFor="let m of eventSearchResult; let i = index"
+              (markerClick)="clickedMarker(m.title, i)"
+              [latitude]="m.geoNbWidth"
+              [longitude]="m.geoNbLength"
+              [label]="m.eventType"
+              [markerDraggable]="false"
               (dragEnd)="markerDragEnd(m, $event)">
 
         <sebm-google-map-info-window>
-          <strong>Treść znacznika {{i}}:{{m.label}}</strong>
+          <strong>Treść znacznika {{i}}:{{m.title}}</strong>
           <p>
-          Aliquam ante sapien, sodales non lectus a, maximus dapibus eros. Phasellus blandit purus accumsan, convallis purus et, semper ligula. Duis ante orci, tincidunt eget libero id, pretium tempus turpis. Etiam tortor turpis, molestie sed auctor et, malesuada sit amet velit. Maecenas eget arcu tortor. Duis viverra ex mi, quis venenatis erat consequat ac. Donec ac nisi leo. Sed efficitur pharetra eros, sit amet iaculis libero placerat et. Aliquam blandit diam eu quam tempus, nec vulputate magna venenatis. In et arcu porttitor, tristique risus vel, imperdiet urna. Ut sagittis, elit eu volutpat ultrices, ligula est rutrum est, sit amet elementum lacus dolor ut libero. Maecenas congue mauris placerat, hendrerit enim sit amet, accumsan velit. Mauris et orci sapien. Aliquam viverra maximus arcu, eu tincidunt sapien dapibus at. Duis consequat, lacus a pharetra tempor, lacus purus consectetur turpis, quis laoreet tellus nisl vitae turpis.
+            {{m.description}}
           </p>
         </sebm-google-map-info-window>
       </sebm-google-map-marker>
@@ -34,43 +34,44 @@
     <form>
       Zasięg: {{kilometersRange}} km. Przelicznik km do stopnie = {{kmToDeg}}
       <input type="range" #ref name="points" min="1" max="100" (change)="changeRange(ref.value)">
+
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoLength" [(ngModel)]="myGeoLength" name="geoLength" >
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoWidth" [(ngModel)]="myGeoWidth" name="geoWidth">
+      </div>
+
     </form>
   </div>
 </div>
 
+<div style="height: 40px"></div>
+<!-- CALA TRESC STRONY ------------------ ----------------- ----------------- -->
 
-<!--TRESC STRONY-->
+<!-- CIALO WYSZUKIWANIA -->
 <div class="row">
-  <!--NAGLOWEK-->
-  <div class="col-md-offset-1 col-md-11">
-
-    <p>Znajdź wydarzenia blisko Ciebie, ustaw znacznik na mapie by pokazać gdzie jesteś.</p>
-  </div>
-</div>
-<div class="row">
-  <!--GLOWNE CIALO-->
-  <div class="col-md-11 col-md-offset-1">
+  <!--SRODEK GLOWNE CIALO-->
+  <div class="col-md-10 col-md-offset-1">
     <!--WYSZUKIWARKA-->
     <div class="row">
-      <div class="col-md-offset-2 col-md-8">
+      <div class="col-md-offset-1 col-md-10 searchBlock">
         <!--FORMULARZ-->
         <form>
+          <div class="fullLine"></div>
           <div class="row">
-            <div class="col-md-2">
-              <span
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-10">
               <div class="form-group-lg" >
-                <input type="text"  class="form-control" id="textContent" [(ngModel)]="eventSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
+                <input type="text" placeholder="Czego szukasz?" class="form-control" id="textContent" [(ngModel)]="eventSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
                 </div>
-
-
-
             </div>
             <div class="col-md-2">
-
+              <div><button class="btn btn-block btn-lg" (click)="postSearch()">Szukaj</button></div>
             </div>
           </div>
+
+          <div class="fullLine"></div>
+
           <div class="row">
             <div class="col-md-3">
               <div class="form-group" >
@@ -102,27 +103,167 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="eventTypeName">Typ wydarzenia:</label>
+                <select class="form-control" [(ngModel)]="eventSearchForm.eventType" name="eventTypeName" id="eventTypeName">
+                  <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" align="center" >
+                <div class="checkbox" style="margin-top: 30px">
+                  <h3><label><input type="checkbox" [(ngModel)]="eventSearchForm.freeEntrance" name="freeEntrance" id="freeEntrance" value="">Wstęp bezpłatny</label></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group" align="center">
+                <div class="checkbox" style="margin-top: 30px">
+                  <h3><label><input type="checkbox" [(ngModel)]="eventSearchForm.registerEnabled" name="registerEnabled" id="registerEnabled" value="">Rejestracja możliwa</label></h3>
+                </div>
+              </div>
+            </div>
+          </div>
 
+
+          <div class="fullLine"></div>
 
         </form>
 
       </div>
 
     </div>
+  </div>
+</div>
+
+<div class="fullLine"></div>
+
+
+<!-- CIALO LISTY ZWROTNEJ -->
+<div class="row">
+  <!--SRODEK GLOWNE CIALO-->
+  <div class="col-md-10 col-md-offset-1">
     <!--LISTA ZWROTNA-->
     <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <!--NAGLOWEK LISTY-->
+        <div class="row">
+          <div class="col-md-12 resultBlock">
+            <h4>Znaleziono {{eventSearchResult?.length}} wydarzeń</h4>
+          </div>
+          <br>
+        </div>
+        <!--CIALO LISTY-->
+        <div class="row">
+          <div *ngFor="let i of eventSearchResult">
+            <div class="panel panel-default eventPanel" (click)="goToEvent(i.idEvent)" >
+              <!--GORA EVENTU-->
 
+              <div class="panel-body" >
+                <!--TYTUL, DATA STARTU, MOZLIWA REJESTRACJA?, BEZPLATNE? TRANSMISJA?-->
+                <div class="row">
+                  <div class="col-md-2">
+                    <!--ikona kalendarza-->
+                    <div class="myCalendarContainer">
+                      <div class="myCalendarHead">
+                        {{i.startTime | date:'MMMM'}}
+                      </div>
+                      <div class="myCalendarBody">
+                        <span style="font-size: 35px">{{i.startTime | date:'d'}}</span>
+                        <br>
+                        <span><b>{{i.startTime | date:'EEEE'}}</b></span>
+                      </div>
+                      <div class="myCalendarFooter">
+                        <div>{{i.startTime | date:'y'}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <H2>{{i.title}}</H2>
+                  </div>
+                  <div class="col-md-1">
+                    <div style="margin-top: auto; margin-bottom: auto">
+                      <div class="row"><!--Rejestracja-->
+
+                        <span class="myIcon" *ngIf="!i.registerEnabled" style="color: rgba(121,103,105,0.24)">
+                          <i class="fa fa-fw fa-user-plus"></i>
+                        </span>
+                        <span class="myIcon" *ngIf="i.registerEnabled" >
+                          <i class="fa fa-fw fa-user-plus"></i>
+                        </span>
+
+                      </div>
+                      <div class="row"><!--BEZPLATNE-->
+                        <span class="myIcon" *ngIf="i.freeEntrance" style="color: rgba(121,103,105,0.24)">
+                          <i class="fa fa-fw fa-money"></i>
+                        </span>
+
+                          <span class="myIcon" *ngIf="!i.freeEntrance" style="color: rgba(16,177,24,0.8)">
+                          <i class="fa fa-fw fa-money"></i>
+                        </span>
+                      </div>
+                      <div class="row"><!--TRANSMISJA-->
+
+                        <span class="myIcon" *ngIf="i.youtubeLink?.length>0" style="color: rgba(189,0,0,0.8)">
+                          <i class="fa fa-fw fa-youtube"></i>
+                        </span>
+
+                        <span class="myIcon" *ngIf="i.youtubeLink==null || i.youtubeLink?.length<=0" style="color: rgba(121,103,105,0.24)">
+                          <i class="fa fa-fw fa-youtube"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!--END GORA EVENTU-->
+              <!--DOL EVENTU-->
+              <div class="panel-footer eventFooter">
+                <!--REGION,MIASTO, ILOSC WIZYT, ILOSC GOSCI/POJEMNOSC, TYP-->
+                <div class="row" >
+                  <div class="col-md-4">
+                    <b>{{i.cityName}}</b>, {{i.regionName}}
+                  </div>
+                  <div class="col-md-4" align="center">
+                    Obejrzano: {{i.visits}}
+                  </div>
+                  <div class="col-md-4" align="right">
+                    Zajętość: <b>{{i.registeredGuests}}/{{i.capacity}}</b>
+                  </div>
+                </div>
+
+              </div>
+              <!--END DOL EVENTU-->
+            </div>
+            <div class="fullLine"></div>
+          </div>
+
+
+        </div>
+        <!--END CIALO LISTY-->
+        <!--STOPKA LISTY-->
+        <div class="row resultBlock">
+          <div class="col-md-offset-1 col-md-10">
+            <nav aria-label="...">
+              <ul class="pager">
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!--END STOPKA LISTY-->
+      </div>
     </div>
   </div>
 </div>
 
 
-<ul>
-  <li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>
-</ul>
-
-<div class="blok">asfsdfsfsdffds</div>
-<div class="blok">asfsdfsfsdffds</div>
-<div class="blok">asfsdfsfsdffds</div>
-<div class="blok">asfsdfsfsdffds</div>
+<!--<ul>-->
+  <!--<li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>-->
+<!--</ul>-->
 

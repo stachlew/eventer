@@ -6,6 +6,7 @@ import {HttpSecService} from "../_service/util/http-sec.service";
 import {CustomDateService} from "../_service/util/custom-date.service";
 import {Http,Response} from "@angular/http";
 import {City, EventType, Region} from "../_model/domainClass";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,11 @@ import {City, EventType, Region} from "../_model/domainClass";
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder, public dateService: CustomDateService) {
+  goToEvent(id: number) {
+    this.router.navigate(['/event/view/'+id]);
+  }
+
+  constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder, public dateService: CustomDateService, public router:Router) {
     this.complexForm = fb.group({
       'textContent':new FormControl(null,Validators.compose([Validators.maxLength(100)])),
       'region':new FormControl(null),
@@ -26,13 +31,15 @@ export class SearchComponent implements OnInit {
       'fromGeoLenght':new FormControl(null),
       'toGeoLenght':new FormControl(null),
       'freeEntrance':new FormControl(null, Validators.compose([Validators.required])),
-      'registerEnabled':new FormControl(null)
+      'registerEnabled':new FormControl(null),
+      'eventType':new FormControl(null)
     })
     this.eventSearchForm=new EventSearchForm;
 
   }
 
   ngOnInit() {
+    this.getLatest();
     this.getEventRegions();
     this.getEventTypes();
   }
@@ -53,6 +60,12 @@ export class SearchComponent implements OnInit {
       this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> this.cities = data.json());
   }
 
+  getLatest(){
+    this.http.get(this.myHttp.getUrl() + '/api/event/search/getLatest').subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.refreshMarks()});
+  }
+
+
+
 
   /*FORMULARZ*/
   public eventSearchForm:EventSearchForm;
@@ -62,6 +75,29 @@ export class SearchComponent implements OnInit {
   public eventTypes: EventType[];
   public dataRozpoczeciaPomoc: Date;
   public dataZakonczeniaPomoc: Date;
+
+  public postSearch():void{
+    console.info("postSearch()");
+    this.eventSearchForm.dateFrom=this.dataRozpoczeciaPomoc;
+    this.eventSearchForm.dateTo=this.dataZakonczeniaPomoc;
+
+    // console.info(this.eventSearchForm!.textContent);
+    //
+    // console.info(this.eventSearchForm!.region.regionName);
+    // console.info(this.eventSearchForm!.city.cityName);
+    // console.info(this.eventSearchForm!.eventType.eventTypeName);
+    //
+    // console.info(this.eventSearchForm!.dateFrom);
+    // console.info(this.eventSearchForm!.dateTo);
+    //
+    // console.info(this.eventSearchForm!.freeEntrance);
+    // console.info(this.eventSearchForm!.registerEnabled);
+
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getByCriteria',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.refreshMarks()});
+
+  }
+
 
 
   /*WYNIKI WYSZUKIWANIA*/
@@ -75,14 +111,16 @@ export class SearchComponent implements OnInit {
     if(this.isSlideHide){
       (<HTMLScriptElement>document.getElementById("mySideMap")).style.width = "80%"; //pokaz
 
+      (<HTMLScriptElement>document.getElementById("mapPannel")).style.minHeight = "500px"; //pokaz
       (<HTMLScriptElement>document.getElementById("mapPannel")).style.height = "70%"; //pokaz
       (<HTMLScriptElement>document.getElementById("mySideMapTitle")).style.height = "30%"; //pokaz
 
       // this.isSlideHide=false;
     }
     else{
-      (<HTMLScriptElement>document.getElementById("mySideMap")).style.width = "8%";//ukryj
+      (<HTMLScriptElement>document.getElementById("mySideMap")).style.width = "10%";//ukryj
 
+      (<HTMLScriptElement>document.getElementById("mapPannel")).style.minHeight = "300px"; //pokaz
       (<HTMLScriptElement>document.getElementById("mapPannel")).style.height = "100%"; //pokaz
       (<HTMLScriptElement>document.getElementById("mySideMapTitle")).style.height = "0"; //pokaz
 
@@ -117,6 +155,13 @@ export class SearchComponent implements OnInit {
   zoom: number = 12;
   lat: number = 52.25353;
   lng: number = 20.90067;
+
+  refreshMarks(){
+    for(let m of this.eventSearchResult){
+      m.geoNbLength=Number.parseFloat(m.geoLenght);
+      m.geoNbWidth=Number.parseFloat(m.geoWidth);
+    }
+  }
 
   clickedMarker(label: string, index: number) {
     console.log(`clicked the marker: ${label || index}`)

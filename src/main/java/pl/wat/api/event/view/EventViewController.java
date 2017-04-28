@@ -3,6 +3,7 @@ package pl.wat.api.event.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.wat.logic.event._model.EventHeader;
+import pl.wat.logic.event._model.EventSearchResult;
 import pl.wat.logic.event._model.view.EventViewDetails;
 import pl.wat.logic.event.view.EventViewService;
 
