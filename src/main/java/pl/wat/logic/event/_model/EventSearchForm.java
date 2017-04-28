@@ -1,16 +1,17 @@
 package pl.wat.logic.event._model;
 
 
+import pl.wat.db.domain.event.EventType;
 import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Region;
 
 import java.sql.Timestamp;
 
 public class EventSearchForm {
-    private String title;
-    private String description;
+    private String textContent;
     private Region region;
     private City city;
+    private EventType eventType;
     private Timestamp dateFrom;
     private Timestamp dateTo;
     private boolean freeEntrance;
@@ -24,11 +25,11 @@ public class EventSearchForm {
     public EventSearchForm() {
     }
 
-    public EventSearchForm(String title, String description, Region region, City city, Timestamp dateFrom, Timestamp dateTo, boolean freeEntrance, boolean registerEnabled, String fromGeoWidth, String toGeoWidth, String fromGeoLenght, String toGeoLenght) {
-        this.title = title;
-        this.description = description;
+    public EventSearchForm(String textContent, Region region, City city, EventType eventType, Timestamp dateFrom, Timestamp dateTo, boolean freeEntrance, boolean registerEnabled, String fromGeoWidth, String toGeoWidth, String fromGeoLenght, String toGeoLenght) {
+        this.textContent = textContent;
         this.region = region;
         this.city = city;
+        this.eventType = eventType;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.freeEntrance = freeEntrance;
@@ -39,20 +40,12 @@ public class EventSearchForm {
         this.toGeoLenght = toGeoLenght;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTextContent() {
+        return textContent;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTextContent(String textContent) {
+        this.textContent = textContent;
     }
 
     public Region getRegion() {
@@ -69,6 +62,14 @@ public class EventSearchForm {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     public Timestamp getDateFrom() {

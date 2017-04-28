@@ -39,11 +39,84 @@
 </div>
 
 
+<!--TRESC STRONY-->
+<div class="row">
+  <!--NAGLOWEK-->
+  <div class="col-md-offset-1 col-md-11">
+
+    <p>Znajdź wydarzenia blisko Ciebie, ustaw znacznik na mapie by pokazać gdzie jesteś.</p>
+  </div>
+</div>
+<div class="row">
+  <!--GLOWNE CIALO-->
+  <div class="col-md-11 col-md-offset-1">
+    <!--WYSZUKIWARKA-->
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8">
+        <!--FORMULARZ-->
+        <form>
+          <div class="row">
+            <div class="col-md-2">
+              <span
+            </div>
+            <div class="col-md-8">
+              <div class="form-group-lg" >
+                <input type="text"  class="form-control" id="textContent" [(ngModel)]="eventSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
+                </div>
 
 
-<h2>Animated Sidenav Example</h2>
-<p>Click on the element below to open the side navigation menu.</p>
-<span style="font-size:30px;cursor:pointer" (click)="changeSlideStatus()">&#9776; open</span>
+
+            </div>
+            <div class="col-md-2">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group" >
+                <label for="dateFrom">Od:</label>
+                <input type="date" class="form-control" id="dateFrom" [(ngModel)]="dataRozpoczeciaPomoc" name="dateFrom" [formControl]="complexForm.controls['dateFrom']">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group" >
+                <label for="dateTo">Od:</label>
+                <input type="date" class="form-control" id="dateTo" [(ngModel)]="dataZakonczeniaPomoc" name="dateTo" [formControl]="complexForm.controls['dateTo']">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="regionName">Region:</label>
+                <select class="form-control" [(ngModel)]="eventSearchForm.region" name="regionName" id="regionName" (click)="getEventCities(eventSearchForm.region)">
+                  <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="cityName">Miasto:</label>
+                <select class="form-control" [(ngModel)]="eventSearchForm.city" name="cityName" id="cityName">
+                  <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+        </form>
+
+      </div>
+
+    </div>
+    <!--LISTA ZWROTNA-->
+    <div class="row">
+
+    </div>
+  </div>
+</div>
+
+
 <ul>
   <li *ngFor="let i of markers">Marker {{i.label}} {{i.lat}} {{i.lng}}</li>
 </ul>

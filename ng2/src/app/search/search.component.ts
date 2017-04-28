@@ -1,5 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SebmGoogleMap} from "angular2-google-maps/core";
+import {EventSearchForm, EventSearchResult} from "../_model/searchDomain";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {HttpSecService} from "../_service/util/http-sec.service";
+import {CustomDateService} from "../_service/util/custom-date.service";
+import {Http,Response} from "@angular/http";
+import {City, EventType, Region} from "../_model/domainClass";
 
 @Component({
   selector: 'app-search',
@@ -8,14 +14,63 @@ import {SebmGoogleMap} from "angular2-google-maps/core";
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder, public dateService: CustomDateService) {
+    this.complexForm = fb.group({
+      'textContent':new FormControl(null,Validators.compose([Validators.maxLength(100)])),
+      'region':new FormControl(null),
+      'city':new FormControl(null),
+      'dateFrom':new FormControl(null),
+      'dateTo':new FormControl(null),
+      'fromGeoWidth':new FormControl(null),
+      'toGeoWidth':new FormControl(null),
+      'fromGeoLenght':new FormControl(null),
+      'toGeoLenght':new FormControl(null),
+      'freeEntrance':new FormControl(null, Validators.compose([Validators.required])),
+      'registerEnabled':new FormControl(null)
+    })
+    this.eventSearchForm=new EventSearchForm;
 
-  ngOnInit() {
   }
 
+  ngOnInit() {
+    this.getEventRegions();
+    this.getEventTypes();
+  }
+
+  getEventRegions() {
+    console.info("Pobieranie regionow");
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response)=> this.regions = data.json());
+  }
+
+  getEventTypes() {
+    console.info("Pobieranie eventTypes");
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response)=> this.eventTypes = data.json());
+  }
+
+  getEventCities(region: Region) {
+    console.info("Pobieranie nazw miast");
+    if (region!=null)
+      this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> this.cities = data.json());
+  }
+
+
+  /*FORMULARZ*/
+  public eventSearchForm:EventSearchForm;
+  public complexForm: FormGroup;
+  public regions: Region[];
+  public cities: City[];
+  public eventTypes: EventType[];
+  public dataRozpoczeciaPomoc: Date;
+  public dataZakonczeniaPomoc: Date;
+
+
+  /*WYNIKI WYSZUKIWANIA*/
+  public eventSearchResult:EventSearchResult[];
+
+
+  /*SLIDER Otwieranie i zamykanie slidera mapy*/
   public isSlideHide = true;
 
-  /*Otwieranie i zamykanie slidera mapy*/
   public changeSlideStatus(){
     if(this.isSlideHide){
       (<HTMLScriptElement>document.getElementById("mySideMap")).style.width = "80%"; //pokaz

@@ -1,10 +1,11 @@
-import {City, Region, SimpleUser, Timestamp} from "./domainClass";
+import {City, EventType, Region, SimpleUser, Timestamp} from "./domainClass";
 export class EventSearchForm {
-  title:string;
-  description:string;
+  textContent:string;
 
   region:Region;
   city:City;
+  eventType:EventType;
+
   dateFrom:Timestamp;
   dateTo:Timestamp;
   fromGeoWidth:string;
