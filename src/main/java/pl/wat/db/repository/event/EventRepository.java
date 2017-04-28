@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,8 +19,14 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     List<Event> findTopNOfLatestEvents(@Param("limit") int limit);
 
 
-    @Query(value = "select id_event from (select p.id_event, e.CAPACITY-count(p.id_participant) from eve_participants p,eve_events e \n" +
-            "where e.id_event=p.id_event and e.published = 1 and e.REGISTER_ENABLED =1   group by p.id_event,e.CAPACITY order by 2 )\n" +
-            "where ROWNUM<=:limit;",nativeQuery = true)
-    List<Integer> findTopNIdEventsWithLeastAmountOfFreeSeats(@Param("limit") int limit);
+    //Metoda zwraca BigDecimal, mimo że powinna Integera- z tego powodu gdy otrzymamy liste numerów, należy
+    //zrobić for eacha dla tej listy i dla każdego elementu wywołać metodę z repozytorium findOne(i.intValue())
+    @Query(value = "select id_event from (select e.id_event, e.CAPACITY-count(p.id_participant) from eve_events e LEFT JOIN EVE_PARTICIPANTS p ON e.id_event=p.id_event \n" +
+            "where  e.published = 1 and e.REGISTER_ENABLED =1   group by e.id_event,e.CAPACITY order by 2 )\n" +
+            "where ROWNUM<=:limit",nativeQuery = true)
+    List<BigDecimal> findTopNIdEventsWithLeastAmountOfFreeSeats(@Param("limit") int limit);
+
+
+    List<Event> findTop3ByOrderByVisitsDesc();
+
 }

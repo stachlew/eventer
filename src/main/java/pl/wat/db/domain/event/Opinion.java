@@ -30,6 +30,9 @@ public class Opinion {
     private Timestamp createDate;
 
     @NotNull
+    private int rate;
+
+    @NotNull
     @JoinColumn(name = "id_event")
     @ManyToOne
     private Event event;
@@ -37,11 +40,12 @@ public class Opinion {
     public Opinion() {
     }
 
-    public Opinion(String content, String email, Timestamp createDate, Event event) {
+    public Opinion(String content, String email, Timestamp createDate, Event event,int rate) {
         this.content = content;
         this.email = email;
         this.createDate = createDate;
         this.event = event;
+        this.rate = rate;
     }
 
     public Opinion(EventViewOpinionForm form){
@@ -49,6 +53,7 @@ public class Opinion {
             this.content=form.getContent();
             this.email=form.getEmail();
             this.createDate=form.getCreateDate();
+            this.rate=form.getRate();
         }
     }
 
@@ -90,5 +95,13 @@ public class Opinion {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 }

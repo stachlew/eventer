@@ -7,12 +7,12 @@ DECLARE
   v_all_participants integer;
 BEGIN
   select * into v_event from eve_events where id_event = :new.id_event;
-    DBMS_OUTPUT.put_line(v_event.capacity);
+
   select count(1) into v_all_participants from eve_participants where id_event = :new.id_event;
-  DBMS_OUTPUT.put_line(v_all_participants);
+
   if v_event.capacity <= v_all_participants +1 then
     update eve_events set register_enabled = 0 where id_event=v_event.id_event; 
-    DBMS_OUTPUT.put_line('jestem');
+  
   end if;
    commit;
 END;

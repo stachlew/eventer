@@ -80,7 +80,7 @@ INSERT INTO EVE_LECTURES (ID_LECTURE, START_TIME, END_TIME, LECTURE_NAME, DESCRI
 INSERT INTO EVE_LECTURES (ID_LECTURE, START_TIME, END_TIME, LECTURE_NAME, DESCRIPTION, ID_SPEAKER, ID_EVENT) VALUES (EVE_LECTURE_SEQ.NEXTVAL,TO_TIMESTAMP('2017-06-10 16:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2017-06-10 17:40:00', 'YYYY-MM-DD HH24:MI:SS'),'Pomoce domowe LOL wieku','FTP elenx jako polecenie ratuje - przykład sprawnej studenckiej olewki.',1,1);
 
 -- OPINIE
-INSERT INTO EVE_OPINIONS (ID_OPINION, CONTENT, EMAIL, CREATE_DATE, ID_EVENT) VALUES (EVE_OPINION_SEQ.NEXTVAL,'Było zajebiście choć pizza się szybko skończyła i piwko było ciepłe. Hostessy nadrobiły wszystko swoją wiedzą na tematy branżowe. POLECAM','cezarycezary@spamer.gov.pl',TO_TIMESTAMP('2017-06-10 13:40:00', 'YYYY-MM-DD HH24:MI:SS'),1);
+INSERT INTO EVE_OPINIONS (ID_OPINION, CONTENT, EMAIL, CREATE_DATE, ID_EVENT,RATE) VALUES (EVE_OPINION_SEQ.NEXTVAL,'Było zajebiście choć pizza się szybko skończyła i piwko było ciepłe. Hostessy nadrobiły wszystko swoją wiedzą na tematy branżowe. POLECAM','cezarycezary@spamer.gov.pl',TO_TIMESTAMP('2017-06-10 13:40:00', 'YYYY-MM-DD HH24:MI:SS'),1,5);
 
 -- UCZESTNICY
 INSERT INTO EVE_PARTICIPANTS(ID_PARTICIPANT,FIRSTNAME,LASTNAME,EMAIL,ID_EVENT) VALUES (EVE_PARTICIPANT_SEQ.NEXTVAL,'Jan','Kowalski','kowal@wp.pl',1);

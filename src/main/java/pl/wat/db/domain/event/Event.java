@@ -6,10 +6,15 @@ import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
 
+import com.querydsl.core.annotations.Config;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryEntity;
+import com.querydsl.core.annotations.QueryType;
 import org.hibernate.annotations.ColumnDefault;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.user.User;
 
+@Embeddable
 @Entity
 @Table(name = "EVE_Events")
 public class Event {
@@ -19,6 +24,7 @@ public class Event {
     @SequenceGenerator(sequenceName = "EVE_EVENT_SEQ", initialValue = 1, allocationSize = 1, name = "EVE_EVENT_SEQ")
     private int idEvent;
 
+    @QueryType(PropertyType.SIMPLE)
     @Column(length = 100)
     @NotNull
     @Size(min = 4, max = 100)
