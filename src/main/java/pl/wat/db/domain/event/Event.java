@@ -24,7 +24,7 @@ public class Event {
     @SequenceGenerator(sequenceName = "EVE_EVENT_SEQ", initialValue = 1, allocationSize = 1, name = "EVE_EVENT_SEQ")
     private int idEvent;
 
-    @QueryType(PropertyType.SIMPLE)
+    @QueryType(PropertyType.STRING)
     @Column(length = 100)
     @NotNull
     @Size(min = 4, max = 100)
