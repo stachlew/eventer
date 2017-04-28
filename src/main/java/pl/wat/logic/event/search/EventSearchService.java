@@ -17,12 +17,14 @@ import java.util.List;
 public class EventSearchService {
     @Autowired
     EventSearchRepository eventSearchRepository;
+    @Autowired
+    EventExpressions eventExpressions;
 
     @Autowired
     EventDashboardStatisticsService eventDashboardStatisticsService;
 
     public List<EventSearchResult> findEvents(EventSearchForm form){
-        Predicate predicate = EventExpressions.createPredicateDependsOfEventSearchForm(form);
+        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
         Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
         List<EventSearchResult> resultList = new LinkedList<>();
 
