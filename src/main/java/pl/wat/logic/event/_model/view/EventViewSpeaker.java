@@ -1,4 +1,4 @@
-package pl.wat.logic.event._model;
+package pl.wat.logic.event._model.view;
 
 import pl.wat.db.domain.event.lecture.Speaker;
 

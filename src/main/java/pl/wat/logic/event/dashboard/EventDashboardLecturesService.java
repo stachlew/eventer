@@ -6,7 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.LectureRepository;
-import pl.wat.logic.event._model.EventDashboardLecturesInfo;
+import pl.wat.logic.event._model.dashboard.EventDashboardLecturesInfo;
 
 import java.util.List;
 

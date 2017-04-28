@@ -9,7 +9,7 @@ import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.event._model.EventHeader;
-import pl.wat.logic.event._model.EventViewDetails;
+import pl.wat.logic.event._model.view.EventViewDetails;
 
 import java.util.LinkedList;
 import java.util.List;

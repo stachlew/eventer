@@ -1,4 +1,4 @@
-package pl.wat.logic.event._model;
+package pl.wat.logic.event._model.view;
 
 /**
  * Created by K on 2017-04-21.

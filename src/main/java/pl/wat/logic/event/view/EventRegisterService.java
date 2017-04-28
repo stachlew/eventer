@@ -1,24 +1,15 @@
 package pl.wat.logic.event.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Participant;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.ParticipantRepository;
-import pl.wat.logic.event._model.ParticipantForm;
+import pl.wat.logic.event._model.view.ParticipantForm;
 import pl.wat.logic.util.MailContainer;
-
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Service
 public class EventRegisterService {

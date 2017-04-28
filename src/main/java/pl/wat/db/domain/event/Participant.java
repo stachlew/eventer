@@ -9,8 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
-import pl.wat.db.domain.event.Event;
-import pl.wat.logic.event._model.ParticipantForm;
+import pl.wat.logic.event._model.view.ParticipantForm;
 
 
 @Entity

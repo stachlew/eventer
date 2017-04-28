@@ -8,7 +8,7 @@ import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.event.location.Region;
 import pl.wat.db.repository.event.EventRepository;
-import pl.wat.logic.event._model.EventDashboardInfo;
+import pl.wat.logic.event._model.dashboard.EventDashboardInfo;
 
 @Service
 public class EventDashboardInfoService {

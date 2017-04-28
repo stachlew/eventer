@@ -1,6 +1,7 @@
-package pl.wat.logic.event._model;
+package pl.wat.logic.event._model.dashboard;
 
 import pl.wat.db.domain.event.lecture.Lecture;
+import pl.wat.logic.event._model.view.EventViewLecture;
 
 import java.util.LinkedList;
 import java.util.List;

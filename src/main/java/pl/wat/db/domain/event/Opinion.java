@@ -1,8 +1,6 @@
 package pl.wat.db.domain.event;
 
-import pl.wat.db.domain.event.Event;
-import pl.wat.db.domain.event.location.Region;
-import pl.wat.logic.event._model.EventViewOpinionForm;
+import pl.wat.logic.event._model.view.EventViewOpinionForm;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

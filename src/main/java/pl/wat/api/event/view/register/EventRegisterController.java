@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.wat.logic.event._model.ParticipantForm;
+import pl.wat.logic.event._model.view.ParticipantForm;
 import pl.wat.logic.event.view.EventRegisterService;
 
 @RestController

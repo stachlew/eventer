@@ -1,23 +1,43 @@
-package pl.wat.logic.event._model;
+package pl.wat.logic.event._model.view;
 
+
+import pl.wat.db.domain.event.Opinion;
 
 import java.sql.Timestamp;
 
-public class EventViewOpinionForm {
+public class EventViewOpinion {
 
+    private int idOpinion;
     private int idEvent;
     private String content;
     private String email;
     private Timestamp createDate;
 
-    public EventViewOpinionForm() {
+    public EventViewOpinion() {
     }
 
-    public EventViewOpinionForm(int idEvent, String content, String email, Timestamp createDate) {
+    public EventViewOpinion(Opinion opinion) {
+        this.idOpinion=opinion.getIdOpinion();
+        this.idEvent=opinion.getEvent().getIdEvent();
+        this.content=opinion.getContent();
+        this.email=opinion.getEmail();
+        this.createDate=opinion.getCreateDate();
+    }
+
+    public EventViewOpinion(int idOpinion, int idEvent, String content, String email, Timestamp createDate) {
+        this.idOpinion = idOpinion;
         this.idEvent = idEvent;
         this.content = content;
         this.email = email;
         this.createDate = createDate;
+    }
+
+    public int getIdOpinion() {
+        return idOpinion;
+    }
+
+    public void setIdOpinion(int idOpinion) {
+        this.idOpinion = idOpinion;
     }
 
     public int getIdEvent() {

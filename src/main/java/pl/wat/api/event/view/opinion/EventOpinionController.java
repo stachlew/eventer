@@ -2,11 +2,10 @@ package pl.wat.api.event.view.opinion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.wat.logic.event._model.EventViewOpinion;
-import pl.wat.logic.event._model.EventViewOpinionForm;
+import pl.wat.logic.event._model.view.EventViewOpinion;
+import pl.wat.logic.event._model.view.EventViewOpinionForm;
 import pl.wat.logic.event.view.EventOpinionService;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 

@@ -6,7 +6,7 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Participant;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.ParticipantRepository;
-import pl.wat.logic.event._model.EventDashboardParticipantsInfo;
+import pl.wat.logic.event._model.dashboard.EventDashboardParticipantsInfo;
 
 import java.util.List;
 

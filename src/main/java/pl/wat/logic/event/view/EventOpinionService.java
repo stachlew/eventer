@@ -7,8 +7,8 @@ import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Opinion;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.OpinionRepository;
-import pl.wat.logic.event._model.EventViewOpinion;
-import pl.wat.logic.event._model.EventViewOpinionForm;
+import pl.wat.logic.event._model.view.EventViewOpinion;
+import pl.wat.logic.event._model.view.EventViewOpinionForm;
 
 import java.util.LinkedList;
 import java.util.List;
