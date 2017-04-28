@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * Created by Wojciech on 2017-04-26.
  */
-public class EventDashboardLecturesInfo {
+public class EventDashboardLecture {
     private int idEvent;
     private List<EventViewLecture> lectures;
 
-    public EventDashboardLecturesInfo() {
+    public EventDashboardLecture() {
     }
 
-    public EventDashboardLecturesInfo(int idEvent, List<Lecture> lectures) {
+    public EventDashboardLecture(int idEvent, List<Lecture> lectures) {
         this.lectures = new LinkedList<>();
         for(Lecture lecture : lectures) {
             this.lectures.add(new EventViewLecture(lecture));

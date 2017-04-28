@@ -5,7 +5,7 @@ import pl.wat.db.domain.event.lecture.Speaker;
 /**
  * Created by Wojciech on 2017-04-28.
  */
-public class EventDashboardSpeakerInfo {
+public class EventDashboardSpeaker {
     private int idSpeaker;
     private String description;
     private String email;
@@ -13,10 +13,10 @@ public class EventDashboardSpeakerInfo {
     private String lastName;
     private String phone;
 
-    public EventDashboardSpeakerInfo() {
+    public EventDashboardSpeaker() {
     }
 
-    public EventDashboardSpeakerInfo(Speaker speaker) {
+    public EventDashboardSpeaker(Speaker speaker) {
         this.idSpeaker = speaker.getIdSpeaker();
         this.description = speaker.getDescription();
         this.email = speaker.getEmail();

@@ -10,6 +10,7 @@ import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.EventSearchRepository;
 import pl.wat.logic.event._model.EventSearchForm;
 import pl.wat.logic.event._model.EventSearchResult;
+import pl.wat.logic.event.dashboard.EventDashboardStatisticsService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +22,9 @@ public class EventSearchService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    EventDashboardStatisticsService eventDashboardStatisticsService;
 
     public Iterable<Event> searchEvent(String title){
         Predicate predicate = EventExpressions.hasTitle(title);
@@ -35,7 +39,7 @@ public class EventSearchService {
 
         for (Event e:eventList){
             //pobierz ilosc zapisanych
-            int registeredGuests=0;
+            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
             EventSearchResult eventResult = new EventSearchResult(e,e.getUser(),e.getPlace(),e.getEventType(),e.getPlace().getCity(),e.getPlace().getCity().getRegion(),registeredGuests);
             resultList.add(eventResult);
         }
