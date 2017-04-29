@@ -2,9 +2,10 @@ package pl.wat.logic.event.dashboard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
-import pl.wat.logic.event._model.dashboard.EventDashboardSpeaker;
+import pl.wat.logic.event._model.view.EventViewSpeaker;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,15 +19,58 @@ public class EventDashboardSpeakersService {
     @Autowired
     SpeakerRepository speakerRepository;
 
-    public List<EventDashboardSpeaker> getSpeakers(int id) {
+    public List<EventViewSpeaker> getSpeakers(int id) {
         if(eventRepository.exists(id)) {
-            List<EventDashboardSpeaker> speakersInfoList = new LinkedList<>();
+            List<EventViewSpeaker> speakersInfoList = new LinkedList<>();
             List<Integer> distinctIdSpeakers = speakerRepository.getDistinctIdSpeakersByIdEvent(id);
             for(Integer integer : distinctIdSpeakers) {
-                speakersInfoList.add(new EventDashboardSpeaker(speakerRepository.findOne(integer)));
+                speakersInfoList.add(new EventViewSpeaker(speakerRepository.findOne(integer)));
             }
             return speakersInfoList;
         }
         return null;
+    }
+
+    public boolean addSpeaker(EventViewSpeaker eventSpeaker) {
+        Speaker speaker = new Speaker();
+
+        speaker.setDescription(eventSpeaker.getDescription());
+        speaker.setEmail(eventSpeaker.getEmail());
+        speaker.setFirstname(eventSpeaker.getFirstname());
+        speaker.setLastname(eventSpeaker.getLastname());
+        speaker.setPhone(eventSpeaker.getPhone());
+
+        try {
+            speakerRepository.save(speaker);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean updateSpeaker(EventViewSpeaker eventSpeaker) {
+        Speaker speaker = speakerRepository.getOne(eventSpeaker.getIdSpeaker());
+
+        speaker.setDescription(eventSpeaker.getDescription());
+        speaker.setFirstname(eventSpeaker.getFirstname());
+        speaker.setLastname(eventSpeaker.getLastname());
+        speaker.setPhone(eventSpeaker.getPhone());
+        speaker.setEmail(eventSpeaker.getEmail());
+
+        try {
+            speakerRepository.save(speaker);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean deleteLecture(EventViewSpeaker eventSpeaker) {
+        try {
+            speakerRepository.delete(eventSpeaker.getIdSpeaker());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
