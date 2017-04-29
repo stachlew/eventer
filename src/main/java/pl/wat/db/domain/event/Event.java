@@ -6,10 +6,8 @@ import javax.validation.constraints.Size;
 import java.sql.Blob;
 import java.sql.Timestamp;
 
-import com.querydsl.core.annotations.Config;
-import com.querydsl.core.annotations.PropertyType;
-import com.querydsl.core.annotations.QueryEntity;
-import com.querydsl.core.annotations.QueryType;
+
+import com.querydsl.core.annotations.*;
 import org.hibernate.annotations.ColumnDefault;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.user.User;
@@ -38,6 +36,7 @@ public class Event {
     @NotNull
     @JoinColumn(name = "id_place")
     @ManyToOne
+    @QueryInit("city.*")
     private Place place;
 
     @NotNull

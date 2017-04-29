@@ -1,5 +1,7 @@
 package pl.wat.db.domain.event.location;
 
+import com.querydsl.core.annotations.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
