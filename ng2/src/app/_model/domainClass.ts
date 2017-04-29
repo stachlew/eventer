@@ -168,6 +168,7 @@ export class EventViewOpinion {
   content: string;
   email: string;
   createDate: Timestamp;
+  rate: number;
 }
 
 export class EventViewOpinionForm {
@@ -175,6 +176,7 @@ export class EventViewOpinionForm {
   email: string;
   createDate: Timestamp;
   idEvent: number;
+  rate: number;
 }
 
 

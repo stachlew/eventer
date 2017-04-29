@@ -61,7 +61,8 @@ export class CreateOpinionComponent {
     this.opinion.email = form.email;
     this.opinion.content = form.myContent;
     this.opinion.idEvent=this.idEvent;
-    console.info("POST OPINION: "+ this.opinion.idEvent + " "+ this.opinion.email + " " + this.opinion.content);
+    this.opinion.rate=this.rateForm;
+    console.info("POST OPINION: "+ this.opinion.idEvent + " "+ this.opinion.email + " " + this.opinion.content+ " " + this.opinion.rate);
 
 
     this.http.post(this.myHttp.getUrl()+'/api/event/view/opinion/postNewOpinion',this.opinion,this.myHttp.postConfig())
@@ -79,6 +80,55 @@ export class CreateOpinionComponent {
     if ((<HTMLElement>event.target).classList.contains('modal')) {
       this.hide();
     }
+  }
+
+  /*OCENIANIE*/
+  private rateForm:number=1;
+  public classStar1:string="rateStarOn";
+  public classStar2:string="rateStarOff";
+  public classStar3:string="rateStarOff";
+  public classStar4:string="rateStarOff";
+  public classStar5:string="rateStarOff";
+
+  public rateClick(value:number){
+    console.log("Rate="+value);
+    this.rateForm=value;
+    if(value==1){
+      this.classStar1="rateStarOn";
+      this.classStar2="rateStarOff";
+      this.classStar3="rateStarOff";
+      this.classStar4="rateStarOff";
+      this.classStar5="rateStarOff";
+    }
+    else if(value==2){
+      this.classStar1="rateStarOn";
+      this.classStar2="rateStarOn";
+      this.classStar3="rateStarOff";
+      this.classStar4="rateStarOff";
+      this.classStar5="rateStarOff";
+    }
+    else if(value==3){
+      this.classStar1="rateStarOn";
+      this.classStar2="rateStarOn";
+      this.classStar3="rateStarOn";
+      this.classStar4="rateStarOff";
+      this.classStar5="rateStarOff";
+    }
+    else if(value==4){
+      this.classStar1="rateStarOn";
+      this.classStar2="rateStarOn";
+      this.classStar3="rateStarOn";
+      this.classStar4="rateStarOn";
+      this.classStar5="rateStarOff";
+    }
+    else if(value==5){
+      this.classStar1="rateStarOn";
+      this.classStar2="rateStarOn";
+      this.classStar3="rateStarOn";
+      this.classStar4="rateStarOn";
+      this.classStar5="rateStarOn";
+    }
+
   }
 
 

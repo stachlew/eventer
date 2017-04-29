@@ -115,6 +115,8 @@ export class EventViewComponent implements OnInit, OnDestroy {
     return this.speakerImageUrl+idSpeaker;
   }
 
+  /*GWIAZDKI*/
+  public rates:number[]=[1,2,3,4,5];
 
 
 

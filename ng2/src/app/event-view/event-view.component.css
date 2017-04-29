@@ -106,3 +106,13 @@ text-decoration: none;
 cursor: pointer;
 }
 
+/*GWIAZDKI*/
+.rateStarOff{
+  color: silver;
+  font-size: x-large;
+}
+
+.rateStarOn{
+  color: gold;
+  font-size: x-large;
+}

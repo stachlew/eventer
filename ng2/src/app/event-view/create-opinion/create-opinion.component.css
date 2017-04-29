@@ -1,0 +1,20 @@
+.rateStarOff{
+  color: silver;
+  font-size: x-large;
+}
+
+.rateStarOn{
+  color: gold;
+  font-size: x-large;
+}
+
+.rateStarOff:hover{
+  cursor: pointer;
+  font-weight: bold;
+  color: gold;
+}
+
+.rateStarOn:hover{
+  cursor: pointer;
+  font-weight: bold;
+}

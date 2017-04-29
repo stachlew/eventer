@@ -8,12 +8,14 @@ import {EventStorageService} from "../event-storage.service";
 })
 export class EventEditComponent implements OnInit {
 
-  id:string;
+  idEvent:string;
 
   constructor(private eventStorageService: EventStorageService) { }
 
   ngOnInit() {
-    this.id=this.eventStorageService.getCurrentEventId();
+    this.idEvent=this.eventStorageService.getCurrentEventId();
   }
+
+
 
 }
