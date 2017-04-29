@@ -1,5 +1,7 @@
 package pl.wat.db.repository.event;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -10,6 +12,7 @@ import pl.wat.logic.event._model.EventSearchForm;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 /**
@@ -24,4 +27,5 @@ public interface EventSearchRepository extends JpaRepository<Event,Integer>,Quer
             ")and p.id_place=e.id_place",nativeQuery = true)
     List<BigDecimal> findIdEventByGeoLocation(@Param("GEO_LENTGTH_FROM")String geoLengthFrom, @Param("GEO_LENTGTH_TO")String geoLengthTo
     , @Param("GEO_WIDTH_FROM")String geoWidthFrom, @Param("GEO_WIDTH_TO")String geoWidthTo);
+
 }

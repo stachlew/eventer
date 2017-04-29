@@ -3,6 +3,8 @@ package pl.wat.logic.event.search;
 
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.repository.event.EventSearchRepository;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Service
 public class EventSearchService {
+    static final int sizeOfPage =8;
     @Autowired
     EventSearchRepository eventSearchRepository;
     @Autowired
@@ -23,9 +26,10 @@ public class EventSearchService {
     @Autowired
     EventDashboardStatisticsService eventDashboardStatisticsService;
 
-    public List<EventSearchResult> findEvents(EventSearchForm form){
+    public List<EventSearchResult> findEventsPage(EventSearchForm form,int nrPage){
         Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
-        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
+        Page<Event> eventPage = eventSearchRepository.findAll(predicate,new PageRequest(nrPage,sizeOfPage));
+        List<Event> eventList = eventPage.getContent();
         List<EventSearchResult> resultList = new LinkedList<>();
 
         for (Event e:eventList){
@@ -36,4 +40,18 @@ public class EventSearchService {
         }
         return resultList;
     }
+//
+//    public List<EventSearchResult> findEvents(EventSearchForm form){
+//        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
+//        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
+//        List<EventSearchResult> resultList = new LinkedList<>();
+//
+//        for (Event e:eventList){
+//            //pobierz ilosc zapisanych
+//            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
+//            EventSearchResult eventResult = new EventSearchResult(e,e.getUser(),e.getPlace(),e.getEventType(),e.getPlace().getCity(),e.getPlace().getCity().getRegion(),registeredGuests);
+//            resultList.add(eventResult);
+//        }
+//        return resultList;
+//    }
 }
