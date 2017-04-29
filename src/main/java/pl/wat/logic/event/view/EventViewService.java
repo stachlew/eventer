@@ -45,6 +45,7 @@ public class EventViewService {
                 speakers.add(speakerRepository.getOne(i));
             }
             List<Lecture> lectures =lectureRepository.getAllByEventOrderByStartTime(event);
+            eventRepository.incrementVisit(id);
             return new EventViewDetails(event,lectures,speakers);
         }
         return null;

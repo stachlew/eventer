@@ -1,8 +1,10 @@
 package pl.wat.db.repository.event;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
 
@@ -28,5 +30,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
 
 
     List<Event> findTop3ByOrderByVisitsDesc();
+
+    @Modifying
+    @Transactional
+    @Query(value = "update eve_events set visits=visits+1 where id_event=:id_event", nativeQuery = true)
+    void incrementVisit(@Param("id_event") int idEvent);
 
 }
