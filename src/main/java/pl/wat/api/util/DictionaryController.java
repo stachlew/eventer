@@ -35,7 +35,6 @@ public class DictionaryController {
     @ResponseBody
     @GetMapping("/cities")
     public List<City> getCities(@RequestParam int idRegion) {
-        // TODO pobranie miast z regionu
-        return dictionaryService.getAllCities();
+        return dictionaryService.getCitiesByIdRegion(idRegion);
     }
 }

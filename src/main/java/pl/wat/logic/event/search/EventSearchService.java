@@ -17,7 +17,9 @@ import java.util.List;
 
 @Service
 public class EventSearchService {
-    static final int sizeOfPage =8;
+
+    static final int sizeOfPage =5;
+
     @Autowired
     EventSearchRepository eventSearchRepository;
     @Autowired
@@ -40,18 +42,18 @@ public class EventSearchService {
         }
         return resultList;
     }
-//
-//    public List<EventSearchResult> findEvents(EventSearchForm form){
-//        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
-//        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
-//        List<EventSearchResult> resultList = new LinkedList<>();
-//
-//        for (Event e:eventList){
-//            //pobierz ilosc zapisanych
-//            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
-//            EventSearchResult eventResult = new EventSearchResult(e,e.getUser(),e.getPlace(),e.getEventType(),e.getPlace().getCity(),e.getPlace().getCity().getRegion(),registeredGuests);
-//            resultList.add(eventResult);
-//        }
-//        return resultList;
-//    }
+
+    public List<EventSearchResult> findEventsFull(EventSearchForm form){
+        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
+        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
+        List<EventSearchResult> resultList = new LinkedList<>();
+
+        for (Event e:eventList){
+            //pobierz ilosc zapisanych
+            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
+            EventSearchResult eventResult = new EventSearchResult(e,e.getUser(),e.getPlace(),e.getEventType(),e.getPlace().getCity(),e.getPlace().getCity().getRegion(),registeredGuests);
+            resultList.add(eventResult);
+        }
+        return resultList;
+    }
 }

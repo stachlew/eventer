@@ -8,6 +8,7 @@ import pl.wat.db.domain.event.location.Region;
 import java.sql.Timestamp;
 
 public class EventSearchForm {
+    private int siteNo;
     private String textContent;
     private Region region;
     private City city;
@@ -25,7 +26,8 @@ public class EventSearchForm {
     public EventSearchForm() {
     }
 
-    public EventSearchForm(String textContent, Region region, City city, EventType eventType, Timestamp dateFrom, Timestamp dateTo, boolean freeEntrance, boolean registerEnabled, String fromGeoWidth, String toGeoWidth, String fromGeoLenght, String toGeoLenght) {
+    public EventSearchForm(int siteNo, String textContent, Region region, City city, EventType eventType, Timestamp dateFrom, Timestamp dateTo, boolean freeEntrance, boolean registerEnabled, String fromGeoWidth, String toGeoWidth, String fromGeoLenght, String toGeoLenght) {
+        this.siteNo = siteNo;
         this.textContent = textContent;
         this.region = region;
         this.city = city;
@@ -38,6 +40,14 @@ public class EventSearchForm {
         this.toGeoWidth = toGeoWidth;
         this.fromGeoLenght = fromGeoLenght;
         this.toGeoLenght = toGeoLenght;
+    }
+
+    public int getSiteNo() {
+        return siteNo;
+    }
+
+    public void setSiteNo(int siteNo) {
+        this.siteNo = siteNo;
     }
 
     public String getTextContent() {

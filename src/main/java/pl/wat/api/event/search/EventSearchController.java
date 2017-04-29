@@ -21,12 +21,20 @@ public class EventSearchController {
     List<EventSearchResult> getSearchLatest(){
         EventSearchForm form = new EventSearchForm();
         //form.setRegisterEnabled(true);
-        return eventSearchService.findEvents(form);
+        return eventSearchService.findEventsPage(form,form.getSiteNo());
     }
 
-    @RequestMapping(value = "/getByCriteria",method = RequestMethod.POST)
+    //Wyszukiwanie wg krytetiow wyszukiwania z paginacja
+    @RequestMapping(value = "/getSearchPage",method = RequestMethod.POST)
     public @ResponseBody
-    List<EventSearchResult> getSearchByForm(@RequestBody EventSearchForm form){
-        return eventSearchService.findEvents(form);
+    List<EventSearchResult> getSearchPage(@RequestBody EventSearchForm form){
+        return eventSearchService.findEventsPage(form,form.getSiteNo());
+    }
+
+    //Wyszukiwanie wg krytetiow wyszukiwania bez paginacji
+    @RequestMapping(value = "/getSearchFull",method = RequestMethod.POST)
+    public @ResponseBody
+    List<EventSearchResult> getSearchFull(@RequestBody EventSearchForm form){
+        return eventSearchService.findEventsFull(form);
     }
 }

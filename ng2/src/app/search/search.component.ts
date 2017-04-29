@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpSecService} from "../_service/util/http-sec.service";
 import {CustomDateService} from "../_service/util/custom-date.service";
 import {Http,Response} from "@angular/http";
-import {City, EventType, Region} from "../_model/domainClass";
+import {City, EventType, Region, Timestamp} from "../_model/domainClass";
 import {Router} from "@angular/router";
 
 @Component({
@@ -15,8 +15,14 @@ import {Router} from "@angular/router";
 })
 export class SearchComponent implements OnInit {
 
-  goToEvent(id: number) {
-    this.router.navigate(['/event/view/'+id]);
+  /*Zmienne ladowania strony*/
+  public isLoading:boolean=true;
+
+  /* INICJALIZACJA ----------------------------------------*/
+  ngOnInit() {
+    this.getLatest();
+    this.getEventRegions();
+    this.getEventTypes();
   }
 
   constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder, public dateService: CustomDateService, public router:Router) {
@@ -35,39 +41,55 @@ export class SearchComponent implements OnInit {
       'eventType':new FormControl(null)
     })
     this.eventSearchForm=new EventSearchForm;
-
-  }
-
-  ngOnInit() {
-    this.getLatest();
-    this.getEventRegions();
-    this.getEventTypes();
+    this.eventSearchForm.siteNo=0;
   }
 
   getEventRegions() {
     console.info("Pobieranie regionow");
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response)=> this.regions = data.json());
+    this.eventSearchForm.region=null;
+    this.eventSearchForm.city=null;
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response)=> {this.regions = data.json(),this.addBlankRegion()});
   }
 
   getEventTypes() {
     console.info("Pobieranie eventTypes");
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response)=> this.eventTypes = data.json());
+    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response)=> {this.eventTypes = data.json(),this.addBlankEventType()});
   }
 
   getEventCities(region: Region) {
+    this.eventSearchForm.city=null;
+    this.cities=null;
     console.info("Pobieranie nazw miast");
     if (region!=null)
-      this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> this.cities = data.json());
+      this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion='+region.idRegion).subscribe((data: Response)=> {this.cities = data.json(),this.addBlankCity()});
+  }
+
+  addBlankEventType(){
+  this.eventTypes.splice(0,0,null);
+}
+  addBlankRegion(){
+    this.regions.splice(0,0,null);
+  }
+  addBlankCity(){
+    this.cities.splice(0,0,null);
   }
 
   getLatest(){
-    this.http.get(this.myHttp.getUrl() + '/api/event/search/getLatest').subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.refreshMarks()});
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchFull',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResultFull = data.json(),this.updateFullData()});
+
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchPage',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json()});
   }
+  /* END: INICJALIZACJA ----------------------------------------*/
 
 
+  /*WYNIKI WYSZUKIWANIA*/
+  public eventSearchResult:EventSearchResult[];
+  public eventSearchResultFull:EventSearchResult[];
 
 
-  /*FORMULARZ*/
+  /*FORMULARZ WYSZUKIWANIA*/
   public eventSearchForm:EventSearchForm;
   public complexForm: FormGroup;
   public regions: Region[];
@@ -76,32 +98,207 @@ export class SearchComponent implements OnInit {
   public dataRozpoczeciaPomoc: Date;
   public dataZakonczeniaPomoc: Date;
 
-  public postSearch():void{
-    console.info("postSearch()");
+  /*WYSZUKANIE WG FORMATKI BEZ MAPY*/
+  public postSearchByCriteria():void{
+    console.info("postSearchCriteria()");
     this.eventSearchForm.dateFrom=this.dataRozpoczeciaPomoc;
     this.eventSearchForm.dateTo=this.dataZakonczeniaPomoc;
+    this.eventSearchForm.toGeoWidth=null;
+    this.eventSearchForm.toGeoLenght=null;
+    this.eventSearchForm.fromGeoWidth=null;
+    this.eventSearchForm.fromGeoLenght=null;
+    this.siteNo=0;
+    this.eventSearchForm.siteNo=0;
 
-    // console.info(this.eventSearchForm!.textContent);
-    //
-    // console.info(this.eventSearchForm!.region.regionName);
-    // console.info(this.eventSearchForm!.city.cityName);
-    // console.info(this.eventSearchForm!.eventType.eventTypeName);
-    //
-    // console.info(this.eventSearchForm!.dateFrom);
-    // console.info(this.eventSearchForm!.dateTo);
-    //
-    // console.info(this.eventSearchForm!.freeEntrance);
-    // console.info(this.eventSearchForm!.registerEnabled);
+    this.isLoading=true;
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchFull',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResultFull = data.json(),this.updateFullData()});
 
-    this.http.post(this.myHttp.getUrl()+'/api/event/search/getByCriteria',this.eventSearchForm,this.myHttp.postConfig())
-      .subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.refreshMarks()});
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchPage',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json()});
+  }
 
+
+  /*WYSZUKANIE WG FORMATKI Z MAPA*/
+  public postSearchByGeo():void{
+    console.info("postSearchGeo()");
+    this.eventSearchForm.fromGeoLenght=this.fromGeoLengthNum.toString().substr(0,12);
+    this.eventSearchForm.toGeoLenght=this.toGeoLengthNum.toString().substr(0,12);
+    this.eventSearchForm.fromGeoWidth=this.fromGeoWidthNum.toString().substr(0,12);
+    this.eventSearchForm.toGeoWidth=this.toGeoWidthNum.toString().substr(0,12);
+    this.siteNo=0;
+    this.eventSearchForm.siteNo=0;
+
+    this.isLoading=true;
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchFull',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResultFull = data.json(),this.updateFullData()});
+
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchPage',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json()});
+  }
+
+  /*Odswiezenie danych po wyszukaniu*/
+  private updateFullData():void{
+    this.refreshMarks();
+    this.siteNo=0;
+    this.eventSearchForm.siteNo=0;
+    this.countEvents = this.eventSearchResultFull.length;
+    this.siteCount = Math.ceil(this.countEvents/5);
+    this.updatePageData();
+  }
+
+  /*Odswiezenie danych po zmianie strony*/
+  private updatePageData():void{
+    if(this.siteNo>0){
+      this.isPrevAvl=true;
+    }
+    else {
+      this.isPrevAvl=false;
+    }
+    console.info("ILOSC STRON: "+this.siteCount);
+    if(this.siteNo<this.siteCount-1){
+      this.isNextAvl=true;
+    }
+    else{
+      this.isNextAvl=false;
+    }
+    this.isLoading=false;
+  }
+
+  /*NAWIGACJA PO PAGINACJI*/
+  public isNextAvl:boolean = false;
+  public isPrevAvl:boolean = false;
+  public siteNo:number = 0;
+  public countEvents = 0;
+  public siteCount =0;
+
+  public postNextPage(){
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchPage',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.updatePageData()});
+  }
+
+  public postPrevPage(){
+    this.http.post(this.myHttp.getUrl()+'/api/event/search/getSearchPage',this.eventSearchForm,this.myHttp.postConfig())
+      .subscribe((data: Response)=> {this.eventSearchResult = data.json(),this.updatePageData()});
+  }
+
+  public prevPage(){
+    this.isLoading=true;
+    if(this.eventSearchForm.siteNo>0){
+      this.eventSearchForm.siteNo=this.eventSearchForm.siteNo-1;
+      this.siteNo=this.siteNo-1;
+    }
+
+    this.postPrevPage();
+  }
+
+  public nextPage(){
+    this.isLoading=true;
+    this.eventSearchForm.siteNo=this.eventSearchForm.siteNo+1;
+    this.siteNo=this.siteNo+1;
+    this.postNextPage();
   }
 
 
 
-  /*WYNIKI WYSZUKIWANIA*/
-  public eventSearchResult:EventSearchResult[];
+
+
+  /* MAPA OBLICZANIE  --------------------------------------------- */
+  private kilometersRange:number = 126;
+  private degreeRange:number = 0.0089827083*126;
+  private fromGeoLengthNum:number;
+  private toGeoLengthNum:number;
+  private fromGeoWidthNum:number;
+  private toGeoWidthNum:number;
+
+
+  private kmToDeg:number=0.0139827083;
+
+  public changeRange(value: number){
+    //console.info("Zmiana wartosci na: "+value);
+    this.kilometersRange=value;
+    this.degreeRange=this.kilometersRange*this.kmToDeg;
+
+    this.fromGeoLengthNum=this.markers[0].lng-this.degreeRange;
+    this.toGeoLengthNum=this.markers[0].lng+this.degreeRange;
+    this.fromGeoWidthNum=this.markers[0].lat-this.degreeRange;
+    this.toGeoWidthNum=this.markers[0].lat+this.degreeRange;
+
+    this.postSearchByGeo();
+  }
+  /*End OBLICZANIE*/
+
+
+  /* MAPA */
+  @ViewChild(SebmGoogleMap) map: SebmGoogleMap;
+
+  zoom: number = 12;
+  defaultLat: number = 52.25353;
+  defaultLng: number = 20.90067;
+
+  refreshMarks(){
+    if(this.markers.length>1)
+      this.markers.splice(1,this.markers.length);
+
+    for(let m of this.eventSearchResultFull){
+      m.geoNbLength=Number.parseFloat(m.geoLenght);
+      m.geoNbWidth=Number.parseFloat(m.geoWidth);
+
+      this.markers.push({
+        lat: m.geoNbWidth,
+        lng: m.geoNbLength,
+        label: '+',
+        draggable: false,
+        description: m.description,
+        idEvent: m.idEvent,
+        title: m.title,
+        startTime: m.startTime
+      })
+    }
+  }
+
+  clickedMarker(label: string, index: number) {
+    //console.log(`clicked the marker: ${label || index}`)
+  }
+
+  mapClicked($event: any) {
+    this.markers[0].lat=$event.coords.lat;
+    this.markers[0].lng=$event.coords.lng;
+    //console.info("sze/dlu CENTRALI "+$event.coords.lat+" "+$event.coords.lng);
+    this.changeRange(this.kilometersRange);
+    this.postSearchByGeo();
+
+    //console.info("Zmiana wartosci na: "+this.kilometersRange);
+  }
+
+  markerDragEnd(m: marker, $event: any) {
+    this.markers[0].lat=$event.coords.lat;
+    this.markers[0].lng=$event.coords.lng;
+    this.changeRange(this.kilometersRange);
+    //this.postSearchByGeo();
+    this.postSearchByGeo();
+  }
+
+  markers: marker[] = [{
+    lat: this.defaultLat,
+    lng: this.defaultLng,
+    label: 'TU JESTEM',
+    draggable: true,
+    description: 'Umieść w centrum wyszukiwania',
+    idEvent: -1,
+    title: 'Znacznik wyszukiwania',
+    startTime:null
+  }];
+
+  /* END: MAPA */
+
+
+  /* Przejscie do ogloszen */
+  goToEvent(id: number) {
+    console.info("goToEvent"+id);
+    this.router.navigate(['/event/view/'+id]);
+  }
+  /*END: Przejscie do ogloszen*/
 
 
   /*SLIDER Otwieranie i zamykanie slidera mapy*/
@@ -138,73 +335,6 @@ export class SearchComponent implements OnInit {
   }
   /*END Otwieranie-zamykanie slidera mapy */
 
-  /* Dzialanie na mapie*/
-  private kilometersRange:number = 51;
-  private kmToDeg:number=0.0089827083;
-
-  public changeRange(value: number){
-    console.info("Zmiana wartosci na: "+value);
-    this.kilometersRange=value;
-  }
-  /*End dzialanie na mapie*/
-
-
-  /* MAPA */
-  @ViewChild(SebmGoogleMap) map: SebmGoogleMap;
-
-  zoom: number = 12;
-  lat: number = 52.25353;
-  lng: number = 20.90067;
-
-  refreshMarks(){
-    for(let m of this.eventSearchResult){
-      m.geoNbLength=Number.parseFloat(m.geoLenght);
-      m.geoNbWidth=Number.parseFloat(m.geoWidth);
-    }
-  }
-
-  clickedMarker(label: string, index: number) {
-    console.log(`clicked the marker: ${label || index}`)
-  }
-
-  mapClicked($event: any) {
-    this.markers.push({
-      lat: $event.coords.lat,
-      lng: $event.coords.lng,
-      draggable: true
-    });
-    console.info("sze/dlu "+$event.coords.lat+" "+$event.coords.lng);
-  }
-
-  markerDragEnd(m: marker, $event: any) {
-    m.lat = $event.coords.lat;
-    m.lng = $event.coords.lng;
-    console.log('dragEnd', m, $event);
-  }
-
-  markers: marker[] = [
-    {
-      lat: 52.238907,
-      lng: 20.944372,
-      label: 'K',
-      draggable: true
-    },
-    {
-      lat: 52.229892,
-      lng: 20.896103,
-      label: 'P',
-      draggable: false
-    },
-    {
-      lat: 52.239127,
-      lng: 20.897972,
-      label: 'M',
-      draggable: true
-    }
-  ]
-  /* END: MAPA */
-
-
 
 }
 
@@ -214,5 +344,9 @@ interface marker {
   lng: number;
   label?: string;
   draggable: boolean;
+  title: string;
+  description: string;
+  idEvent:number;
+  startTime:Timestamp;
 }
 

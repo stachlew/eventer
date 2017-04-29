@@ -35,4 +35,8 @@ public class DictionaryService {
     }
 
     public List<City> getAllCities() { return cityRepository.findAll(); }
+
+    public List<City> getCitiesByIdRegion(int idRegion){
+        return cityRepository.findAllByRegion(regionRepository.findOne(idRegion));
+    }
 }

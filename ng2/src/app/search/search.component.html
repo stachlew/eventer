@@ -1,39 +1,45 @@
 <div id="mySideMap" class="sidePage">
   <div class="map-pannel" id="mapPannel">  <!--MAPA-->
     <sebm-google-map class="map-wrapper" id="SebmGoogleMap"
-             [latitude]="lat"
-             [longitude]="lng"
+             [latitude]="defaultLat"
+             [longitude]="defaultLng"
              [zoom]="zoom"
              [disableDefaultUI]="false"
              [zoomControl]="false"
              (mapClick)="mapClicked($event)">
 
       <sebm-google-map-marker
-              *ngFor="let m of eventSearchResult; let i = index"
+              *ngFor="let m of markers; let i = index"
               (markerClick)="clickedMarker(m.title, i)"
-              [latitude]="m.geoNbWidth"
-              [longitude]="m.geoNbLength"
-              [label]="m.eventType"
-              [markerDraggable]="false"
+              [latitude]="m.lat"
+              [longitude]="m.lng"
+              [label]="m.label"
+              [markerDraggable]="m.draggable"
               (dragEnd)="markerDragEnd(m, $event)">
 
         <sebm-google-map-info-window>
-          <strong>Treść znacznika {{i}}:{{m.title}}</strong>
+          <strong>{{m.title}}</strong>
+          <p>
+            {{m.startTime|date}}
+          </p>
           <p>
             {{m.description}}
           </p>
+          <p>
+            <a (click)="goToEvent(m.idEvent)"> Przejdź do strony wydarzenia <i class="fa fa-fw fa-external-link"></i>  </a>
+          </p>
         </sebm-google-map-info-window>
       </sebm-google-map-marker>
+
     </sebm-google-map>
   </div><!--END MAPA-->
   <a class="closebtn" (click)="changeSlideStatus()">
     <i [hidden]="!isSlideHide" class="fa fa-caret-square-o-right"></i>
     <i [hidden]="isSlideHide" class="fa fa-caret-square-o-left"></i>
   </a>
-  <div id="mySideMapTitle" [hidden]="isSlideHide" ><h3>Kliknij w miejscu gdzie szukasz wydarzeń</h3>
+  <div id="mySideMapTitle" [hidden]="isSlideHide" ><h3>Kliknij w miejscu gdzie szukasz wydarzeń. Zasięg: {{kilometersRange}} km.</h3>
     <form>
-      Zasięg: {{kilometersRange}} km. Przelicznik km do stopnie = {{kmToDeg}}
-      <input type="range" #ref name="points" min="1" max="100" (change)="changeRange(ref.value)">
+      <input type="range" #ref name="points" min="1" max="250" (change)="changeRange(ref.value)">
 
       <div class="form-group">
         <input type="hidden" class="form-control" id="geoLength" [(ngModel)]="myGeoLength" name="geoLength" >
@@ -41,7 +47,6 @@
       <div class="form-group">
         <input type="hidden" class="form-control" id="geoWidth" [(ngModel)]="myGeoWidth" name="geoWidth">
       </div>
-
     </form>
   </div>
 </div>
@@ -66,7 +71,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-              <div><button class="btn btn-block btn-lg" (click)="postSearch()">Szukaj</button></div>
+              <div><button class="btn btn-block btn-lg" (click)="postSearchByCriteria()">Szukaj</button></div>
             </div>
           </div>
 
@@ -81,7 +86,7 @@
             </div>
             <div class="col-md-3">
               <div class="form-group" >
-                <label for="dateTo">Od:</label>
+                <label for="dateTo">Do:</label>
                 <input type="date" class="form-control" id="dateTo" [(ngModel)]="dataZakonczeniaPomoc" name="dateTo" [formControl]="complexForm.controls['dateTo']">
               </div>
             </div>
@@ -89,7 +94,7 @@
               <div class="form-group">
                 <label for="regionName">Region:</label>
                 <select class="form-control" [(ngModel)]="eventSearchForm.region" name="regionName" id="regionName" (click)="getEventCities(eventSearchForm.region)">
-                  <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
+                  <option *ngFor="let i of regions" [ngValue]="i">{{i?.regionName}}</option>
                 </select>
               </div>
             </div>
@@ -97,7 +102,7 @@
               <div class="form-group">
                 <label for="cityName">Miasto:</label>
                 <select class="form-control" [(ngModel)]="eventSearchForm.city" name="cityName" id="cityName">
-                  <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
+                  <option *ngFor="let i of cities" [ngValue]="i">{{i?.cityName}}</option>
                 </select>
               </div>
             </div>
@@ -108,7 +113,7 @@
               <div class="form-group">
                 <label for="eventTypeName">Typ wydarzenia:</label>
                 <select class="form-control" [(ngModel)]="eventSearchForm.eventType" name="eventTypeName" id="eventTypeName">
-                  <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
+                  <option *ngFor="let i of eventTypes" [ngValue]="i">{{i?.eventTypeName}}</option>
                 </select>
               </div>
             </div>
@@ -146,13 +151,28 @@
 <div class="row">
   <!--SRODEK GLOWNE CIALO-->
   <div class="col-md-10 col-md-offset-1">
+    <div class="row" *ngIf="isLoading" align="center">
+      <img class="img-responsive"style="width: 15%" src="../assets/images/loading2.gif" />
+    </div>
     <!--LISTA ZWROTNA-->
-    <div class="row">
+    <div class="row" *ngIf="!isLoading">
       <div class="col-md-offset-1 col-md-10">
         <!--NAGLOWEK LISTY-->
         <div class="row">
           <div class="col-md-12 resultBlock">
-            <h4>Znaleziono {{eventSearchResult?.length}} wydarzeń</h4>
+            <h2 *ngIf="eventSearchResultFull?.length>0">Znaleziono {{eventSearchResultFull?.length}} wydarzeń</h2>
+            <h2 *ngIf="eventSearchResultFull?.length<=0">Nie znaleziono wydarzeń według podanych kryteriów</h2>
+            <div class="row resultBlock" *ngIf="eventSearchResultFull?.length>0">
+              <div class="col-md-offset-1 col-md-10">
+                <nav aria-label="...">
+                  <ul class="pager">
+                    <li class="" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
+                    <li class=""><span>Strona {{siteNo+1}}/{{siteCount}}</span></li>
+                    <li class="" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
           </div>
           <br>
         </div>
@@ -246,12 +266,13 @@
         </div>
         <!--END CIALO LISTY-->
         <!--STOPKA LISTY-->
-        <div class="row resultBlock">
+        <div class="row resultBlock" *ngIf="eventSearchResultFull?.length>0">
           <div class="col-md-offset-1 col-md-10">
             <nav aria-label="...">
               <ul class="pager">
-                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                <li class="" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
+                <li class=""><span>Strona {{siteNo+1}}/{{siteCount}}</span></li>
+                <li class="" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
               </ul>
             </nav>
           </div>

@@ -1,5 +1,6 @@
 import {City, EventType, Region, SimpleUser, Timestamp} from "./domainClass";
 export class EventSearchForm {
+  siteNo:number;
   textContent:string;
 
   region:Region;
