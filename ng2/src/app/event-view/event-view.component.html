@@ -38,8 +38,8 @@
   <div class="col-md-6">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h1><i class="fa fa-calendar"></i></h1>
-      <h3><i class="fa fa-fw fa-play"></i>{{event.startTime|date}}</h3>
-      <h3><i class="fa fa-fw fa-stop"></i>{{event.endTime|date}}</h3>
+      <h3><i class="fa fa-fw fa-play"></i>{{event.startTime|date:'d-MM-y'}}</h3>
+      <h3><i class="fa fa-fw fa-stop"></i>{{event.endTime|date:'d-MM-y'}}</h3>
     </div>
   </div>
   <div class="col-md-6  ">
@@ -75,7 +75,7 @@
         <a *ngFor="let i of event.lectures" (click)="modal2.show(i,i.eventViewSpeaker)" class="list-group-item active lecture clickable">
           <div class="row">
             <div class="col-md-5">
-              <p><i class="fa fa-clock-o"></i> {{i.startTime | date:'shortDate'}} {{i.startTime | date:'shortTime'}}</p>
+              <p><i class="fa fa-clock-o"></i> {{i.startTime |date:'d-MM-y'}} {{i.startTime |date:'HH:mm'}}</p>
             </div>
             <div class="col-md-7" style="font-weight: lighter">
               <p>{{i.eventViewSpeaker.firstname}} {{i.eventViewSpeaker.lastname}}</p>
@@ -225,7 +225,7 @@
               <!--END:GWIAZDKI-->
             </div>
             <div class="col-md-offset-2 col-md-5" style="font-weight: lighter" align="right">
-              <p>{{i.email}} </p><p> {{i.createDate | date:'shortDate'}}</p>
+              <p>{{i.email}} </p><p> {{i.createDate |date:'d-MM-y HH:mm'}}</p>
             </div>
           </div>
           <div class="row">

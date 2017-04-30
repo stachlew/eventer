@@ -1,3 +1,264 @@
-<p>
-  event-edit works! {{id}}
-</p>
+<div class="row" *ngIf="isLoading" align="center">
+  <img class="img-responsive"style="width: 15%" src="../assets/images/loading2.gif" />
+</div>
+
+<div *ngIf="!isLoading" class="row formBody">
+  <div class="col-md-12">
+    <form>
+      <div class="col-md-7">
+        <H1>EDYCJA WYDARZENIA ID: {{idEvent}}</H1>
+      </div>
+      <div class="col-md-4" style="font-size: x-large; margin-top: 15px">
+
+        <button (click)="postEditEvent()" type="" class="btn btn-success btn-lg btn-block">Zapisz zmiany</button>
+        <br>
+        <span class="myCheckbox" *ngIf="eventInfo.published" (click)="changePublished()">Publikowane: <i class="fa fa-check-square-o"></i> </span>
+        <span class="myCheckbox" *ngIf="!eventInfo.published" (click)="changePublished()">Publikowane: <i class="fa fa-square-o"></i> </span>
+        <span style="margin-left: 15px"></span>
+        <span class="myCheckbox" *ngIf="eventInfo.registerEnabled" (click)="changeRegister()">Rejestracja: <i class="fa fa-check-square-o"></i> </span>
+        <span class="myCheckbox" *ngIf="!eventInfo.registerEnabled" (click)="changeRegister()">Rejestracja: <i class="fa fa-square-o"></i> </span>
+
+      </div>
+      <div class="col-md-1"></div>
+
+      <div class="col-sm-8 col-md-8 col-lg-8 pading0">
+        <div *ngIf="!isTitleEdit" class="titleView">
+          Nazwa wydarzenia: <span style="font-weight: bold; font-size: x-large">{{eventInfo.title}}</span>
+          <span (click)="editTitle()"><i class="fa fa-pencil-square-o"></i></span>
+        </div>
+        <div *ngIf="isTitleEdit" class="titleEdit">
+          <!--EDYCJA-->
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['title'].valid && complexForm.controls['title'].touched}">
+            <label for="nazwaWydarzenia"><span class="saveIcon" (click)="editTitle()"><i class="fa fa-floppy-o"></i></span>Nazwa wydarzenia:</label>
+            <input type="text" class="form-control" id="nazwaWydarzenia" [(ngModel)]="eventInfo.title" name="nazwaWydarzenia" [formControl]="complexForm.controls['title']">
+            <div *ngIf="complexForm.controls['title'].hasError('required') && complexForm.controls['title'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['title'].hasError('minlength') && complexForm.controls['title'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+            <div *ngIf="complexForm.controls['title'].hasError('maxlength') && complexForm.controls['title'].touched" class="alert alert-danger">Maksimum 100 znaków.</div>
+          </div>
+          <!---->
+
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 pading0">
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <div *ngIf="!isDateEdit" class="dateView">
+          Rozpoczęcie: <b>{{dataOdPomocnicza |date:'d-MM-y HH:mm'}}</b> Zakończenie: <b>{{dataDoPomocnicza |date:'d-MM-y HH:mm'}}</b>
+          <span (click)="editDate()"><i class="fa fa-pencil-square-o"></i></span>
+        </div>
+        <div *ngIf="isDateEdit" class="dateEdit">
+          <!--EDYCJA-->
+          <div *ngIf="isDateValid==0" class="list-group-item list-group-item-danger">
+            Błędna data!
+          </div>
+          <div *ngIf="isDateValid==0" class="alert alert-danger">Data zakończenia znajduje się przed datą rozpoczęcia!</div>
+          <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['startTime'].valid && complexForm.controls['startTime'].touched}">
+            <label for="startTime">Data i godzina rozpoczęcia:</label>
+            <input type="datetime-local" class="form-control" id="startTime" [(ngModel)]="dataOdPomocnicza" name="startTime" [formControl]="complexForm.controls['startTime']" (change)="validDates()">
+            <div *ngIf="complexForm.controls['startTime'].hasError('required') && complexForm.controls['startTime'].touched && isDateValid==0" class="alert alert-danger">Pole obowiązkowe.</div>
+          </div>
+          <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['endTime'].valid && complexForm.controls['endTime'].touched}">
+            <label for="endTime">Data i godzina zakończenia:</label>
+            <input type="datetime-local" class="form-control" id="endTime" [(ngModel)]="dataDoPomocnicza" name="endTime" [formControl]="complexForm.controls['endTime']" (change)="validDates()">
+            <div *ngIf="complexForm.controls['endTime'].hasError('required') && complexForm.controls['endTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          </div>
+          <!---->
+          <span class="saveIcon" (click)="editDate()"><i class="fa fa-floppy-o"></i></span>
+        </div>
+
+
+        <!--REGION-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
+          <div *ngIf="!isRegionEdit" class="regionView">
+            Województwo: <b>{{eveRegion?.regionName}}</b>
+            <span (click)="editRegion()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isRegionEdit" class="regionEdit">
+            <label for="regionName"><span class="saveIcon" (click)="editRegion()"><i class="fa fa-floppy-o"></i></span>Region:</label>
+            <select class="form-control" required  [(ngModel)]="eveRegion" name="regionName" id="regionName" (click)="getUpdateEventCities(eveRegion)">
+              <option *ngFor="let i of regions" [ngValue]="i">{{i.regionName}}</option>
+            </select>
+
+          </div>
+        </div>
+
+
+        <!--MIASTO-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm">
+          <div *ngIf="!isCityEdit" class="cityView">
+            Miasto: <b>{{eveCity?.cityName}}</b>
+            <span (click)="editCity()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isCityEdit" class="cityEdit">
+            <label for="cityName"><span class="saveIcon" (click)="editCity()"><i class="fa fa-floppy-o"></i></span>Miasto:</label>
+            <select class="form-control" required [(ngModel)]="eveCity" name="cityName" id="cityName">
+              <option *ngFor="let i of cities" [ngValue]="i">{{i.cityName}}</option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <!--ULICA-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['streetName'].valid && complexForm.controls['streetName'].touched}">
+          <div *ngIf="!isStreetNameEdit" class="streetNameView">
+            Ulica: <b>{{evePlace.streetName}}</b>
+            <span (click)="editStreetName()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isStreetNameEdit" class="streetNameEdit">
+            <label for="streetName"><span class="saveIcon" (click)="editStreetName()"><i class="fa fa-floppy-o"></i></span>Ulica:</label>
+            <input type="text" class="form-control" id="streetName" [(ngModel)]="evePlace.streetName" name="streetName" [formControl]="complexForm.controls['streetName']">
+            <div *ngIf="complexForm.controls['streetName'].hasError('required') && complexForm.controls['streetName'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['streetName'].hasError('minlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+            <div *ngIf="complexForm.controls['streetName'].hasError('maxlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+
+          </div>
+        </div>
+
+        <!--NR BUDYNKU-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['streetNo'].valid && complexForm.controls['streetNo'].touched}">
+          <div *ngIf="!isStreetNoEdit" class="streetNoView">
+            Numer budynku/lokalu: <b>{{evePlace.streetNo}}</b>
+            <span (click)="editStreetNo()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isStreetNoEdit" class="streetNoEdit">
+            <label for="streetNo"><span class="saveIcon" (click)="editStreetNo()"><i class="fa fa-floppy-o"></i></span>Numer budynku/lokalu:</label>
+            <input type="text" class="form-control" id="streetNo" [(ngModel)]="evePlace.streetNo" name="streetNo" [formControl]="complexForm.controls['streetNo']">
+            <div *ngIf="complexForm.controls['streetNo'].hasError('required') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['streetNo'].hasError('minlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Minimum 1 znaki.</div>
+            <div *ngIf="complexForm.controls['streetNo'].hasError('maxlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Maksimum 20 znaków.</div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <!--TYP WYDARZENIA-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
+          <div *ngIf="!isTypeEdit" class="typeView">
+            Typ wydarzenia: <b>{{eventInfo.eventType?.eventTypeName}}</b>
+            <span (click)="editType()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isTypeEdit" class="typeEdit">
+            <label for="eventTypeName"><span class="saveIcon" (click)="editType()"><i class="fa fa-floppy-o"></i></span>Typ wydarzenia:</label>
+            <select class="form-control" required [(ngModel)]="eventInfo.eventType" name="eventType" id="eventTypeName">
+              <option *ngFor="let i of eventTypes" [ngValue]="i">{{i.eventTypeName}}</option>
+            </select>
+
+          </div>
+        </div>
+
+
+        <!--POJEMNOSC-->
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 padingCenterForm">
+          <div *ngIf="!isCapacityEdit" class="capacityView">
+            Liczba miejsc: <b>{{eventInfo.capacity}}</b>
+            <span (click)="editCapacity()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isCapacityEdit" class="capacityEdit">
+            <label for="capacity"><span class="saveIcon" (click)="editCapacity()"><i class="fa fa-floppy-o"></i></span>Liczba miejsc:</label>
+            <input type="number" min="1" max="9999999" class="form-control" id="capacity" required [(ngModel)]="eventInfo.capacity" name="capacity">
+
+
+          </div>
+        </div>
+
+
+        <!--WSTEP WOLNY-->
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 padingRightForm">
+          <div *ngIf="!isFreeEdit" class="freeView">
+            <span *ngIf="eventInfo.freeEntrance">Wstęp bezpłatny</span>
+            <span *ngIf="!eventInfo.freeEntrance">Wstęp płatny</span>
+            <span (click)="editFree()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isFreeEdit" class="freeEdit">
+            <label for="freeEntrance"><span class="saveIcon" (click)="editFree()"><i class="fa fa-floppy-o"></i></span>Wydarzenie bezpłatne?</label>
+            <select class="form-control" required [(ngModel)]="eventInfo.freeEntrance" name="freeEntrance" id="freeEntrance">
+              <option [ngValue]="true">Tak</option>
+              <option [ngValue]="false">Nie</option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <!--OPIS WYDARZENIA-->
+        <div *ngIf="!isDescriptionEdit" class="descriptionView">
+          OPIS: <br>
+          <b>{{eventInfo.description}}</b>
+          <span (click)="editDescription()"><i class="fa fa-pencil-square-o"></i></span>
+        </div>
+        <div *ngIf="isDescriptionEdit" class="descriptionEdit">
+          <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['description'].valid && complexForm.controls['description'].touched}">
+            <label for="endTime"><span class="saveIcon" (click)="editDescription()"><i class="fa fa-floppy-o"></i></span>Opis wydarzenia:</label>
+            <textarea rows="5" class="form-control" id="description" [(ngModel)]="eventInfo.description" name="description" [formControl]="complexForm.controls['description']"></textarea>
+            <div *ngIf="complexForm.controls['description'].hasError('required') && complexForm.controls['description'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            <div *ngIf="complexForm.controls['description'].hasError('minlength') && complexForm.controls['description'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+            <div *ngIf="complexForm.controls['description'].hasError('maxlength') && complexForm.controls['description'].touched" class="alert alert-danger">Maksimum 1000 znaków.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoLength" [(ngModel)]="evePlace.geoLength" name="geoLength" >
+      </div>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="geoWidth" [(ngModel)]="evePlace.geoWidth" name="geoWidth">
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12 pading0">
+        <!--YOUTUBE-->
+
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm">
+          <button class="btn btn-danger btn-lg btn-block" (click)="changeMapVisible()">Lokalizacja wydarzenia</button>
+          <div class="map-pannel" id="mapPannel" *ngIf="isMapVisible">  <!--MAPA-->
+            <sebm-google-map class="map-wrapper" id="SebmGoogleMap"
+                             [latitude]="defaultLat"
+                             [longitude]="defaultLng"
+                             [zoom]="zoom"
+                             [disableDefaultUI]="false"
+                             [zoomControl]="false"
+                             (mapClick)="mapClicked($event)">
+
+              <sebm-google-map-marker
+                *ngFor="let m of markers; let i = index"
+                (markerClick)="clickedMarker(m.title, i)"
+                [latitude]="m.lat"
+                [longitude]="m.lng"
+                [label]="m.label"
+                [markerDraggable]="m.draggable"
+                (dragEnd)="markerDragEnd(m, $event)">
+              </sebm-google-map-marker>
+
+            </sebm-google-map>
+            <span>Kliknij na mapie by zmienić położenie wydarzenia.</span>
+          </div>
+
+        </div>
+
+        <!--MAPA-->
+        <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" >
+          <button class="btn btn-danger btn-lg btn-block" (click)="changeYTVisible()">Film youtube</button>
+
+          <div *ngIf="isYTVisible">
+            <div *ngIf="!isYtEdit" class="isYtView">
+              <iframe class="myIFrame" [src]='url' frameborder="5" allowfullscreen></iframe>
+              <span (click)="changeYt()">Edycja linku <i class="fa fa-pencil-square-o"></i></span>
+            </div>
+            <div *ngIf="isYtEdit" class="isYtEdit">
+              <label for="youtubeLink"><span class="saveIcon" (click)="changeYt()"><i class="fa fa-floppy-o"></i></span>Wklej identyfikator filmu YouTube:</label>
+              <input type="text" class="form-control" id="youtubeLink" [(ngModel)]="eventInfo.youtubeLink" name="youtubeLink">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

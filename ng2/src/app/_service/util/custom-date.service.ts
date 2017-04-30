@@ -14,9 +14,11 @@ export class CustomDateService {
     month = month < 10 ? '0' + month : month;
     day = date.getUTCDate();
     day = day < 10 ? '0' + day : day;
-    hour = date.getUTCHours();
+    //hour = date.getUTCHours();
+    hour = date.getHours();
     hour = hour < 10 ? '0' + hour : hour;
-    min = date.getUTCMinutes();
+    //min = date.getUTCMinutes();
+    min = date.getMinutes();
     min = min < 10 ? '0' + min : min;
     str += year + '-' + month + '-' + day;
     str += ' ' + hour + ':' + min;

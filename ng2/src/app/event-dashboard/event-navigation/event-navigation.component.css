@@ -1,0 +1,18 @@
+.navPanel{
+  background-color: #e95420;
+  padding: 15px;
+  color: white;
+}
+
+.navLink{
+  color: white;
+}
+
+.navLink:focus{
+  background-color: #c62525;
+}
+
+.navLink:hover{
+  color: white;
+  background-color: firebrick;
+}

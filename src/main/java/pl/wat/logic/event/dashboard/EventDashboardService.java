@@ -8,6 +8,7 @@ import pl.wat.db.domain.event.location.City;
 import pl.wat.db.domain.event.location.Place;
 import pl.wat.db.domain.event.location.Region;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.location.PlaceRepository;
 import pl.wat.logic.event._model.dashboard.EventDashboardInfo;
 
 @Service
@@ -15,6 +16,17 @@ public class EventDashboardService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    PlaceRepository placeRepository;
+
+    //Zwrot pelnego Eventu z bazy
+    public Event getFullEvent(int id){
+        if(eventRepository.exists(id)) {
+            return eventRepository.getOne(id);
+        }
+        return null;
+    }
 
     // Zwrot informacji o wydarzeniu
     public EventDashboardInfo getEventDashboardInfo(int id) {
@@ -41,11 +53,11 @@ public class EventDashboardService {
         event.setTitle(eventDashboardInfo.getTitle());
         event.setYoutubeLink(eventDashboardInfo.getYoutubeLink());
 
-        event.setPlace(eventDashboardInfo.getPlace());
         event.setEventType(eventDashboardInfo.getEventType());
 
         try {
             eventRepository.save(event);
+            placeRepository.save(eventDashboardInfo.getPlace());
             return true;
         } catch (Exception e) {
             return false;

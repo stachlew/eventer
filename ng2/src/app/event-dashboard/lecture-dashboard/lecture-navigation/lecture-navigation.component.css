@@ -1,0 +1,12 @@
+.navLink{
+  color: white;
+}
+
+.navLink:focus{
+  background-color: #c62525;
+}
+
+.navLink:hover{
+  color: white;
+  background-color: firebrick;
+}

@@ -1,10 +1,13 @@
-<div class="row" >
-  <!-- LEWA KOLUMNA NAWIGACJI LECTURE -->
-  <div class="col-md-2 ">
+<!-- WIERSZ NAWIGACJI LECTURE -->
+<div class="row">
+  <div class="col-md-12" style="background-color: #e95420;">
     <app-lecture-navigation></app-lecture-navigation>
   </div>
-  <!-- PRAWA KOLUMNA TRESCI LECTURE  -->
-  <div class="col-md-10 ">
+</div>
+
+<!-- TRESCI LECTURE  -->
+<div class="row">
+  <div class="col-md-12 ">
     <ng2-page-transition [scrollTop]="false">
       <router-outlet></router-outlet>
     </ng2-page-transition>

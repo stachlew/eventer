@@ -1,36 +1,35 @@
-<p>
-  Panel sterowania eventem id: {{id}}
-</p>
-<ul class="nav">
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['/event/dashboard/'+id]" >
-      <i class="fa fa-fw fa-info-circle"></i>Informacje podstawowe
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['edit']" >
-      <i class="fa fa-fw fa-pencil-square-o"></i>Edycja eventu
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['formals']" >
-      <i class="fa fa-fw fa-gavel"></i>Sprawy formalne
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['guests']" >
-      <i class="fa fa-fw fa-users"></i>Lista gości
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['lectures']" >
-      <i class="fa fa-fw fa-calendar"></i>Prelekcje
-    </a>
-  </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['statistics']" >
-      <i class="fa fa-fw fa-bar-chart"></i> Statystyki
-    </a>
-  </li>
-</ul>
-
+<div class="navPanel">
+  <h2>Panel sterowania wydarzeniem</h2>
+  <ul class="nav">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['/event/dashboard/'+id]" >
+        <i class="fa fa-fw fa-info-circle"></i>Informacje podstawowe
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['edit']" >
+        <i class="fa fa-fw fa-pencil-square-o"></i>Edycja eventu
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['formals']" >
+        <i class="fa fa-fw fa-gavel"></i>Sprawy formalne
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['guests']" >
+        <i class="fa fa-fw fa-users"></i>Lista gości
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['lectures']" >
+        <i class="fa fa-fw fa-calendar"></i>Prelekcje
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="navLink" [routerLink]="['statistics']" >
+        <i class="fa fa-fw fa-bar-chart"></i> Statystyki
+      </a>
+    </li>
+  </ul>
+</div>

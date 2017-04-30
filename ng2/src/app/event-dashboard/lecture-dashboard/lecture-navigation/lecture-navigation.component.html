@@ -1,26 +1,23 @@
-<p>
-  Nawigacja wykładów:
-</p>
-<ul class="nav">
+<ul class="nav navbar-nav">
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['./']" >
-      Lista wykładów
+    <a class="navLink" [routerLink]="['./']" >
+      <i class="fa fa-fw fa-list"></i>Lista wykładów
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['create/lecture']" >
-      Utwórz wykład
+    <a class="navLink" [routerLink]="['create/lecture']" >
+      <i class="fa fa-fw fa-plus-square-o"></i>Utwórz wykład
     </a>
   </li>
   <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['speakers']" >
-      Lista prelegentów
+    <a class="navLink" [routerLink]="['speakers']" >
+      <i class="fa fa-fw fa-id-badge"></i>Lista prelegentów
     </a>
   </li>
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-    <a [routerLink]="['create/speaker']" >
-      Dodaj prelegenta
-    </a>
-  </li>
-
+  <!--<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">-->
+    <!--<a class="navLink" [routerLink]="['create/speaker']" >-->
+      <!--Dodaj prelegenta-->
+    <!--</a>-->
+  <!--</li>-->
 </ul>
+

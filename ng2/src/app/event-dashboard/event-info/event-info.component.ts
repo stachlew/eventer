@@ -1,6 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {EventStorageService} from "../event-storage.service";
+import {HttpSecService} from "../../_service/util/http-sec.service";
+import {Http, Response} from "@angular/http";
 
 @Component({
   selector: 'app-event-info',
@@ -10,12 +11,11 @@ import {EventStorageService} from "../event-storage.service";
 export class EventInfoComponent implements OnInit {
 
   id:string;
-
-  constructor(private eventStorageService: EventStorageService) { }
+  constructor(private eveStore: EventStorageService, private http: Http, private myHttp: HttpSecService) { }
 
   ngOnInit() {
-    this.id=this.eventStorageService.getCurrentEventId();
-  }
+    this.id=this.eveStore.getCurrentEventId();
+    }
 
 
 

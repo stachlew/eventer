@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import pl.wat.db.domain.user.Authority;
 import pl.wat.db.domain.user.AuthorityName;
 import pl.wat.db.domain.user.User;
+import pl.wat.logic.event.dashboard.EventDashboardService;
 import pl.wat.logic.user.account.UserAccountService;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class SecurityInfo {
 
     private UserAccountService userAccountService;
     private Authentication auth;
+
 
     public SecurityInfo(Authentication auth,UserAccountService userAccountService){
         if(auth!=null && userAccountService!=null){
@@ -41,6 +43,14 @@ public class SecurityInfo {
             if(this.haveUserAuth && !this.haveAdminAuth)
                 this.isUser=true;
         }
+    }
+
+    public boolean isEventOwner(int eventId, EventDashboardService service){
+        String owner = service.getFullEvent(eventId).getUser().getUsername();
+        if(this.username.equals(owner))
+            return true;
+        else
+            return false;
     }
 
 
