@@ -12,4 +12,6 @@ import java.util.List;
 public interface OpinionRepository extends JpaRepository<Opinion,Integer> {
 
     public List<Opinion> getAllByEventOrderByCreateDate(Event event);
+
+    Integer countByEventIdEventAndRate(int idEvent,int rate);
 }
