@@ -1,14 +1,9 @@
-<div class="row">
-  <div class="col-md-offset-1 col-md-10">
-    <H1>Lista gości wydarzenia</H1>
-  </div>
-</div>
-<div class="row">
+<div class="row" style="margin-top: 50px">
   <div class="col-md-offset-1 col-md-10">
     <!--TABELA-->
     <div class="panel panel-default">
       <!-- Naglowek -->
-      <div class="panel-heading">Panel heading</div>
+      <div class="panel-heading"><H1>Lista gości wydarzenia</H1></div>
 
       <!-- Cialo -->
       <table class="table">
@@ -27,8 +22,8 @@
           <td>{{g.firstName}}</td>
           <td>{{g.lastName}}</td>
           <td>
-            <span></span>
-            {{g.presence}}
+            <span *ngIf="g.presence" (click)="changePresence(g)"><i class="fa fa-check-square-o"></i></span>
+            <span *ngIf="!g.presence" (click)="changePresence(g)"><i class="fa fa-square-o"></i></span>
           </td>
         </tr>
       </table>

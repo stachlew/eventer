@@ -26,6 +26,11 @@ export class EventDashboardStatisticsInfo {
   visits:number;
   participants:number;
   presence:number;
+  stars5:number;
+  stars4:number;
+  stars3:number;
+  stars2:number;
+  stars1:number;
 }
 
 export class EventViewPartcipant {

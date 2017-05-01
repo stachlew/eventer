@@ -19,8 +19,18 @@ export class EventGuestsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.idEvent=this.eventStorageService.getCurrentEventId();
-    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/guests/getList/'+this.idEvent,this.myHttp.getConfig()).subscribe((data: Response)=> {this.guests = data.json()});
+    this.idEvent = this.eventStorageService.getCurrentEventId();
+    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/guests/getList/' + this.idEvent, this.myHttp.getConfig()).subscribe((data: Response) => {
+      this.guests = data.json()
+    });
+  }
+
+  public changePresence(guest: EventViewPartcipant):void{
+    if(guest!=null){
+      (guest.presence) ? guest.presence=false : guest.presence=true;
+      this.http.post(this.myHttp.getUrl() + '/api/event/dashboard/guests/setPresence', guest, this.myHttp.postConfig())
+        .subscribe((data: Response) => { });
+    }
   }
 
 }

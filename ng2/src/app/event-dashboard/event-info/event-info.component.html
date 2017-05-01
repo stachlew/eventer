@@ -14,12 +14,13 @@
       <h3>Wyświetleń wydarzenia: {{stats.visits}}</h3>
       <h3>Zapisani goście: {{stats.participants}}/{{eventInfo.capacity}}</h3>
       <h3>Obecni na wydarzeniu: {{stats.presence}}/{{stats.participants}}</h3>
+      <h3>Liczba opinii: {{stats.stars1+stats.stars2+stats.stars3+stats.stars4+stats.stars5}}</h3>
       <h3>Ocena wydarzenia:</h3>
-      <div class="rateRow"><i class="fa fa-star star"></i>23</div>
-      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i>54</div>
-      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>63</div>
-      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>34</div>
-      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>67</div>
+      <div class="rateRow"><i class="fa fa-star star"></i>{{stats.stars1}}</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i>{{stats.stars2}}</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>{{stats.stars3}}</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>{{stats.stars4}}</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>{{stats.stars5}}</div>
     </div>
   </div>
 </div>
