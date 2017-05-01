@@ -36,9 +36,9 @@ public class EventDashboardParticipantsService {
         return null;
     }
 
-    public boolean editParticipantPresence(EventDashboardAttendForm attendForm) {
-        Participant participant = participantRepository.findOne(attendForm.getIdParticipant());
-        participant.setPresence(attendForm.isPresent());
+    public boolean editParticipantPresence(EventViewPartcipant eventViewPartcipant) {
+        Participant participant = participantRepository.findOne(eventViewPartcipant.getIdPartcipant());
+        participant.setPresence(eventViewPartcipant.isPresence());
 
         try {
             participantRepository.save(participant);

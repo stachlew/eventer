@@ -16,14 +16,15 @@ import java.util.List;
 @RequestMapping("/api/event/dashboard/guests")
 public class EventDashboardGuestsCtrl {
 
-    @Autowired
-    EventDashboardParticipantsService eventDashboardParticipantsService;
 
     @Autowired
     UserAccountService userAccountService;
 
     @Autowired
     EventDashboardService eventDashboardService;
+
+    @Autowired
+    EventDashboardParticipantsService eventDashboardParticipantsService;
 
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/getList/{id}",method = RequestMethod.GET)
@@ -39,6 +40,15 @@ public class EventDashboardGuestsCtrl {
         }catch (Exception e){
             return null;
         }
+    }
+
+    @RequestMapping(value = "/setPresence",method = RequestMethod.POST)
+    boolean setParticipantPresence (@RequestBody EventViewPartcipant eventViewPartcipant){
+        if (eventViewPartcipant!=null){
+            return eventDashboardParticipantsService.editParticipantPresence(eventViewPartcipant);
+        }
+        return false;
+
     }
 
 }
