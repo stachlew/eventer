@@ -1,4 +1,25 @@
-<p>
-  event-info works! {{id}}
-</p>
+<div class="row" *ngIf="isLoading" align="center">
+  <img class="img-responsive"style="width: 15%" src="../assets/images/loading2.gif" />
+</div>
 
+
+<div *ngIf="!isLoading"  class="row">
+  <div class="row">
+    <div class="col-md-11 col-md-offset-1">
+      <H1>Statystyki wydarzenia: <i>{{eventInfo.title}}</i></H1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-11 col-md-offset-1">
+      <h3>Wyświetleń wydarzenia: {{stats.visits}}</h3>
+      <h3>Zapisani goście: {{stats.participants}}/{{eventInfo.capacity}}</h3>
+      <h3>Obecni na wydarzeniu: {{stats.presence}}/{{stats.participants}}</h3>
+      <h3>Ocena wydarzenia:</h3>
+      <div class="rateRow"><i class="fa fa-star star"></i>23</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i>54</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>63</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>34</div>
+      <div class="rateRow"><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i><i class="fa fa-star star"></i>67</div>
+    </div>
+  </div>
+</div>

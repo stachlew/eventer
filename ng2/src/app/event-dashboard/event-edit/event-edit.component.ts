@@ -7,7 +7,8 @@ import {City, EventType, Place, Region} from "../../_model/domainClass";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomDateService} from "../../_service/util/custom-date.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-
+import { FileUploader } from 'ng2-file-upload';
+import {any} from "codelyzer/util/function"; //UPLOAD PLIKU
 
 @Component({
   selector: 'app-event-edit',
@@ -67,7 +68,7 @@ export class EventEditComponent implements OnInit {
   }
 
   private updateData():void{
-    //console.info(this.eventInfo.place);
+    console.info("updateData()");
     this.evePlace=this.eventInfo.place;
     this.eveCity=this.eventInfo.place.city;
     this.eveRegion=this.eventInfo.place.city.region;
@@ -86,15 +87,17 @@ export class EventEditComponent implements OnInit {
     });
     this.updateYt();
     this.isLoading=false;
-
+    this.uploader = new FileUploader({url:this.myHttp.getUrl() + '/api/images/postEventImage/'+this.eventInfo.idEvent,authToken:this.myHttp.getToken()});
+    this.uploader.onCompleteItem = ()=>{this.updateData()};
+    this.uploader.onCompleteAll = ()=>{this.updateData()};
+    this.imageUrl= this.myHttp.getUrl()+ '/api/images/getEventImage/'+this.idEvent+'?random+\=' + Math.random();
 
 
   }
 
   ngOnInit() {
-
+    this.imageUrl= this.myHttp.getUrl()+ '/api/images/getEventImage/'+this.idEvent+'?random+\=' + Math.random();
   }
-
 
 
   /*
@@ -116,6 +119,7 @@ export class EventEditComponent implements OnInit {
   //DANE GLOWNE
   idEvent:string;
   eventInfo: EventDashboardInfo;//2 w 1 INFO ORAZ FORMULARZ
+  imageUrl:string;
 
   //FORMULARZ
   complexForm: FormGroup;
@@ -366,6 +370,13 @@ export class EventEditComponent implements OnInit {
 
   public changeYTVisible(){
     (this.isYTVisible) ? this.isYTVisible=false : this.isYTVisible=true;
+  }
+
+  //ZDJECIE
+  public uploader:FileUploader;
+
+  public deleteImage(){
+    this.http.get(this.myHttp.getUrl() + '/api/images/deleteEventImage/'+this.eventInfo.idEvent,this.myHttp.getConfig()).subscribe((data: Response)=> this.updateData());
   }
 
 

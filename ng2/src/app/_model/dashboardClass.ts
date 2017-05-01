@@ -27,3 +27,12 @@ export class EventDashboardStatisticsInfo {
   participants:number;
   presence:number;
 }
+
+export class EventViewPartcipant {
+  idPartcipant:number;
+  activated: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
+  presence: boolean;
+}

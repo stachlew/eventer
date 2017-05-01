@@ -3,7 +3,7 @@
   <ul class="nav">
     <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
       <a class="navLink" [routerLink]="['/event/dashboard/'+id]" >
-        <i class="fa fa-fw fa-info-circle"></i>Informacje podstawowe
+        <i class="fa fa-fw fa-info-circle"></i><span style="font-weight: bold">INFO</span>
       </a>
     </li>
     <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
@@ -26,10 +26,10 @@
         <i class="fa fa-fw fa-calendar"></i>Prelekcje
       </a>
     </li>
-    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-      <a class="navLink" [routerLink]="['statistics']" >
-        <i class="fa fa-fw fa-bar-chart"></i> Statystyki
-      </a>
-    </li>
+    <!--<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">-->
+      <!--<a class="navLink" [routerLink]="['statistics']" >-->
+        <!--<i class="fa fa-fw fa-bar-chart"></i> Statystyki-->
+      <!--</a>-->
+    <!--</li>-->
   </ul>
 </div>

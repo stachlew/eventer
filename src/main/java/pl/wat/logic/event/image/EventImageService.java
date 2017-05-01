@@ -51,6 +51,14 @@ public class EventImageService {
         }
     }
 
+
+    //usuniecie obrazu eventu
+    @Transactional
+    public void deleteImageEvent(int idEvent) {
+        Event event = eventRepository.findOne(idEvent);
+        event.setImage(null);
+    }
+
     //odczyt obrazu speakera
     public byte[] findImageByIdSpeaker(int idSpeaker) {
         Speaker speaker = speakerRepository.findOne(idSpeaker);
@@ -64,6 +72,29 @@ public class EventImageService {
             }
         }
         return null;
+    }
+
+    //zapis obrazu speakera
+    @Transactional
+    public void saveImageToSpeaker(int idSpeaker, byte[] image) {
+        Speaker speaker = speakerRepository.findOne(idSpeaker);
+        if(image!=null) {
+            try {
+                speaker.setImage(new SerialBlob(image));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            speaker.setImage(null);
+        }
+    }
+
+    //usuniecie obrazu speakera
+    @Transactional
+    public void deleteImageSpeaker(int idSpeaker) {
+        Speaker speaker = speakerRepository.findOne(idSpeaker);
+        speaker.setImage(null);
     }
 
 
