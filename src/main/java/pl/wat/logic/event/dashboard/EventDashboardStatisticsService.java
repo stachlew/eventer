@@ -22,8 +22,16 @@ public class EventDashboardStatisticsService {
             int visits = event.getVisits();
             int participants = participantRepository.countByEvent(event);
             int presence = participantRepository.countByEventAndPresenceIsTrue(event);
+            EventDashboardStatisticsInfo stats = new EventDashboardStatisticsInfo(visits, participants, presence);
+            //pobieranie gwiazdek
+//            stats.setStars1(participantRepository.);
+//            stats.setStars2(participantRepository.);
+//            stats.setStars3(participantRepository.);
+//            stats.setStars4(participantRepository.);
+//            stats.setStars5(participantRepository.);
 
-            return new EventDashboardStatisticsInfo(visits, participants, presence);
+
+            return stats;
         }
         return null;
     }
