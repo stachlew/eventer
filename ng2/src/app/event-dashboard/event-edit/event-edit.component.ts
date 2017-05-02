@@ -274,7 +274,7 @@ export class EventEditComponent implements OnInit {
   }
 
   public updateYt(){
-    if (this.eventInfo.youtubeLink.length>0){
+    if (this.eventInfo.youtubeLink!=null && this.eventInfo.youtubeLink.length>0){
       this.videoUrl=this.eventInfo.youtubeLink;
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.ytUrl+this.videoUrl); //iFrame
     }
