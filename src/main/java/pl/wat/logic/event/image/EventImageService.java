@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.Event;
+import pl.wat.db.domain.event.image.EventImage;
+import pl.wat.db.domain.event.image.SpeakerImage;
 import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.image.EventImageRepository;
+import pl.wat.db.repository.event.image.SpeakerImageRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -20,16 +24,21 @@ public class EventImageService {
     @Autowired
     SpeakerRepository speakerRepository;
 
+    @Autowired
+    SpeakerImageRepository speakerImageRepository;
+
+    @Autowired
+    EventImageRepository eventImageRepository;
+
     //odczyt obrazu eventu
+    @Transactional
     public byte[] findImageByIdEvent(int idEvent) {
-        Event event = eventRepository.findOne(idEvent);
-        if(event!=null){
-            if (event.getImage()!=null) {
-                try {
-                    return event.getImage().getBytes(1, (int) event.getImage().length());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        EventImage image = eventImageRepository.findByIdEvent(idEvent);
+        if(image!=null && image.getImage()!=null){
+            try {
+                return image.getImage().getBytes(1, (int) image.getImage().length());
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -38,16 +47,19 @@ public class EventImageService {
     //zapis obrazu eventu
     @Transactional
     public void saveImageToEvent(int idEvent, byte[] image) {
-        Event event = eventRepository.findOne(idEvent);
         if(image!=null) {
+            EventImage imageRepo = eventImageRepository.findByIdEvent(idEvent);
+            if(imageRepo==null){//zdjecie juz istnieje
+                imageRepo = new EventImage();
+                imageRepo.setIdEvent(idEvent);
+            }
             try {
-                event.setImage(new SerialBlob(image));
-            } catch (SQLException e) {
+                imageRepo.setImage(new SerialBlob(image));
+                eventImageRepository.save(imageRepo);
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
-        }
-        else {
-            event.setImage(null);
         }
     }
 
@@ -55,20 +67,22 @@ public class EventImageService {
     //usuniecie obrazu eventu
     @Transactional
     public void deleteImageEvent(int idEvent) {
-        Event event = eventRepository.findOne(idEvent);
-        event.setImage(null);
+        EventImage imageRepo = eventImageRepository.findByIdEvent(idEvent);
+        if(imageRepo!=null){
+            imageRepo.setImage(null);
+            eventImageRepository.save(imageRepo);
+        }
     }
 
     //odczyt obrazu speakera
+    @Transactional
     public byte[] findImageByIdSpeaker(int idSpeaker) {
-        Speaker speaker = speakerRepository.findOne(idSpeaker);
-        if(speaker!=null){
-            if (speaker.getImage()!=null) {
-                try {
-                    return speaker.getImage().getBytes(1, (int) speaker.getImage().length());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        SpeakerImage image = speakerImageRepository.findByIdSpeaker(idSpeaker);
+        if(image!=null && image.getImage()!=null){
+            try {
+                return image.getImage().getBytes(1, (int) image.getImage().length());
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -77,24 +91,30 @@ public class EventImageService {
     //zapis obrazu speakera
     @Transactional
     public void saveImageToSpeaker(int idSpeaker, byte[] image) {
-        Speaker speaker = speakerRepository.findOne(idSpeaker);
         if(image!=null) {
+            SpeakerImage imageRepo = speakerImageRepository.findByIdSpeaker(idSpeaker);
+            if(imageRepo==null){//zdjecie juz istnieje
+                imageRepo = new SpeakerImage();
+                imageRepo.setIdSpeaker(idSpeaker);
+            }
             try {
-                speaker.setImage(new SerialBlob(image));
-            } catch (SQLException e) {
+                imageRepo.setImage(new SerialBlob(image));
+                speakerImageRepository.save(imageRepo);
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
-        }
-        else {
-            speaker.setImage(null);
         }
     }
 
     //usuniecie obrazu speakera
     @Transactional
     public void deleteImageSpeaker(int idSpeaker) {
-        Speaker speaker = speakerRepository.findOne(idSpeaker);
-        speaker.setImage(null);
+        SpeakerImage imageRepo = speakerImageRepository.findByIdSpeaker(idSpeaker);
+        if(imageRepo!=null){
+            imageRepo.setImage(null);
+            speakerImageRepository.save(imageRepo);
+        }
     }
 
 

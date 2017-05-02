@@ -1,7 +1,9 @@
 package pl.wat.logic.event.dashboard;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
@@ -29,6 +31,10 @@ public class EventDashboardSpeakersService {
             return speakersInfoList;
         }
         return null;
+    }
+
+    public EventViewSpeaker getSpeaker(int id) {
+        return new EventViewSpeaker(speakerRepository.findOne(id));
     }
 
     public boolean addSpeaker(EventViewSpeaker eventSpeaker) {

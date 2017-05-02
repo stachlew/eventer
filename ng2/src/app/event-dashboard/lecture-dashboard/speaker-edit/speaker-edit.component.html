@@ -1,3 +1,147 @@
-<p>
-  speaker-edit works!
-</p>
+<div class="row" style="padding-right: 5px;padding-left: 5px;padding-top: 10px">
+  <div class="col-md-6">
+    <span style="font-size: x-large">Edycja prelegenta</span>
+  </div>
+  <div class="col-md-3" >
+    <button class="btn btn-block btn-info" (click)="save()">
+      Zapisz zmiany
+    </button>
+  </div>
+  <div class="col-md-3" style="color: black; background-color: white">
+    <button class="btn btn-block btn-info" (click)="hide()">
+      Anuluj
+    </button>
+  </div>
+</div>
+<div class="row" style="padding-right: 5px;padding-left: 5px;padding-top: 10px">
+  <!--FORMULARZ-->
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+
+        <div *ngIf="isSpeakerValid==0" class="list-group-item list-group-item-danger">
+          Błędy w formularzu prelegenta
+        </div>
+
+        <!--Imie-->
+        <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['firstname'].valid && speakerForm.controls['firstname'].touched}">
+          <label for="firstname">Imię prelegenta:</label>
+          <input type="text" class="form-control" id="firstname" [(ngModel)]="newSpeaker.firstname" name="firstname" [formControl]="speakerForm.controls['firstname']">
+          <div *ngIf="speakerForm.controls['firstname'].hasError('required') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="speakerForm.controls['firstname'].hasError('minlength') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+          <div *ngIf="speakerForm.controls['firstname'].hasError('maxlength') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--Nazwisko-->
+        <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['lastname'].valid && speakerForm.controls['lastname'].touched}">
+          <label for="lastname">Nazwisko prelegenta:</label>
+          <input type="text" class="form-control" id="lastname" [(ngModel)]="newSpeaker.lastname" name="lastname" [formControl]="speakerForm.controls['lastname']">
+          <div *ngIf="speakerForm.controls['lastname'].hasError('required') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="speakerForm.controls['lastname'].hasError('minlength') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+          <div *ngIf="speakerForm.controls['lastname'].hasError('maxlength') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--Opis prelegenta-->
+        <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['descriptionSpeaker'].valid && speakerForm.controls['descriptionSpeaker'].touched}">
+          <label for="descriptionSpeaker">Charakterystyka:</label>
+          <textarea rows="5" class="form-control" id="descriptionSpeaker" [(ngModel)]="newSpeaker.description" name="descriptionSpeaker" [formControl]="speakerForm.controls['descriptionSpeaker']"></textarea>
+          <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('required') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('minlength') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('maxlength') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Maksimum 500 znaków.</div>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <label for="single">Fotografia prelegenta</label>
+            <input id="single" type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+          </div>
+        </form>
+
+        <!-- PODGLAD UPLOADU PLIKOW -->
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th width="50%">Name</th>
+            <th>Rozmiar</th>
+            <th>Trwanie</th>
+            <th>Stan</th>
+            <th>Akcje</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item.file.name }}</strong></td>
+            <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
+            <td>
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess">OK</span>
+              <span *ngIf="item.isCancel">---</span>
+              <span *ngIf="item.isError"></span>
+            </td>
+            <td nowrap>
+              <button type="button" class="btn btn-success btn-xs"
+                      (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                Załaduj!
+              </button>
+              <button type="button" class="btn btn-warning btn-xs"
+                      (click)="item.cancel()" [disabled]="!item.isUploading">
+                Anuluj
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      (click)="item.remove()">
+                Usuń
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div>
+          <button type="button" class="btn btn-success btn-s"
+                  (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            Załaduj!
+          </button>
+          <button type="button" class="btn btn-warning btn-s"
+                  (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            Anuluj
+          </button>
+          <button type="button" class="btn btn-danger btn-s"
+                  (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+            Usuń z listy
+          </button>
+          <button type="button" class="btn btn-danger btn-s"
+                  (click)="deleteImage()">
+            Usuń bieżący obraz
+          </button>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <!--Email-->
+        <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['email'].valid && speakerForm.controls['email'].touched}">
+          <label for="email">E-mail:</label>
+          <input type="text" class="form-control" id="email" [(ngModel)]="newSpeaker.email" name="email" [formControl]="speakerForm.controls['email']">
+          <div *ngIf="speakerForm.controls['email'].hasError('required') && speakerForm.controls['email'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="speakerForm.controls['email'].hasError('minlength') && speakerForm.controls['email'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="speakerForm.controls['email'].hasError('maxlength') && speakerForm.controls['email'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--Nr tel-->
+        <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['phone'].valid && speakerForm.controls['phone'].touched}">
+          <label for="phone">Nr tel.:</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="newSpeaker.phone" name="phone" [formControl]="speakerForm.controls['phone']">
+          <div *ngIf="speakerForm.controls['phone'].hasError('maxlength') && speakerForm.controls['phone'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <div>
+          <img [src]="imageUrl" style="width: 100%" class="img-responsive"/>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--END: FORMULARZ-->
+</div>

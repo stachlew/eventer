@@ -1,5 +1,5 @@
-<div class="row" style="margin-top: 50px">
-  <div class="col-md-offset-1 col-md-10">
+<div class="row" style="padding-right: 5px;padding-left: 0">
+  <div class="col-md-12" style="padding-left: 0">
     <!--TABELA-->
     <div class="panel panel-default">
       <!-- Naglowek -->
@@ -7,23 +7,28 @@
 
       <!-- Cialo -->
       <table class="table">
-        <tr style="background-color: silver">
+        <tr style="background-color: #e95420">
           <td>Nr</td>
           <td>Identyfikator</td>
           <td>E-mail</td>
           <td>Imię</td>
           <td>Nazwisko</td>
-          <td>Obecny</td>
+          <td align="center">Obecny</td>
+          <td>Akcja</td>
         </tr>
-        <tr *ngFor="let g of guests,let i = index">
+        <tr *ngFor="let g of guests,let i = index" class="tableRow">
           <td>{{i+1}}</td>
           <td>{{g.idPartcipant}}</td>
           <td>{{g.email}}</td>
           <td>{{g.firstName}}</td>
           <td>{{g.lastName}}</td>
+          <td align="center">
+            <span class="changeBox"*ngIf="g.presence"><i class="fa fa-check-square-o"></i></span>
+            <span class="changeBox" *ngIf="!g.presence"><i class="fa fa-square-o"></i></span>
+          </td>
           <td>
-            <span *ngIf="g.presence" (click)="changePresence(g)"><i class="fa fa-check-square-o"></i></span>
-            <span *ngIf="!g.presence" (click)="changePresence(g)"><i class="fa fa-square-o"></i></span>
+            <span class="changeSpan" *ngIf="g.presence" (click)="changePresence(g)">Cofnij</span>
+            <span class="changeSpan" *ngIf="!g.presence" (click)="changePresence(g)">Przybył</span>
           </td>
         </tr>
       </table>

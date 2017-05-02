@@ -69,10 +69,10 @@ public class Event {
     @ColumnDefault(value = "0")
     private int visits;
 
-    @Lob
-    @Column(nullable = true)
-    @Basic(fetch = FetchType.LAZY)
-    private Blob image;
+//    @Lob
+//    @Column(nullable = true)
+//    @Basic(fetch = FetchType.LAZY)
+//    private Blob image;
 
 
 
@@ -91,7 +91,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, Blob image, User user, EventType eventType) {
+    public Event(String title, String description, Place place, Timestamp startTime, Timestamp endTime, Timestamp createDate, int capacity, int visits, /*Blob image,*/ User user, EventType eventType) {
         this.title = title;
         this.description = description;
         this.place = place;
@@ -100,7 +100,7 @@ public class Event {
         this.createDate = createDate;
         this.capacity = capacity;
         this.visits = visits;
-        this.image = image;
+        //this.image = image;
 
         this.user = user;
         this.eventType = eventType;
@@ -116,7 +116,7 @@ public class Event {
         this.createDate = eventBuilder.createDate;
         this.capacity = eventBuilder.capacity;
         this.visits = eventBuilder.visits;
-        this.image = eventBuilder.image;
+        //this.image = eventBuilder.image;
         this.user = eventBuilder.user;
         this.eventType = eventBuilder.eventType;
         this.youtubeLink = eventBuilder.youtubeLink;
@@ -227,13 +227,13 @@ public class Event {
         this.visits = visits;
     }
 
-    public Blob getImage() {
-        return image;
-    }
+//    public Blob getImage() {
+//        return image;
+//    }
 
-    public void setImage(Blob image) {
-        this.image = image;
-    }
+//    public void setImage(Blob image) {
+//        this.image = image;
+//    }
 
     public User getUser() {
         return user;
@@ -270,7 +270,7 @@ public class Event {
         private Timestamp createDate;
         private int capacity;
         private int visits;
-        private Blob image;
+        //private Blob image;
         private User user;
         private EventType eventType;
         private String youtubeLink;
@@ -323,10 +323,10 @@ public class Event {
             return this;
         }
 
-        public EventBuilder image(Blob image) {
-            this.image = image;
-            return this;
-        }
+//        public EventBuilder image(Blob image) {
+//            this.image = image;
+//            return this;
+//        }
 
 
 
@@ -382,7 +382,7 @@ public class Event {
                 ", freeEntrance=" + freeEntrance +
                 ", registerEnabled=" + registerEnabled +
                 ", visits=" + visits +
-                ", image=" + image +
+//                ", image=" + image +
                 ", user=" + user +
                 ", eventType=" + eventType +
                 '}';

@@ -20,6 +20,8 @@ public class EventViewSpeaker {
         this.phone=speaker.getPhone();
     }
 
+
+
     public EventViewSpeaker(){}
 
     public int getIdSpeaker() {

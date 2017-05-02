@@ -44,7 +44,7 @@
 
       <div class="col-sm-12 col-md-12 col-lg-12 pading0">
         <div *ngIf="!isDateEdit" class="dateView">
-          Rozpoczęcie: <b>{{dataOdPomocnicza |date:'d-MM-y HH:mm'}}</b> Zakończenie: <b>{{dataDoPomocnicza |date:'d-MM-y HH:mm'}}</b>
+          Rozpoczęcie: <b>{{dataOdPomocnicza |date:'dd-MM-y HH:mm'}}</b> Zakończenie: <b>{{dataDoPomocnicza |date:'dd-MM-y HH:mm'}}</b>
           <span (click)="editDate()"><i class="fa fa-pencil-square-o"></i></span>
         </div>
         <div *ngIf="isDateEdit" class="dateEdit">

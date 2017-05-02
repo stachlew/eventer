@@ -29,6 +29,9 @@ public class EventViewLecture {
         this.endTime = lecture.getEndTime();
     }
 
+    public EventViewLecture() {
+    }
+
     public int getIdLecture() {
         return idLecture;
     }

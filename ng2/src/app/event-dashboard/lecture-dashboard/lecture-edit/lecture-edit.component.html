@@ -1,3 +1,184 @@
-<p>
-  lecture-edit works! {{id}}
-</p>
+<div class="row" style="padding-right: 5px;padding-left: 0">
+  <div class=" col-md-12" style="padding-left: 0">
+    <!--TRESC STRONY-->
+
+    <!--CZESC FORMULARZA PRELEKCJI-->
+    <form>
+      <div class="row" style="padding-left: 10px">
+        <div class="col-md-6" >
+          <h2>Edycja prelekcji</h2>
+          <!--INPUTY PRELEKCJI-->
+          <div *ngIf="isLectureValid==0" class="list-group-item list-group-item-danger">
+            Błędy w formularzu prelekcji
+          </div>
+
+          <!--NAZWA-->
+          <div *ngIf="!isTitleEdit" class="titleView">
+            Nazwa prelekcji: <br/> <span style="font-weight: bold; font-size: x-large">{{newLecture.lectureName}}</span>
+            <span (click)="editTitle()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isTitleEdit" class="titleEdit">
+            <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['lectureName'].valid && complexForm.controls['lectureName'].touched}">
+              <label for="lectureName">Podaj nazwę prelekcji:</label>
+              <input type="text" class="form-control" id="lectureName" [(ngModel)]="newLecture.lectureName" name="lectureName" [formControl]="complexForm.controls['lectureName']">
+              <div *ngIf="complexForm.controls['lectureName'].hasError('required') && complexForm.controls['lectureName'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="complexForm.controls['lectureName'].hasError('minlength') && complexForm.controls['lectureName'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+              <div *ngIf="complexForm.controls['lectureName'].hasError('maxlength') && complexForm.controls['lectureName'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            </div>
+            <span class="saveIcon" (click)="editTitle()"><i class="fa fa-floppy-o"></i></span>
+          </div>
+
+
+          <div *ngIf="!isDateEdit" class="dateView">
+            Termin: <span style="font-weight: bold; font-size: x-large"></span><br/>
+            <span style="font-weight: bold; font-size: x-large">{{helpStartTime|date:'dd-MM-y HH:mm'}} - </span>
+            <span style="font-weight: bold; font-size: x-large">{{helpEndTime|date:'dd-MM-y HH:mm'}}</span>
+
+            <span (click)="editDate()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isDateEdit" class="dateEdit">
+            <!--Od-->
+            <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['helpStartTime'].valid && complexForm.controls['helpStartTime'].touched}">
+              <label for="helpStartTime">Podaj datę i godzinę rozpoczęcia:</label>
+              <input type="datetime-local" class="form-control" id="helpStartTime" [(ngModel)]="helpStartTime" name="helpStartTime" [formControl]="complexForm.controls['helpStartTime']" (change)="validFormDates()">
+              <div *ngIf="complexForm.controls['helpStartTime'].hasError('required') && complexForm.controls['helpStartTime'].touched && isDateValid==0" class="alert alert-danger">Pole obowiązkowe.</div>
+            </div>
+
+            <!--Do-->
+            <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['helpEndTime'].valid && complexForm.controls['helpEndTime'].touched}">
+              <label for="helpEndTime">Podaj datę i godzinę zakończenia:</label>
+              <input type="datetime-local" class="form-control" id="helpEndTime" [(ngModel)]="helpEndTime" name="endTime" [formControl]="complexForm.controls['helpEndTime']" (change)="validFormDates()">
+              <div *ngIf="complexForm.controls['helpEndTime'].hasError('required') && complexForm.controls['helpEndTime'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+            </div>
+
+            <!--Bledy Od/Do-->
+            <div *ngIf="isDateValid==0" class="list-group-item list-group-item-danger">
+              Błędna data!
+            </div>
+            <span class="saveIcon" (click)="editDate()"><i class="fa fa-floppy-o"></i></span>
+          </div>
+
+
+
+          <div *ngIf="!isDescriptionEdit" class="descriptionView">
+            Opis: <br/> <span style="font-weight: bold; font-size: x-large">{{newLecture.description}}</span>
+            <span (click)="editDescription()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isDescriptionEdit" class="descriptionEdit">
+            <!--OPIS-->
+            <div class="form-group" [ngClass]="{'has-error':!complexForm.controls['description'].valid && complexForm.controls['description'].touched}">
+              <label for="description">Opisz swoje wydarzenie:</label>
+              <textarea rows="5" class="form-control" id="description" [(ngModel)]="newLecture.description" name="description" [formControl]="complexForm.controls['description']"></textarea>
+              <div *ngIf="complexForm.controls['description'].hasError('required') && complexForm.controls['description'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="complexForm.controls['description'].hasError('minlength') && complexForm.controls['description'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+              <div *ngIf="complexForm.controls['description'].hasError('maxlength') && complexForm.controls['description'].touched" class="alert alert-danger">Maksimum 500 znaków.</div>
+            </div>
+            <span class="saveIcon" (click)="editDescription()"><i class="fa fa-floppy-o"></i></span>
+          </div>
+
+
+
+          <div *ngIf="!isSpeakerEdit" class="speakerView">
+            Prelegent: <br>
+            <span *ngIf="!isSpeakerCreate" style="font-weight: bold; font-size: x-large">
+            {{selectedSpeaker?.firstname}} {{selectedSpeaker?.lastname}}
+            </span>
+            <span *ngIf="isSpeakerCreate" style="font-weight: bold; font-size: x-large">
+            {{newSpeaker.firstname}} {{newSpeaker.lastname}}
+            </span>
+
+            <span (click)="editSpeaker()"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <div *ngIf="isSpeakerEdit" class="speakerEdit">
+            <label>
+              <input name="options" ng-control="options" type="radio" [value]="true"  [(ngModel)]="isSpeakerCreate">
+              Nowy prelegent
+            </label>
+            <br/>
+            <label>
+              <input name="options" ng-control="options" type="radio" [value]="false"  [(ngModel)]="isSpeakerCreate" >
+              Istniejący prelegent
+            </label>
+
+            <div class="form-group" *ngIf="!isSpeakerCreate">
+              <label for="selectSpeaker">Wybierz prelegenta:</label>
+              <select class="form-control" required [(ngModel)]="selectedSpeaker" name="selectSpeaker" id="selectSpeaker">
+                <option *ngFor="let i of speakers" [ngValue]="i">{{i.firstname}} {{i.lastname}} </option>
+              </select>
+            </div>
+
+            <span class="saveIcon" (click)="editSpeaker()"><i class="fa fa-floppy-o"></i></span>
+          </div>
+
+        </div>
+
+        <div class="col-md-5">
+          <!--INPUTY MOWCY-->
+
+          <div *ngIf="isSpeakerCreate">
+            <h2>Tworzenie nowego prelegenta</h2>
+            <div *ngIf="isSpeakerValid==0" class="list-group-item list-group-item-danger">
+              Błędy w formularzu prelegenta
+            </div>
+
+            <!--Imie-->
+            <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['firstname'].valid && speakerForm.controls['firstname'].touched}">
+              <label for="firstname">Imię prelegenta:</label>
+              <input type="text" class="form-control" id="firstname" [(ngModel)]="newSpeaker.firstname" name="firstname" [formControl]="speakerForm.controls['firstname']">
+              <div *ngIf="speakerForm.controls['firstname'].hasError('required') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="speakerForm.controls['firstname'].hasError('minlength') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+              <div *ngIf="speakerForm.controls['firstname'].hasError('maxlength') && speakerForm.controls['firstname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            </div>
+
+            <!--Nazwisko-->
+            <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['lastname'].valid && speakerForm.controls['lastname'].touched}">
+              <label for="lastname">Nazwisko prelegenta:</label>
+              <input type="text" class="form-control" id="lastname" [(ngModel)]="newSpeaker.lastname" name="lastname" [formControl]="speakerForm.controls['lastname']">
+              <div *ngIf="speakerForm.controls['lastname'].hasError('required') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="speakerForm.controls['lastname'].hasError('minlength') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
+              <div *ngIf="speakerForm.controls['lastname'].hasError('maxlength') && speakerForm.controls['lastname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            </div>
+
+            <!--Opis prelegenta-->
+            <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['descriptionSpeaker'].valid && speakerForm.controls['descriptionSpeaker'].touched}">
+              <label for="descriptionSpeaker">Charakterystyka:</label>
+              <textarea rows="5" class="form-control" id="descriptionSpeaker" [(ngModel)]="newSpeaker.description" name="descriptionSpeaker" [formControl]="speakerForm.controls['descriptionSpeaker']"></textarea>
+              <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('required') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('minlength') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+              <div *ngIf="speakerForm.controls['descriptionSpeaker'].hasError('maxlength') && speakerForm.controls['descriptionSpeaker'].touched" class="alert alert-danger">Maksimum 500 znaków.</div>
+            </div>
+
+            <!--Email-->
+            <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['email'].valid && speakerForm.controls['email'].touched}">
+              <label for="email">E-mail:</label>
+              <input type="text" class="form-control" id="email" [(ngModel)]="newSpeaker.email" name="email" [formControl]="speakerForm.controls['email']">
+              <div *ngIf="speakerForm.controls['email'].hasError('required') && speakerForm.controls['email'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+              <div *ngIf="speakerForm.controls['email'].hasError('minlength') && speakerForm.controls['email'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+              <div *ngIf="speakerForm.controls['email'].hasError('maxlength') && speakerForm.controls['email'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            </div>
+
+            <!--Nr tel-->
+            <div class="form-group" [ngClass]="{'has-error':!speakerForm.controls['phone'].valid && speakerForm.controls['phone'].touched}">
+              <label for="phone">Nr tel.:</label>
+              <input type="text" class="form-control" id="phone" [(ngModel)]="newSpeaker.phone" name="phone" [formControl]="speakerForm.controls['phone']">
+              <div *ngIf="speakerForm.controls['phone'].hasError('maxlength') && speakerForm.controls['phone'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+            </div>
+
+            <div><h4>Zdjęcie prelegenta można umieścić w późniejszej edycji prelegenta.</h4></div>
+          </div>
+
+        </div>
+
+
+      </div>
+      <!--CZESC FORMULARZA MOWCY-->
+      <div class="row"  style="padding-left: 10px">
+        <div class="col-md-5">
+
+          <button  (click)="postAddLecture()" type="" class="btn btn-success btn-block">Zapisz zmiany</button>
+        </div>
+      </div>
+    </form>
+    <!--END TRESC STRONY-->
+  </div>
+</div>

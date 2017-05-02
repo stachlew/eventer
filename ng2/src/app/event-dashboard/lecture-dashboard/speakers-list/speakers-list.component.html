@@ -1,8 +1,33 @@
-<p>
-  speakers-list works!
-</p>
-<ul>
-  <li *ngFor="let i of [1,2,3,4] " [routerLink]="['edit',i]">
-    <a>Mówca nr {{i}}</a>
-  </li>
-</ul>
+<!--<li *ngFor="let i of [1,2,3,4] " [routerLink]="['edit',i]">-->
+<div class="row" style="padding-right: 5px;padding-left: 0">
+  <div class=" col-md-12" style="padding-left: 0">
+    <!--TABELA-->
+    <div class="panel panel-default">
+      <!-- Naglowek -->
+      <div class="panel-heading" ><H1>Prelegenci</H1></div>
+
+      <!-- Cialo -->
+      <table class="table .table-hover">
+        <tr style="background-color: #e95420;">
+          <td>Nr</td>
+          <td>Imię</td>
+          <td>Nazwisko</td>
+          <td>E-mail</td>
+          <td>Nr tel.</td>
+          <td>Opis</td>
+          <td>Edytuj</td>
+        </tr>
+        <tr class="tableRow" *ngFor="let g of speakers,let i = index" >
+          <td>{{i+1}}</td>
+          <td>{{g.firstname}}</td>
+          <td>{{g.lastname}}</td>
+          <td>{{g.email}}</td>
+          <td>{{g.phone}}</td>
+          <td>{{g.description}}</td>
+          <td><span [routerLink]="['edit',g.idSpeaker]"><i class="fa fa-pencil-square-o"></i></span></td>
+        </tr>
+      </table>
+    </div>
+    <!--END TABELA-->
+  </div>
+</div>

@@ -1,5 +1,7 @@
 package pl.wat.db.domain.event.lecture;
 
+import pl.wat.logic.event._model.view.EventViewSpeaker;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,21 +40,29 @@ public class Speaker {
     @Size(min = 4, max = 50)
     private String phone;
 
-    @Lob
-    @Column(nullable = true)
-    @Basic(fetch = FetchType.LAZY)
-    private Blob image;
+//    @Lob
+//    @Column(nullable = true)
+//    @Basic(fetch = FetchType.LAZY)
+//    private Blob image;
 
     public Speaker() {
     }
 
-    public Speaker(String firstname, String lastname, String email, String description, String phone, Blob image) {
+    public Speaker(String firstname, String lastname, String email, String description, String phone/*, Blob image*/) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.description = description;
         this.phone = phone;
-        this.image = image;
+        //this.image = image;
+    }
+
+    public Speaker(EventViewSpeaker view){
+        this.firstname = view.getFirstname();
+        this.lastname = view.getLastname();
+        this.email = view.getEmail();
+        this.description = view.getDescription();
+        this.phone = view.getPhone();
     }
 
     public int getIdSpeaker() {
@@ -103,11 +113,11 @@ public class Speaker {
         this.phone = phone;
     }
 
-    public Blob getImage() {
-        return image;
-    }
-
-    public void setImage(Blob image) {
-        this.image = image;
-    }
+//    public Blob getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Blob image) {
+//        this.image = image;
+//    }
 }

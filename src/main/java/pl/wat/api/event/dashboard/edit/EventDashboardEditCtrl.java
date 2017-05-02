@@ -23,6 +23,7 @@ public class EventDashboardEditCtrl {
     @RequestMapping(value = "/getEventInfo/{id}",method = RequestMethod.GET)
     public @ResponseBody
     EventDashboardInfo getEventDashboardInfo(@PathVariable String id, Authentication auth){
+        System.out.println("getEventDashboardInfo() id:"+id);
         try {
             int intId = Integer.parseInt(id);
             SecurityInfo si = new SecurityInfo(auth,userAccountService);

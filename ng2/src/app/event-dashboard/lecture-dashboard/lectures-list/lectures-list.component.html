@@ -1,8 +1,34 @@
-<p>
-  lectures-list works!
-</p>
-<ul>
-  <li *ngFor="let i of [1,2,3,4] " [routerLink]="['edit',i]">
-    <a>Wykład nr {{i}}</a>
-  </li>
-</ul>
+<!--<li *ngFor="let i of [1,2,3,4] " [routerLink]="['edit',i]">-->
+<div class="row" style="padding-right: 5px;padding-left: 0">
+  <div class=" col-md-12" style="padding-left: 0">
+    <!--TABELA-->
+    <div class="panel panel-default">
+      <!-- Naglowek -->
+      <div class="panel-heading" ><H1>Prelekcje</H1></div>
+
+      <!-- Cialo -->
+      <table class="table .table-hover">
+        <tr style="background-color: #e95420;">
+          <td>Nr</td>
+          <td>Tytuł</td>
+          <td>Od</td>
+          <td>Do</td>
+          <td>Prelegent</td>
+          <td>Edytuj</td>
+          <td>Usuń</td>
+
+        </tr>
+        <tr class="tableRow" *ngFor="let g of lectures,let i = index">
+          <td>{{i+1}}</td>
+          <td>{{g.lectureName}}</td>
+          <td>{{g.startTime|date:'dd-MM-y HH:mm'}}</td>
+          <td>{{g.endTime|date:'dd-MM-y HH:mm'}}</td>
+          <td>{{g.eventViewSpeaker.firstname}} {{g.eventViewSpeaker.lastname}}</td>
+          <td><span [routerLink]="['edit',g.idLecture]"><i class="fa fa-pencil-square-o"></i></span></td>
+          <td><span ><i class="fa fa-times"></i></span></td>
+        </tr>
+      </table>
+    </div>
+    <!--END TABELA-->
+  </div>
+</div>

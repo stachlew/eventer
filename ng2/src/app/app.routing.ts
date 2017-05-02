@@ -97,7 +97,7 @@ const appRoutes: Routes = [
       {path: 'lectures', component: LectureDashboardComponent,
       children: [
         {path: '', component: LecturesListComponent},
-        {path: 'edit/:id', component: LectureEditComponent},
+        {path: 'edit/:idLecture', component: LectureEditComponent},
 
         {path: 'create/lecture', component: LectureCreateComponent},
         {path: 'create/speaker', component: SpeakerCreateComponent},
