@@ -13,4 +13,6 @@ public interface LectureRepository extends JpaRepository<Lecture,Integer> {
     public List<Lecture> getAllByEventOrderByStartTime(Event event);
 
     public List<Lecture> findAllByEvent(Event event);
+
+    public int countBySpeakerIdSpeaker(int idSpeaker);
 }

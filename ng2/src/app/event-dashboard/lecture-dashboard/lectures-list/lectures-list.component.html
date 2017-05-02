@@ -25,7 +25,7 @@
           <td>{{g.endTime|date:'dd-MM-y HH:mm'}}</td>
           <td>{{g.eventViewSpeaker.firstname}} {{g.eventViewSpeaker.lastname}}</td>
           <td><span [routerLink]="['edit',g.idLecture]"><i class="fa fa-pencil-square-o"></i></span></td>
-          <td><span ><i class="fa fa-times"></i></span></td>
+          <td><span (click)="deleteLecture(g.idLecture)"><i class="fa fa-times"></i></span></td>
         </tr>
       </table>
     </div>

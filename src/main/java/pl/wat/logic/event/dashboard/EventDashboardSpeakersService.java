@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.wat.db.domain.event.image.SpeakerImage;
 import pl.wat.db.domain.event.lecture.Speaker;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.image.SpeakerImageRepository;
+import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.event._model.view.EventViewSpeaker;
 
@@ -20,6 +23,12 @@ public class EventDashboardSpeakersService {
 
     @Autowired
     SpeakerRepository speakerRepository;
+
+    @Autowired
+    LectureRepository lectureRepository;
+
+    @Autowired
+    SpeakerImageRepository speakerImageRepository;
 
     public List<EventViewSpeaker> getSpeakers(int id) {
         if(eventRepository.exists(id)) {
@@ -71,12 +80,25 @@ public class EventDashboardSpeakersService {
         }
     }
 
-    public boolean deleteLecture(EventViewSpeaker eventSpeaker) {
+    public boolean checkIsHisLastLecture(int idSpeaker){
+        int hisLectures = lectureRepository.countBySpeakerIdSpeaker(idSpeaker);
+        if(hisLectures<1)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean deleteSpeaker(int idSpeaker) {
         try {
-            speakerRepository.delete(eventSpeaker.getIdSpeaker());
+            speakerRepository.delete(idSpeaker);
+            SpeakerImage image = speakerImageRepository.findByIdSpeaker(idSpeaker);
+            if (image!=null)
+                speakerImageRepository.delete(image);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
+
 }

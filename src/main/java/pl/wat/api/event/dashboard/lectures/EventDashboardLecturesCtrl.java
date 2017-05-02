@@ -63,5 +63,19 @@ public class EventDashboardLecturesCtrl {
         return false;
     }
 
+    
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public @ResponseBody
+    boolean deleteLecture(@PathVariable String id){
+        try {
+            int intId = Integer.parseInt(id);
+            return eventDashboardLecturesService.deleteLecture(intId);
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+
 
 }

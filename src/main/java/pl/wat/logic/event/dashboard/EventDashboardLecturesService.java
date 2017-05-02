@@ -26,6 +26,9 @@ public class EventDashboardLecturesService {
     @Autowired
     SpeakerRepository speakerRepository;
 
+    @Autowired
+    EventDashboardSpeakersService eventDashboardSpeakersService;
+
     public List<EventViewLecture> getEventViewLectures(int id) {
         if(eventRepository.exists(id)) {
             List<EventViewLecture> eventLectures = new LinkedList<>();
@@ -51,32 +54,63 @@ public class EventDashboardLecturesService {
     @Transactional
     public boolean editLecture(EventViewLecture eventLecture) {
         Lecture lecture = lectureRepository.findOne(eventLecture.getIdLecture());
+        int oldSpeakerId = lecture.getSpeaker().getIdSpeaker();
         Speaker speaker;
+        boolean changeSpeaker = false;
+
         if(lecture!=null){
+            int lectureId = lecture.getIdLecture();
             lecture.setDescription(eventLecture.getDescription());
             lecture.setStartTime(eventLecture.getStartTime());
             lecture.setEndTime(eventLecture.getEndTime());
             lecture.setLectureName(eventLecture.getLectureName());
 
+            //ID=0 NOWY SPEAKER
             if(eventLecture.getEventViewSpeaker().getIdSpeaker()<=0) {
                 speaker = new Speaker(eventLecture.getEventViewSpeaker());
+                changeSpeaker=true;
             }
             else {
+                //SPEAKER MA ID
                 speaker = speakerRepository.findOne(eventLecture.getEventViewSpeaker().getIdSpeaker());
                 if (speaker==null) return false;
+
+                System.out.println("Stary id speakera: "+lecture.getSpeaker().getIdSpeaker());
+                System.out.println("Nowy id speakera: "+eventLecture.getEventViewSpeaker().getIdSpeaker());
+
+                //ID SA ROZNE => ZMIANA SPEAKERA NA JUZ ISTNIEJACEGO
+                if(lecture.getSpeaker().getIdSpeaker()!=eventLecture.getEventViewSpeaker().getIdSpeaker()){
+
+                    changeSpeaker=true;
+                }
+                //BRAK ZMIAN SPEAKERA
+                else {
+                    changeSpeaker=false;
+                }
             }
-        }
+        } //END: PRELEKCJA !=null
         else {
             return false; //brak prelekcji
         }
         try {
-            System.out.println("try editLecture");
+            System.out.println("editLecture()");
+
+            //Zapis zmodyfikowanych speakerow
             if(speaker.getIdSpeaker()<=0)
                 lecture.setSpeaker(speakerRepository.save(speaker));
             else
                 lecture.setSpeaker(speaker);
-
+            //Zapis zmodyfikowanego eventu
             lectureRepository.save(lecture);
+
+            //Sprawdzenie czy w wyniku zmian speaker nie utracil powiazan, tak => usunac
+            if(changeSpeaker){
+                if(eventDashboardSpeakersService.checkIsHisLastLecture(oldSpeakerId)){
+                    eventDashboardSpeakersService.deleteSpeaker(oldSpeakerId);
+                    System.out.println("editLecture(): Usunięto speakera id="+oldSpeakerId+" z powodu utraty powiązań.");
+                }
+            }
+
             return true;
         } catch (Exception e) {
             System.out.println("excp addLecture");
@@ -130,12 +164,23 @@ public class EventDashboardLecturesService {
         }
     }
 
-    public boolean deleteLecture(EventViewLecture eventLecture) {
-        try {
-            lectureRepository.delete(eventLecture.getIdLecture());
-            return true;
-        } catch (Exception e) {
-            return false;
+    public boolean deleteLecture(int idLecture) {
+        Lecture lecture = lectureRepository.findOne(idLecture);
+        if(lecture!=null){
+            int idSpeaker = lecture.getSpeaker().getIdSpeaker();
+
+            try {
+                lectureRepository.delete(idLecture);
+                //Sprawdzenie czy w wyniku zmian speaker nie utracil powiazan, tak => usunac
+                if(eventDashboardSpeakersService.checkIsHisLastLecture(idSpeaker)){
+                    eventDashboardSpeakersService.deleteSpeaker(idSpeaker);
+                    System.out.println("deleteLecture(): Usunięto speakera id="+idSpeaker+" z powodu utraty powiązań.");
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
+        return false;
     }
 }

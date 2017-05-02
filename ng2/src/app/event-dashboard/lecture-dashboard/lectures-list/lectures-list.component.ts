@@ -23,4 +23,15 @@ export class LecturesListComponent implements OnInit {
     });
   }
 
+  updateData(){
+    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/lectures/getList/' + this.idEvent, this.myHttp.getConfig()).subscribe((data: Response) => {
+      this.lectures = data.json()
+    });
+  }
+
+  deleteLecture(idLecture:number):void{
+    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/lectures/delete/' + idLecture, this.myHttp.getConfig())
+      .subscribe((data: Response) => {  this.updateData() });
+  }
+
 }
