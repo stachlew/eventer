@@ -1,12 +1,66 @@
-ZAWARTOSC:
-<ul>
-  <li>Zwykły formularz z walidacją dynamiczną</li>
-</ul>
-DANE:
-<ul>
-  <li>Dynamiczna informacja czy np. login jest dostępny</li>
-</ul>
-FORMULARZE:
-<ul>
-  <li>Formularz rejestracyjny. [podczas przetwarzania ma wysłać mejla z potwierdzeniem rejestracji]</li>
-</ul>
+<div class="row">
+  <div *ngIf="!isSuccessRegister" class="col-md-4 col-md-offset-4" align="center">
+    <div><H1>Rejestracja nowego użytkownika</H1></div>
+    <div>
+      <form>
+        <div *ngIf="!isFormValid">
+          <span style="color: red"><h3>Błędy w formularzu!</h3></span>
+        </div>
+
+
+        <!--username-->
+        <div class="form-group" align="left" [ngClass]="{'has-error':!complexForm.controls['username'].valid && complexForm.controls['username'].touched}">
+          <label for="username">Podaj login:</label>
+          <input type="text" class="form-control" id="username" [(ngModel)]="newUser.username" name="username" [formControl]="complexForm.controls['username']" (change)="validPageUsername()">
+          <div *ngIf="complexForm.controls['username'].hasError('required') && complexForm.controls['username'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="complexForm.controls['username'].hasError('minlength') && complexForm.controls['username'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['username'].hasError('maxlength') && complexForm.controls['username'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+          <div *ngIf="complexForm.controls['username'].valid && !isUsernameValid && complexForm.controls['username'].touched" class="alert alert-danger">Podany login jest już zajęty.</div>
+        </div>
+        <!--firstname-->
+        <div class="form-group" align="left" [ngClass]="{'has-error':!complexForm.controls['firstname'].valid && complexForm.controls['firstname'].touched}">
+          <label for="firstname">Podaj imię:</label>
+          <input type="text" class="form-control" id="firstname" [(ngModel)]="newUser.firstname" name="firstname" [formControl]="complexForm.controls['firstname']">
+          <div *ngIf="complexForm.controls['firstname'].hasError('required') && complexForm.controls['firstname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="complexForm.controls['firstname'].hasError('minlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['firstname'].hasError('maxlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--lastname-->
+        <div class="form-group" align="left" [ngClass]="{'has-error':!complexForm.controls['lastname'].valid && complexForm.controls['lastname'].touched}">
+          <label for="lastname">Podaj nazwisko:</label>
+          <input type="text" class="form-control" id="lastname" [(ngModel)]="newUser.lastname" name="lastname" [formControl]="complexForm.controls['lastname']">
+          <div *ngIf="complexForm.controls['lastname'].hasError('required') && complexForm.controls['lastname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="complexForm.controls['lastname'].hasError('minlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['lastname'].hasError('maxlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--email-->
+        <div class="form-group" align="left" [ngClass]="{'has-error':!complexForm.controls['email'].valid && complexForm.controls['email'].touched}">
+          <label for="email">Podaj e-mail:</label>
+          <input type="text" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" [formControl]="complexForm.controls['email']">
+          <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
+          <div *ngIf="complexForm.controls['email'].hasError('minlength') && complexForm.controls['email'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['email'].hasError('maxlength') && complexForm.controls['email'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <!--phone-->
+        <div class="form-group" align="left" [ngClass]="{'has-error':!complexForm.controls['phone'].valid && complexForm.controls['phone'].touched}">
+          <label for="phone">Podaj nr tel.:</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="newUser.phone" name="username" [formControl]="complexForm.controls['phone']">
+          <div *ngIf="complexForm.controls['phone'].hasError('maxlength') && complexForm.controls['phone'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
+        </div>
+
+        <div>
+          <button class="btn btn-danger btn-block" (click)="createNewUser()">Zarejestruj!</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+  <div *ngIf="isSuccessRegister" class="col-md-6 col-md-offset-3" align="center" style="margin-top: 50px">
+    <div><H1>Rejestracja użytkownika udana!</H1></div>
+    <div><H2>Na podany e-mail zostało wysłane hasło.</H2></div>
+  </div>
+</div>

@@ -28,7 +28,7 @@ public class UserAccountService {
 
     public boolean isUsernameFree(String username){
         User checkedUser = getUser(username);
-        if(checkedUser!=null)
+        if(checkedUser!=null || username == null || username.equals(""))
             return false;
         else
             return true;
