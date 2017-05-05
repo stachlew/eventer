@@ -39,7 +39,7 @@ public class EventDashboardEditCtrl {
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/updateEvent",method = RequestMethod.POST)
     public @ResponseBody
-    Boolean getEventDashboardInfo(@RequestBody EventDashboardInfo form, Authentication auth){
+    Boolean updateEvent(@RequestBody EventDashboardInfo form, Authentication auth){
         try {
             SecurityInfo si = new SecurityInfo(auth,userAccountService);
             if(form!=null && si.isEventOwner(form.getIdEvent(),eventDashboardService)){
@@ -49,6 +49,23 @@ public class EventDashboardEditCtrl {
                 System.out.println(form.getStartTime());
                 System.out.println(form.getEndTime());
                 return eventDashboardService.editEvent(form);
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/deleteEvent/{id}",method = RequestMethod.GET)
+    public @ResponseBody
+    boolean deleteEvent(@PathVariable String id, Authentication auth){
+        System.out.println("deleteEvent() id:"+id);
+        try {
+            int intId = Integer.parseInt(id);
+            SecurityInfo si = new SecurityInfo(auth,userAccountService);
+            if(si.isEventOwner(intId,eventDashboardService)){
+                return this.eventDashboardService.deleteEvent(intId);
             }
             return false;
         }catch (Exception e){

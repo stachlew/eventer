@@ -113,15 +113,17 @@ public class EventDashboardService {
                     speakerImageRepository.delete(speakerImage);
                 }
             }
-            //////Usuwanie speakerów
-            for (Integer i : distinctIdSpeakersByIdEvent) {
-                speakerRepository.delete(i);
-            }
             ////////Usuwanie wykładów
             List<Lecture> allLecture = lectureRepository.findAllByEvent(event);
             for (Lecture lecture:allLecture) {
                 lectureRepository.delete(lecture);
             }
+
+            //////Usuwanie speakerów
+            for (Integer i : distinctIdSpeakersByIdEvent) {
+                speakerRepository.delete(i);
+            }
+
             ///////Usuwanie opinni
             List<Opinion> allOpinion = opinionRepository.findAllByEvent(event);
             for (Opinion opinion: allOpinion) {

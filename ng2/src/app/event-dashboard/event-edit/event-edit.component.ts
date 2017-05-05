@@ -8,7 +8,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomDateService} from "../../_service/util/custom-date.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import { FileUploader } from 'ng2-file-upload';
-import {any} from "codelyzer/util/function"; //UPLOAD PLIKU
+import {any} from "codelyzer/util/function";
+import {Router} from "@angular/router"; //UPLOAD PLIKU
 
 @Component({
   selector: 'app-event-edit',
@@ -18,8 +19,29 @@ import {any} from "codelyzer/util/function"; //UPLOAD PLIKU
 export class EventEditComponent implements OnInit {
 
   public isLoading=false;
+  public isDeleting=false;
 
-  constructor(private eveStore: EventStorageService, private http: Http, public fb: FormBuilder, public dateService: CustomDateService, private myHttp: HttpSecService,sanitizer: DomSanitizer) {
+  changeDelete(){
+    (this.isDeleting) ? this.isDeleting = false : this.isDeleting=true;
+  }
+
+  deleteEvent(){
+    console.info("USUWANIE EVENTU");
+    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/edit/deleteEvent/' +this.idEvent,this.myHttp.getConfig())
+      .subscribe((data: Response)=> {this.afterDelete(data.json())});
+  }
+
+  afterDelete(flag:boolean){
+    if(flag){
+      //router do strony moich wydarzen
+      this.router.navigate(['/event/my']);
+    }
+    else {
+      alert("Nie udało się usunąć eventu!");
+    }
+  }
+
+  constructor(private eveStore: EventStorageService,private router: Router , private http: Http, public fb: FormBuilder, public dateService: CustomDateService, private myHttp: HttpSecService,sanitizer: DomSanitizer) {
     this.isLoading=true;
     this.sanitizer=sanitizer;
     this.idEvent=this.eveStore.getCurrentEventId();

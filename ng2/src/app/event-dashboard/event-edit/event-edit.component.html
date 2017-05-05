@@ -18,6 +18,18 @@
         <span class="myCheckbox" *ngIf="eventInfo.registerEnabled" (click)="changeRegister()">Rejestracja: <i class="fa fa-check-square-o"></i> </span>
         <span class="myCheckbox" *ngIf="!eventInfo.registerEnabled" (click)="changeRegister()">Rejestracja: <i class="fa fa-square-o"></i> </span>
 
+        <br>
+        <div *ngIf="!isDeleting">
+          <button (click)="changeDelete()" class="btn btn-danger btn-block"> Usuń wydarzenie</button>
+          <br/>
+        </div>
+
+        <div *ngIf="isDeleting">
+          <span>Czy jesteś pewny?</span>
+          <button (click)="deleteEvent()" class="btn btn-danger btn-block">Tak</button>
+          <button (click)="changeDelete()" class="btn btn-danger btn-block" >Nie</button>
+        </div>
+
       </div>
       <div class="col-md-1"></div>
 
