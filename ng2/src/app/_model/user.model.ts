@@ -6,3 +6,11 @@ export interface User {
   authorities: string[];
   enabled: boolean;
 }
+
+export class UserRegisterForm {
+  username:string;
+  firstname:string;
+  lastname:string;
+  email:string;
+  phone:string;
+}
