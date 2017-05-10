@@ -1,6 +1,7 @@
 package pl.wat.db.repository.event;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.Participant;
 
@@ -16,4 +17,7 @@ public interface ParticipantRepository extends JpaRepository<Participant,Integer
         public Integer countByEvent(Event event);
 
         public Integer countByEventAndPresenceIsTrue(Event event);
+
+        @Query(value = "select avg(s) from (select sum(p.id_Event) as s from Eve_Participants p group by p.id_Event) ",nativeQuery = true)
+        public double getAvgParticipant();
 }

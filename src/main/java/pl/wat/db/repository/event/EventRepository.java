@@ -36,4 +36,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query(value = "update eve_events set visits=visits+1 where id_event=:id_event", nativeQuery = true)
     void incrementVisit(@Param("id_event") int idEvent);
 
+    @Query("select sum(e.visits) from Event e")
+    long getCountVisits();
+
+    @Query("select avg(e.visits) from Event e")
+    double getAvgVisits();
+
 }
