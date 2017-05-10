@@ -15,11 +15,16 @@ import pl.jsolve.templ4docx.variable.TableVariable;
 import pl.jsolve.templ4docx.variable.TextVariable;
 import pl.jsolve.templ4docx.variable.Variable;
 import pl.jsolve.templ4docx.variable.Variables;
+import pl.wat.db.domain.event.Event;
+import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.domain.user.User;
+import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.logic.user.account.UserAccountService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +33,28 @@ public class DocumentService {
 
     @Autowired
     UserAccountService userAccountService;
+
+    @Autowired
+    EventRepository eventRepository;
+    @Autowired
+    LectureRepository lectureRepository;
+
+    List<String> documentList;
+
+    public DocumentService() {
+        documentList = new ArrayList<String>();
+        documentList.add("Wójt");   //0
+        documentList.add("Burmistrz");      //1
+        documentList.add("Prezydent Miasta");       //2
+        documentList.add("Komendant Powiatowy Państwowej Straży Pożarnej"); //3
+        documentList.add("Komendant Miejski Państwowej Straży Pożarnej");//4
+        documentList.add("Komendant Powiatowy Policji");//5
+        documentList.add("Komendant Rejonowy Policji");//6
+        documentList.add("Komendant Miejski Policji");//7
+        documentList.add("Kierownik Jednostki Organizacyjnej Pomocy Doraźnej");//8
+        documentList.add("Państwowy Inspektor Sanitarny");//9
+        documentList.add("Dysponent Zespołów Ratownictwa Medycznego");//10
+    }
 
     public ResponseEntity<byte[]> createDocumentResponse(XWPFDocument document){
         //Przygotowanie formy bajtowej pliku
@@ -49,65 +76,69 @@ public class DocumentService {
         return responseEntity;
     }
 
-    public XWPFDocument getDocument(String username){
-        User user = userAccountService.getUser(username);
+    public XWPFDocument getDocument(int idEvent, int nrDocument){
 
-        //Wczytac szablon
-        Docx docx = new Docx("src\\main\\resources\\documents\\test.docx");
+         Event event = eventRepository.getOne(idEvent);
+        if(event!=null && nrDocument>=0 && nrDocument<=10) {
+            //Wczytac szablon
+            Docx docx = new Docx("src\\main\\resources\\documents\\test.docx");
+            Docx document = new Docx("src\\main\\resources\\documents\\Wniosek_o_opinie.docx");
 
-        //Przygotowac zmienne
-        Variables variables = new Variables();
-        variables.addTextVariable(new TextVariable("${docType}", "Nota do sanepidu"));
-        variables.addTextVariable(new TextVariable("${name}", user.getFirstname()));
-        variables.addTextVariable(new TextVariable("${lastname}", user.getLastname()));
-        variables.addTextVariable(new TextVariable("${username}", user.getUsername()));
-        variables.addTextVariable(new TextVariable("${email}", user.getEmail()));
+            Date date = new Date(System.currentTimeMillis());
+            //Przygotowac zmienne
+            Variables variables = new Variables();
+            variables.addTextVariable(new TextVariable("${data}", date.toString()));
+            variables.addTextVariable(new TextVariable("${miejsce}", event.getPlace().getCity().getCityName()));
+            variables.addTextVariable(new TextVariable("${AdresatWniosku}", documentList.get(nrDocument)));
+            variables.addTextVariable(new TextVariable("${imieO}", event.getUser().getFirstname()));
+            variables.addTextVariable(new TextVariable("${nazwiskoO}", event.getUser().getLastname()));
+            variables.addTextVariable(new TextVariable("${emailO}", event.getUser().getEmail()));
+            variables.addTextVariable(new TextVariable("${dtPI}", event.getStartTime().toString().substring(0, 16)));
+            variables.addTextVariable(new TextVariable("${mscPI}", event.getPlace().getCity().getCityName()));
 
-        if(user.getPhone()==null) //przyklad problem braku wartosci w bazie
-            variables.addTextVariable(new TextVariable("${phone}", ""));
-        else
-            variables.addTextVariable(new TextVariable("${phone}", user.getPhone()));
 
-        variables.addTextVariable(new TextVariable("${parTitle}", "EVENTER"));
-        variables.addTextVariable(new TextVariable("${par0}", "WZIĄć"));
-        variables.addTextVariable(new TextVariable("${par1}", "Parametr1"));
-        variables.addTextVariable(new TextVariable("${par2}", "Parek2"));
-        variables.addTextVariable(new TextVariable("${par3}", "PARAMETR3"));
-        variables.addTextVariable(new TextVariable("${par4}", "Partens4"));
-        variables.addTextVariable(new TextVariable("${par5}", "Parametr duży 5, słownie piąty."));
-        variables.addTextVariable(new TextVariable("${par6}", "Stopka dokumentu żółćą pełna"));
+            if (event.getUser().getPhone() == null) //przyklad problem braku wartosci w bazie
+                variables.addTextVariable(new TextVariable("${telefonO}", "........................................."));
+            else
+                variables.addTextVariable(new TextVariable("${telefonO}", event.getUser().getPhone()));
 
-        //tabela
-        TableVariable tableVariable = new TableVariable();
-        List<Variable> kol1Variables = new ArrayList<Variable>();
-        List<Variable> kol2Variables = new ArrayList<Variable>();
-        List<Variable> kol3Variables = new ArrayList<Variable>();
+            variables.addTextVariable(new TextVariable("${limitmiejscPI}", String.valueOf(event.getCapacity())));
 
-        for(int i=0;i<4;i++){
-            kol1Variables.add(new TextVariable("${kol1}", "dana1 "+i));
-            kol2Variables.add(new TextVariable("${kol2}", "dana2 "+i));
-            kol3Variables.add(new TextVariable("${kol3}", "dana3 "+i));
+
+            //tabela
+            TableVariable tableVariable = new TableVariable();
+            List<Variable> kol1Variables = new ArrayList<Variable>();
+            List<Variable> kol2Variables = new ArrayList<Variable>();
+            List<Variable> kol3Variables = new ArrayList<Variable>();
+
+            List<Lecture> allByEventOrderByStartTime = lectureRepository.getAllByEventOrderByStartTime(event);
+            for (Lecture lecture : allByEventOrderByStartTime) {
+                kol1Variables.add(new TextVariable("${PRdtRozpoczecia}", lecture.getStartTime().toString().substring(0, 16)));
+                kol2Variables.add(new TextVariable("${PRdtZakonczenia}", lecture.getEndTime().toString().substring(0, 16)));
+                kol3Variables.add(new TextVariable("${PRNazwa}", lecture.getLectureName()));
+            }
+
+            tableVariable.addVariable(kol1Variables);
+            tableVariable.addVariable(kol2Variables);
+            tableVariable.addVariable(kol3Variables);
+            variables.addTableVariable(tableVariable);
+
+            //end: tabela
+
+
+            //Wypelnic szablon zmiennymi
+            document.fillTemplate(variables);
+
+            //Można ewentualnie zapisac do pliku
+            //docx.save("D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\documents\\testEdit.docx");
+
+            //Zwrocic dokument .docx (XWPF) w celu pozniejszego streamowania do usera jako jego download
+            return document.getXWPFDocument();
         }
-
-        tableVariable.addVariable(kol1Variables);
-        tableVariable.addVariable(kol2Variables);
-        tableVariable.addVariable(kol3Variables);
-        variables.addTableVariable(tableVariable);
-
-        //end: tabela
-
-
-
-
-
-        //Wypelnic szablon zmiennymi
-        docx.fillTemplate(variables);
-
-        //Można ewentualnie zapisac do pliku
-        //docx.save("D:\\Projekty\\LocalRepoEventer\\eventer\\src\\main\\resources\\documents\\testEdit.docx");
-
-        //Zwrocic dokument .docx (XWPF) w celu pozniejszego streamowania do usera jako jego download
-        return docx.getXWPFDocument();
+        return null;
     }
 
+    public List<String> getDocumentList() {
+        return documentList;
+    }
 }
