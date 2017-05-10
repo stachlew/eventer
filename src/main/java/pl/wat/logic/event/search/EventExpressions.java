@@ -33,7 +33,7 @@ public class EventExpressions {
 
     public Predicate createPredicateDependsOfEventSearchForm(EventSearchForm searchForm){
 
-        BooleanExpression booleanExpression=QEvent.event.idEvent.isNotNull();
+        BooleanExpression booleanExpression=QEvent.event.published.isTrue();
 
         if (searchForm.getTextContent()!=null){
             booleanExpression=booleanExpression.and((QEvent.event.title.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%")).or(QEvent.event.description.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%")));
@@ -51,7 +51,7 @@ public class EventExpressions {
             booleanExpression=booleanExpression.and(QEvent.event.startTime.gt(searchForm.getDateFrom()));
         }
         if(searchForm.getDateTo()!=null){
-            booleanExpression=booleanExpression.and(QEvent.event.endTime.lt(searchForm.getDateTo()));
+            booleanExpression=booleanExpression.and(QEvent.event.startTime.lt(searchForm.getDateTo()));
         }
         if(searchForm.isFreeEntrance()){
             booleanExpression=booleanExpression.and(QEvent.event.freeEntrance.isTrue());

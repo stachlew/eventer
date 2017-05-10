@@ -73,8 +73,16 @@ export class EventCreateComponent implements OnInit {
     if((this.dataZakonczeniaPomoc!=null) && (this.dataRozpoczeciaPomoc!=null)) {
       if (this.dataZakonczeniaPomoc > this.dataRozpoczeciaPomoc) this.isDateValid = 1;
       else this.isDateValid = 0;
+    }
+  }
+
+  validFinallDates() {
+    if((this.dataZakonczeniaPomoc!=null) && (this.dataRozpoczeciaPomoc!=null)) {
+      if (this.dataZakonczeniaPomoc > this.dataRozpoczeciaPomoc) this.isDateValid = 1;
+      else this.isDateValid = 0;
     } else { this.isDateValid = 0; }
   }
+
 
   validMap() {
     if (this.addEventClass.geoLength != null) {
@@ -93,7 +101,7 @@ export class EventCreateComponent implements OnInit {
   postAddEvent(){
     console.log("postAddEvent()");
 
-    this.validDates();
+    this.validFinallDates();
     this.validMap();
     if(this.isDateValid==1 && this.isMapValid==1) {
       this.addEventClass.startTime = this.dateService.convDatePickerToTimestamp(this.dataRozpoczeciaPomoc);

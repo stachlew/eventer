@@ -308,7 +308,7 @@ export class SearchComponent implements OnInit {
     if(this.isSlideHide){
       (<HTMLScriptElement>document.getElementById("mySideMap")).style.width = "80%"; //pokaz
 
-      (<HTMLScriptElement>document.getElementById("mapPannel")).style.minHeight = "500px"; //pokaz
+      (<HTMLScriptElement>document.getElementById("mapPannel")).style.minHeight = "400px"; //pokaz
       (<HTMLScriptElement>document.getElementById("mapPannel")).style.height = "70%"; //pokaz
       (<HTMLScriptElement>document.getElementById("mySideMapTitle")).style.height = "30%"; //pokaz
 

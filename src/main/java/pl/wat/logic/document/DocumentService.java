@@ -9,13 +9,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.jsolve.templ4docx.core.Docx;
+import pl.jsolve.templ4docx.insert.TableCellInsert;
+import pl.jsolve.templ4docx.insert.TableRowInsert;
+import pl.jsolve.templ4docx.variable.TableVariable;
 import pl.jsolve.templ4docx.variable.TextVariable;
+import pl.jsolve.templ4docx.variable.Variable;
 import pl.jsolve.templ4docx.variable.Variables;
 import pl.wat.db.domain.user.User;
 import pl.wat.logic.user.account.UserAccountService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DocumentService {
@@ -70,6 +76,29 @@ public class DocumentService {
         variables.addTextVariable(new TextVariable("${par4}", "Partens4"));
         variables.addTextVariable(new TextVariable("${par5}", "Parametr duży 5, słownie piąty."));
         variables.addTextVariable(new TextVariable("${par6}", "Stopka dokumentu żółćą pełna"));
+
+        //tabela
+        TableVariable tableVariable = new TableVariable();
+        List<Variable> kol1Variables = new ArrayList<Variable>();
+        List<Variable> kol2Variables = new ArrayList<Variable>();
+        List<Variable> kol3Variables = new ArrayList<Variable>();
+
+        for(int i=0;i<4;i++){
+            kol1Variables.add(new TextVariable("${kol1}", "dana1 "+i));
+            kol2Variables.add(new TextVariable("${kol2}", "dana2 "+i));
+            kol3Variables.add(new TextVariable("${kol3}", "dana3 "+i));
+        }
+
+        tableVariable.addVariable(kol1Variables);
+        tableVariable.addVariable(kol2Variables);
+        tableVariable.addVariable(kol3Variables);
+        variables.addTableVariable(tableVariable);
+
+        //end: tabela
+
+
+
+
 
         //Wypelnic szablon zmiennymi
         docx.fillTemplate(variables);
