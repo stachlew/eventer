@@ -12,15 +12,18 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
 import pl.wat.db.repository.event.EventRepository;
+import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
-import pl.wat.logic.event._model.dashboard.EventDashboardInfo;
-import pl.wat.logic.event._model.dashboard.EventDashboardStatisticsInfo;
-import pl.wat.logic.event._model.view.EventViewLecture;
-import pl.wat.logic.event._model.view.EventViewPartcipant;
-import pl.wat.logic.event.dashboard.*;
+import pl.wat.logic.event._model.EventSearchForm;
+import pl.wat.logic.event._model.EventSearchResult;
+
+import pl.wat.logic.event.dashboard.EventDashboardLecturesService;
+import pl.wat.logic.event.dashboard.EventDashboardParticipantsService;
+
 import pl.wat.logic.event.image.EventImageService;
+import pl.wat.logic.event.search.EventSearchService;
 import pl.wat.logic.event.view.EventRegisterService;
 import pl.wat.logic.user._model.SecurityInfo;
 import pl.wat.logic.user.account.UserAccountService;
@@ -62,7 +65,7 @@ public class DemoRestController {
     EventRegisterService eventRegisterService;
 
     @Autowired
-    EventDashboardInfoService eventDashboardInfoService;
+    LectureRepository lectureRepository;
 
     @Autowired
     EventDashboardParticipantsService eventDashboardParticipantsService;
@@ -71,26 +74,71 @@ public class DemoRestController {
     EventDashboardLecturesService eventDashboardLecturesService;
 
     @Autowired
-    EventDashboardSpeakersService eventDashboardSpeakersService;
+    EventSearchService eventSearchService;
 
-    @Autowired
-    EventDashboardStatisticsService eventDashboardStatisticsService;
+    //POBRANIE DANYCH BEZ AUTORYZACJI
+    @RequestMapping(value = "/test3/{id}",method = RequestMethod.GET)
+    @ResponseBody int getTest3(@PathVariable int id){
+        System.out.println("getTest3()");
+        return  lectureRepository.countBySpeakerIdSpeaker(id);
+    }
 
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
-    @RequestMapping(value = "/test",method = RequestMethod.GET)
-    @ResponseBody String getTest(){
-        System.out.println("URUCHOMIENIE TESTU");
-        boolean status1=false;
-        boolean status2=false;
+//    @RequestMapping(value = "/test",method = RequestMethod.GET)
+//    @ResponseBody
+//    List<EventSearchResult> getTest(){
+//        System.out.println("URUCHOMIENIE TESTU");
+//        boolean status1=false;
+//        boolean status2=false;
+//
+//
+//
+//
+//        //Deklaracja
+//        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+//
+////        for (Integer s: distinctSpeakersByIdEvent
+////             ) {
+////            System.out.println(s);
+////
+////        }
+////        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
+////        eventRegisterService.registeredParticipant(participantForm);
+//
+//
+//        //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
+//        //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
+//
+//        //Wykonywanie
+//        // status1 = userRegisterService.createUser(newUser);
+//        //status2 = userAccountService.deleteUser("user");
+//
+//        //Zwrot wyniku
+//        if(status1 && status2)
+//            return "OK!";
+//        else
+//            return "FAIL";
+//    }
 
-
-
-        //Deklaracja
-        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
-
-//        for (Integer s: distinctSpeakersByIdEvent
-//             ) {
+    //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
+//    @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
+//    @ResponseBody
+//    EventDashboardLecture getParticipantInfo(@PathVariable String id){
+//        System.out.println("URUCHOMIENIE TESTU");
+////        boolean status1=false;
+////        boolean status2=false;
+//        int intId = Integer.parseInt(id);
+//        EventDashboardLecture eventDashboardLecturesInfo = eventDashboardLecturesService.getEventDashboardLecturesInfo(intId);
+//
+//        return eventDashboardLecturesInfo;
+//
+//
+//        //Deklaracja
+//        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+//
+////        for (Integer s: distinctSpeakersByIdEvent
+////             ) {
 //            System.out.println(s);
 //
 //        }
@@ -106,21 +154,11 @@ public class DemoRestController {
         //status2 = userAccountService.deleteUser("user");
 
         //Zwrot wyniku
-        if(status1 && status2)
-            return "OK!";
-        else
-            return "FAIL";
-    }
-
-    //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
-    @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
-    @ResponseBody
-    public List<EventViewPartcipant> getLectures(@PathVariable String id){
-        System.out.println("URUCHOMIENIE TESTU");
-        int intId = Integer.parseInt(id);
-
-        return eventDashboardParticipantsService.getParticipants(intId);
-    }
+//        if(status1 && status2)
+//            return "OK!";
+//        else
+//            return "FAIL";
+    //}
 
     //Przyklad pobierania dokumentu
     @PreAuthorize("hasRole('USER')")
@@ -129,10 +167,10 @@ public class DemoRestController {
     public ResponseEntity<byte[]> getDocument(Authentication authentication){
         if(authentication!=null){
             //Dla kogo tworzony
-            String username = authentication.getName();
+            //String username = authentication.getName();
 
             //Pobranie odpowiednio przygotowanego w serwisie dokumentu
-            XWPFDocument document = documentService.getDocument(username);
+            XWPFDocument document = documentService.getDocument(1,1);
 
             //Zwrocenie przygotowanej odpowiedzi
             return documentService.createDocumentResponse(document);
