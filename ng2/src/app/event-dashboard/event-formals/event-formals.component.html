@@ -1,3 +1,24 @@
-<p>
-  event-formals works! {{id}}
-</p>
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <H1>Informacje o wymaganych dokumentach</H1>
+    <p>Fusce in leo feugiat, laoreet augue sed, faucibus odio. Aenean maximus luctus elementum. Praesent vitae mi condimentum, feugiat lacus vel, euismod diam. Phasellus venenatis dolor non erat fringilla vulputate. Aliquam erat volutpat. Nulla nec risus pulvinar, pharetra risus at, lobortis nulla. Sed erat libero, aliquam a hendrerit ac, mattis sed libero. Integer efficitur, metus in condimentum maximus, lacus quam consectetur tellus, in maximus sem massa eu sapien. Aenean vitae dapibus mauris. Suspendisse bibendum felis tincidunt, varius tellus non, ornare nunc. Phasellus vulputate iaculis risus, sit amet ultricies sapien finibus ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida fringilla fermentum. Mauris dictum purus id ante vulputate, sed sodales turpis pretium.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <td>Nr</td>
+          <td>Podmiot docelowy</td>
+          <td>Pobieranie</td>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let doc of documents; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{doc}}</td>
+        <td><button class="btn btn-default" (click)="downloadFile(i)">DOWNLOAD</button></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
