@@ -42,3 +42,8 @@
   color: white;
   -webkit-transition: all 1s ease;
 }
+
+.img-style-events {
+  height: 270px;
+  width: 500px;
+}
