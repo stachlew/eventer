@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.db.domain.user.User;
+import pl.wat.logic.administration.users.AdministrationUsersService;
 import pl.wat.logic.user._model.UserRegisterForm;
 import pl.wat.logic.user.account.UserAccountService;
 
@@ -21,24 +22,24 @@ import java.util.List;
 public class AdministrationUsersController {
 
   @Autowired
-  private UserAccountService userAccountService;
+  private AdministrationUsersService administrationUsersService;
 
   @GetMapping("/getAllUsers")
   @ResponseBody
   public List<User> getAllUsers() {
-    return userAccountService.getAllUsers();
+    return administrationUsersService.getAllUsers();
   }
 
   @GetMapping("/getUserByEmail/{email}")
   @ResponseBody
   public User getUserByEmail(@PathVariable String email) {
-    return userAccountService.getUserByEmail(email);
+    return administrationUsersService.getUserByEmail(email);
   }
 
   @GetMapping("/getUser/{id}")
   @ResponseBody
   public User getUser(@PathVariable int id) {
-    return userAccountService.getUser(id);
+    return administrationUsersService.getUser(id);
   }
 
   /*@PreAuthorize("hasRole('ADMIN')")
@@ -52,7 +53,7 @@ public class AdministrationUsersController {
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/disableUser/{id}")
   public void disableUser(@PathVariable int id) {
-    userAccountService.disableUser(getUser(id).getUsername());
+    administrationUsersService.disableUser(getUser(id).getUsername());
   }
 
 }

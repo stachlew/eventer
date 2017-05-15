@@ -28,12 +28,6 @@ public class UserAccountService {
         return userRepository.findByUsername(username);
     }
 
-    public User getUser(int id) { return userRepository.findOne(id); }
-
-    public List<User> getAllUsers() { return userRepository.findAll(); }
-
-    public User getUserByEmail(String email) { return userRepository.findByEmail(email); }
-
     public boolean isUsernameFree(String username){
         User checkedUser = getUser(username);
         if(checkedUser!=null || username == null || username.equals(""))
@@ -49,16 +43,6 @@ public class UserAccountService {
             userRepository.save(userToDelete);
             return true;
             //CZY NIE WARTO WYCZYSCIC RESZTY ATRYBUTOW ZEBY NP ZWOLNIC USERNAME (kwestia NOT NULL)
-        }
-        return false;
-    }
-
-    public boolean disableUser(String username){
-        User userToDisable = getUser(username);
-        if(userToDisable!=null){
-            userToDisable.setEnabled(false);
-            userRepository.save(userToDisable);
-            return true;
         }
         return false;
     }
