@@ -14,7 +14,6 @@ import pl.wat.logic.event.dashboard.EventDashboardStatisticsService;
 
 import java.util.LinkedList;
 import java.util.List;
-
 @Service
 public class EventSearchService {
 

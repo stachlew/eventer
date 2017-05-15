@@ -5,9 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.user.User;
 import pl.wat.db.repository.user.UserRepository;
+import pl.wat.logic.user._model.UserRegisterForm;
 import pl.wat.logic.user.account.AuthorityService;
 
 import java.util.Date;
+import java.util.List;
 
 //TODO: Update usera, podejscie do usuwania usera
 @Service
@@ -25,6 +27,12 @@ public class UserAccountService {
     public User getUser(String username){
         return userRepository.findByUsername(username);
     }
+
+    public User getUser(int id) { return userRepository.findOne(id); }
+
+    public List<User> getAllUsers() { return userRepository.findAll(); }
+
+    public User getUserByEmail(String email) { return userRepository.findByEmail(email); }
 
     public boolean isUsernameFree(String username){
         User checkedUser = getUser(username);
