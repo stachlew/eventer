@@ -31,6 +31,8 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
 
     List<Event> findTop3ByOrderByVisitsDesc();
 
+    List<Event> findEventsByUser_Username(String username);
+
     @Modifying
     @Transactional
     @Query(value = "update eve_events set visits=visits+1 where id_event=:id_event", nativeQuery = true)
