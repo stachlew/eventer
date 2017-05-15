@@ -47,3 +47,20 @@
   height: 270px;
   width: 500px;
 }
+
+.text-home {
+  text-align: center;
+  padding: 10px;
+}
+
+.marginTop30 {
+  margin-top: 30px;
+}
+
+.marginBottom0 {
+  margin-bottom: 0px;
+}
+
+.text-home-size {
+  font-size: 50px;
+}
