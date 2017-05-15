@@ -14,12 +14,12 @@
 </div>
 <div id="start">&nbsp;</div>
 <div class="text-home">
-  <h1 class="marginTop30 marginBottom0 text-home-size">
+  <h1 class="marginTop50 marginBottom0 text-home-size">
     <strong>Informacje o </strong>
     <font color="#EB5225">EV<strong>enter</strong></font>
   </h1>
-  <strong>------------------------------------------------------------------------</strong>
-  <div>
+  _______________________
+  <div class="padding-top10">
     EVenter to internetowy portal do towrzenia i udostępniania wydarzeń.
   </div>
   <div>
@@ -27,23 +27,64 @@
   </div>
 </div>
 
-ZAWARTOSC:
-<ul>
-  <li>Krótki opis o co chodzi w stronie, proces w kilku słowach i obrazkach.</li>
-  <li>Ilość eventów, ilość userów, ilość gości</li>
-  <li>Np. 3 najnowsze wydarzenie</li>
-</ul>
-DANE:
-<ul>
-  <li>Dane statystyczne [Klasa HomeStatistics z 3 danymi statystycznymi]</li>
-  <li>Lista najnowszych wydarzeń [Iterable Event]</li>
-</ul>
+<div class="row col-lg-12 col-md-12 col-sm-12 marginTop80">
+  <div class="col-lg-2 col-md-0 col-sm-0"></div>
+  <div class="col-lg-2 col-md-3 col-sm-3">
+    <img src="../assets/images/publish.png" class="img-home-description img-rounded img-responsive">
+    <div class="text-description"><h5><strong>publikuj wydarzenie</strong></h5>Wprowadz informacje o swoim wydarzeniu, dodaj zdjęcie i publikuj jednym kliknięciem!</div>
+  </div>
+  <div class="col-lg-2 col-md-3 col-sm-3">
+    <img src="../assets/images/play.png" class="img-home-description img-rounded img-responsive">
+    <div class="text-description"><h5><strong>zapraszaj ludzi</strong></h5>Miej pod kontrolą, jak wiele osoób zadeklarowało swoje przybycie na wydarzenie.</div>
+  </div>
+  <div class="col-lg-2 col-md-3 col-sm-3">
+    <img src="../assets/images/accept.png" class="img-home-description img-rounded img-responsive">
+    <div class="text-description"><h5><strong>dodaj prelegentów</strong></h5>Wprowadź dane o prelegentach, dzięki temu Twoje wydarzenie będzie lepiej odbierane w środowiskach do których ma trafić.</div>
+  </div>
+  <div class="col-lg-2 col-md-3 col-sm-3">
+    <img src="../assets/images/pacman.png" class="img-home-description img-rounded img-responsive">
+    <div class="text-description"><h5><strong>sprawdź dostępnosć</strong></h5>Sprawdzaj online listę zadeklarowanych osób, które mają się zjawić</div>
+  </div>
+  <div class="col-lg-2 col-md-0 col-sm-0"></div>
+</div>
+
+<div class="row col-lg-12 col-md-12 col-sm-12 marginTop80">
+  <div  class="col-lg-6 col-md-6 col-sm-6">
+    <img src="../assets/images/apple.png" class="img-home-description-apple img-rounded img-responsive">
+  </div>
+  <div  class="col-lg-6 col-md-6 col-sm-6">
+    <h4><strong>Arka gdynia kurde mistrzem polski jest</strong></h4>
+    <ul>
+      <li>Lololololdfdsffsddf</li>
+      <li>asdasddsdsdfsdfsa</li>
+      <li>Lolololdsdfsdfsdfsol</li>
+      <li>asdasddsdfsdfsdfsdfsdsa</li>
+      <li>Lololodsdfsdfslol</li>
+      <li>asdasddfsdfsdfsdfsdsa</li>
+      <li>Lololdsfdsfolol</li>
+      <li>asdasdfsdfddsa</li>
+    </ul>
+  </div>
+</div>
+
+
+<!--ZAWARTOSC:-->
+<!--<ul>-->
+  <!--<li>Krótki opis o co chodzi w stronie, proces w kilku słowach i obrazkach.</li>-->
+  <!--<li>Ilość eventów, ilość userów, ilość gości</li>-->
+  <!--<li>Np. 3 najnowsze wydarzenie</li>-->
+<!--</ul>-->
+<!--DANE:-->
+<!--<ul>-->
+  <!--<li>Dane statystyczne [Klasa HomeStatistics z 3 danymi statystycznymi]</li>-->
+  <!--<li>Lista najnowszych wydarzeń [Iterable Event]</li>-->
+<!--</ul>-->
 
 <!--<h1>Podglad wydarzeń</h1>-->
-<div class="text-home">
+<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12">
   <h2><strong>Zobacz nasze najnowsze wydarzenia!</strong></h2>
 </div>
-<div class="row" class="padding0">
+<div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10">
   <figure class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of latestEvents">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" id="obrazek" (click)="goToEvent(i.idEvent)">
@@ -56,8 +97,3 @@ DANE:
     </div>
   </figure>
 </div>
-
-
-
-
-

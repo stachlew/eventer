@@ -53,8 +53,16 @@
   padding: 10px;
 }
 
-.marginTop30 {
-  margin-top: 30px;
+.marginTop10 {
+  margin-top: 10px;
+}
+
+.marginTop50 {
+  margin-top: 50px;
+}
+
+.marginTop80 {
+  margin-top: 80px;
 }
 
 .marginBottom0 {
@@ -63,4 +71,27 @@
 
 .text-home-size {
   font-size: 50px;
+}
+
+.img-home-description {
+  width: 150px;
+  height: auto;
+  margin:0px auto;
+  display:block;
+}
+
+.text-description {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.padding-top10 {
+  padding-top: 10px;
+}
+
+.img-home-description-apple {
+  width: 500px;
+  height: auto;
+  margin:0px auto;
+  display:block;
 }
