@@ -107,3 +107,9 @@
 .style-description-check {
   margin-top: 20px;
 }
+
+.row-border {
+  background-color: rgba(190, 190, 190, 0.4);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
