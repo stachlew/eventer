@@ -57,6 +57,10 @@
   margin-top: 10px;
 }
 
+.marginTop30 {
+  margin-top: 30px;
+}
+
 .marginTop50 {
   margin-top: 50px;
 }
@@ -94,4 +98,12 @@
   height: auto;
   margin:0px auto;
   display:block;
+}
+
+.fa-check {
+  color: #2c8d3a;
+}
+
+.style-description-check {
+  margin-top: 20px;
 }
