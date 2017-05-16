@@ -179,9 +179,6 @@ export class EventViewOpinionForm {
   rate: number;
 }
 
-
-
-
 export class Opinion {
   idOpinion: number;
   content: string;
@@ -241,14 +238,10 @@ export class  User {
   authorities: Authority[];
 }
 
-
 export class  Authority {
   id: number;
   name: AuthorityName;
 }
-
-
-
 
 export class  AutoCloseable {
 }
@@ -262,8 +255,6 @@ export class  InputStream extends Closeable {
 export class  Blob {
         binaryStream: InputStream;
     }
-
-
 
     type AuthorityName = "ROLE_USER" | "ROLE_ADMIN";
 

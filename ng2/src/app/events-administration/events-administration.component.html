@@ -21,78 +21,14 @@
               <div><button class="btn btn-block btn-lg" (click)="postSearchByCriteria()">Szukaj</button></div>
             </div>
           </div>
-
           <div class="fullLine"></div>
-
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group" >
-                <label for="dateFrom">Od:</label>
-                <input type="date" class="form-control" id="dateFrom" [(ngModel)]="dataRozpoczeciaPomoc" name="dateFrom" [formControl]="complexForm.controls['dateFrom']">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group" >
-                <label for="dateTo">Do:</label>
-                <input type="date" class="form-control" id="dateTo" [(ngModel)]="dataZakonczeniaPomoc" name="dateTo" [formControl]="complexForm.controls['dateTo']">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="regionName">Region:</label>
-                <select class="form-control" [(ngModel)]="eventSearchForm.region" name="regionName" id="regionName" (click)="getEventCities(eventSearchForm.region)">
-                  <option *ngFor="let i of regions" [ngValue]="i">{{i?.regionName}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="cityName">Miasto:</label>
-                <select class="form-control" [(ngModel)]="eventSearchForm.city" name="cityName" id="cityName">
-                  <option *ngFor="let i of cities" [ngValue]="i">{{i?.cityName}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="eventTypeName">Typ wydarzenia:</label>
-                <select class="form-control" [(ngModel)]="eventSearchForm.eventType" name="eventTypeName" id="eventTypeName">
-                  <option *ngFor="let i of eventTypes" [ngValue]="i">{{i?.eventTypeName}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group" align="center" >
-                <div class="checkbox" style="margin-top: 30px">
-                  <h3><label><input type="checkbox" [(ngModel)]="eventSearchForm.freeEntrance" name="freeEntrance" id="freeEntrance" value="">Wstęp bezpłatny</label></h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group" align="center">
-                <div class="checkbox" style="margin-top: 30px">
-                  <h3><label><input type="checkbox" [(ngModel)]="eventSearchForm.registerEnabled" name="registerEnabled" id="registerEnabled" value="">Rejestracja możliwa</label></h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="fullLine"></div>
-
         </form>
-
       </div>
-
     </div>
   </div>
 </div>
 
 <div class="fullLine"></div>
-
 
 <!-- CIALO LISTY ZWROTNEJ -->
 <div class="row">
@@ -150,37 +86,41 @@
                   </div>
                   <div class="col-md-9">
                     <H2>{{i.title}}</H2>
+                    Jaki użytkownik utwrzył
                   </div>
                   <div class="col-md-1">
                     <div style="margin-top: auto; margin-bottom: auto">
                       <div class="row"><!--Rejestracja-->
 
                         <span class="myIcon" *ngIf="!i.registerEnabled" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-user-plus"></i>
+                          <i class="fa fa-fw fa-toggle-on"></i>
                         </span>
                         <span class="myIcon" *ngIf="i.registerEnabled" >
-                          <i class="fa fa-fw fa-user-plus"></i>
+                          <i class="fa fa-fw fa-toggle-off"></i>
                         </span>
 
                       </div>
                       <div class="row"><!--BEZPLATNE-->
+
                         <span class="myIcon" *ngIf="i.freeEntrance" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-money"></i>
+                          <i class="fa fa-fw fa-unlock"></i>
                         </span>
 
                         <span class="myIcon" *ngIf="!i.freeEntrance" style="color: rgba(16,177,24,0.8)">
-                          <i class="fa fa-fw fa-money"></i>
+                          <i class="fa fa-fw fa-lock"></i>
                         </span>
+
                       </div>
                       <div class="row"><!--TRANSMISJA-->
 
                         <span class="myIcon" *ngIf="i.youtubeLink?.length>0" style="color: rgba(189,0,0,0.8)">
-                          <i class="fa fa-fw fa-youtube"></i>
+                          <i class="fa fa-fw fa-trash"></i>
                         </span>
 
                         <span class="myIcon" *ngIf="i.youtubeLink==null || i.youtubeLink?.length<=0" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-youtube"></i>
+                          <i class="fa fa-fw fa-trash"></i>
                         </span>
+
                       </div>
                     </div>
                   </div>
