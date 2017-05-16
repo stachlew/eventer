@@ -11,7 +11,7 @@ import java.util.List;
 public class AdministrationEventsService {
 
   @Autowired
-  EventRepository eventRepository;
+  private EventRepository eventRepository;
 
   public List<Event> getEventsByUserName(String username) {
     return eventRepository.findEventsByUser_Username(username);

@@ -16,7 +16,7 @@ public class AdministrationStatisticsService {
   private UserRepository userRepository;
 
   public long getCountOfEvents() {
-    return eventRepository.countByIdEvent();
+    return 2;//eventRepository.countByIdEvent();
   }
 
   public long getCountOfAllVisits() {
