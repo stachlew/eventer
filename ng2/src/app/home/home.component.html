@@ -48,11 +48,12 @@
   <div class="col-lg-2 col-md-0 col-sm-0"></div>
 </div>
 
-<div class="row col-lg-12 col-md-12 col-sm-12 marginTop80">
+<div class="row col-lg-12 col-md-12 col-sm-12 marginTop80" (click)="changeState()">
   <div  class="col-lg-6 col-md-6 col-sm-6">
     <img src="../assets/images/apple.png" class="img-home-description-apple img-rounded img-responsive">
   </div>
-  <div  class="col-lg-6 col-md-6 col-sm-6">
+  <div class="wrap">
+  <div class="col-lg-6 col-md-6 col-sm-6 possibility" [@possibility]="possibilityState">
     <h4><strong>Nasz portal oferuje bezkonkurecyjne rozwiązania w zakresie:</strong></h4>
     <div class="marginTop30">
       <i class="fa fa-check"></i> Tworzenia wydarzeń
@@ -75,6 +76,16 @@
     <div class="style-description-check">
       <i class="fa fa-check"></i> Wyszukiwania wydarzeń w Twojej okolicy!
     </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6 statistic" [@possibility]="statisticState">
+    <h4><strong>STATYSTYKI:</strong></h4>
+    <div class="marginTop30">
+      <i class="fa fa-check"></i> elo mordy
+    </div>
+    <div class="style-description-check">
+      <i class="fa fa-check"></i> Statystyki
+    </div>
+  </div>
   </div>
 </div>
 

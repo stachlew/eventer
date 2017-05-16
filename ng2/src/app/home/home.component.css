@@ -1,3 +1,12 @@
+.wrap{
+  position: relative;
+  left: 50%;
+}
+
+.possibility, .statistic{
+  position: absolute;
+}
+
 .image {
   text-align: center;
   position: relative;
