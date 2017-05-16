@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EventStorageService} from "../event-storage.service";
 import {HttpSecService} from "../../_service/util/http-sec.service";
 import {Http, Response} from "@angular/http";
-import {EventDashboardInfo} from "../../_model/dashboardClass";
+import {EventDashboardInfo, EventDashboardStatisticsInfo} from "../../_model/dashboardClass";
 import {City, EventType, Place, Region} from "../../_model/domainClass";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomDateService} from "../../_service/util/custom-date.service";
@@ -20,6 +20,10 @@ export class EventEditComponent implements OnInit {
 
   public isLoading=false;
   public isDeleting=false;
+
+  stats: EventDashboardStatisticsInfo;
+
+
 
   changeDelete(){
     (this.isDeleting) ? this.isDeleting = false : this.isDeleting=true;
@@ -62,6 +66,8 @@ export class EventEditComponent implements OnInit {
 
 
     this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/edit/getEventInfo/'+this.idEvent,this.myHttp.getConfig()).subscribe((data: Response)=> {this.eventInfo = data.json(),this.updateData()});
+    this.http.get(this.myHttp.getUrl() + '/api/event/dashboard/statistics/getEventStats/'+this.idEvent,this.myHttp.getConfig()).subscribe((data: Response)=> {this.stats = data.json()});
+
     this.getEventRegions();
     this.getEventTypes();
 
@@ -207,13 +213,21 @@ export class EventEditComponent implements OnInit {
   }
 
   validCapacity(){
-    if(this.eventInfo.capacity>0){
+
+    if(this.eventInfo.capacity>0 && this.eventInfo.capacity>this.stats.participants){
       this.isCapacityValid=1;
+    }
+    else if (this.eventInfo.capacity>0 && this.eventInfo.capacity==this.stats.participants){
+      this.eventInfo.registerEnabled=false;
+      this.isCapacityValid=1;
+      alert("Pojemność wydarzenia jest równa liczbie zapisanych gości. Rejestracja została wyłączona.");
     }
     else {
       this.isCapacityValid=0;
+      alert("Pojemność wydarzenia jest niepoprawna. Sprawdź czy liczba już zapisanych gości jest większa od wprowadzonej pojemności.");
     }
   }
+
 
   //METODY EDYCYJNE POL -------------------------------------------------------------
   //TYTUL
