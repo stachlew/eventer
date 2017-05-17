@@ -35,7 +35,7 @@ export class EventsAdministrationComponent implements OnInit {
         this.eventSearchResultFull = data.json(), this.updateFullData()
       });
 
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/events/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
         this.eventSearchResult = data.json()
       });
@@ -57,12 +57,12 @@ export class EventsAdministrationComponent implements OnInit {
     this.eventSearchForm.siteNo = 0;
 
     this.isLoading = true;
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchFull', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/events/search/getSearchFull', this.eventSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
         this.eventSearchResultFull = data.json(), this.updateFullData()
       });
 
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/events/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
         this.eventSearchResult = data.json()
       });
@@ -103,14 +103,14 @@ export class EventsAdministrationComponent implements OnInit {
   public siteCount = 0;
 
   public postNextPage() {
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/events/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
         this.eventSearchResult = data.json(), this.updatePageData()
       });
   }
 
   public postPrevPage() {
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/events/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
         this.eventSearchResult = data.json(), this.updatePageData()
       });
@@ -132,4 +132,29 @@ export class EventsAdministrationComponent implements OnInit {
     this.siteNo = this.siteNo + 1;
     this.postNextPage();
   }
+
+  public toRegisterOrDisRegister(temp) {
+    this.http.post(this.myHttp.getUrl()+'/api/administration/events/changeRegister/'+temp,this.myHttp.getConfig()).subscribe(
+      (data: Response) => {
+      this.eventSearchResult = data.json(), this.updatePageData()
+    });
+    console.log(temp+" register");
+  }
+
+  public toPublishOrDisPublish(temp) {
+    this.http.post(this.myHttp.getUrl()+'/api/administration/events/changePublished/'+temp,this.myHttp.getConfig()).subscribe(
+      (data: Response) => {
+        this.eventSearchResult = data.json(), this.updatePageData()
+      });
+    console.log(temp+" publish");
+  }
+
+  public deleteEvent(temp) {
+    this.http.post(this.myHttp.getUrl()+'/api/administration/events/delete/'+temp,this.myHttp.getConfig()).subscribe(
+      (data: Response) => {
+        this.eventSearchResult = data.json(), this.updatePageData()
+      });
+    console.log(temp+" delete");
+  }
+
 }

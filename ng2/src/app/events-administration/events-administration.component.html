@@ -62,7 +62,7 @@
         <!--CIALO LISTY-->
         <div class="row">
           <div *ngFor="let i of eventSearchResult">
-            <div class="panel panel-default eventPanel" (click)="goToEvent(i.idEvent)" >
+            <div class="panel panel-default eventPanel" >
               <!--GORA EVENTU-->
 
               <div class="panel-body" >
@@ -86,38 +86,34 @@
                   </div>
                   <div class="col-md-9">
                     <H2>{{i.title}}</H2>
-                    Jaki użytkownik utwrzył
+                    Użytkownik który utworzył wydarzenie: {{i.user.username}}
                   </div>
                   <div class="col-md-1">
                     <div style="margin-top: auto; margin-bottom: auto">
-                      <div class="row"><!--Rejestracja-->
+                      <div class="row" (click)="toRegisterOrDisRegister(i.idEvent)"><!--Rejestracja-->
 
-                        <span class="myIcon" *ngIf="!i.registerEnabled" style="color: rgba(121,103,105,0.24)">
+                        <span class="myIcon" *ngIf="i.registerEnabled">
                           <i class="fa fa-fw fa-toggle-on"></i>
                         </span>
-                        <span class="myIcon" *ngIf="i.registerEnabled" >
+                        <span class="myIcon" *ngIf="!i.registerEnabled" >
                           <i class="fa fa-fw fa-toggle-off"></i>
                         </span>
 
                       </div>
-                      <div class="row"><!--BEZPLATNE-->
+                      <div class="row" (click)="toPublishOrDisPublish(i.idEvent)"><!--CZY_PUBLIKOWANE-->
 
-                        <span class="myIcon" *ngIf="i.freeEntrance" style="color: rgba(121,103,105,0.24)">
+                        <span class="myIcon" *ngIf="i.published"  style="color: rgba(121,103,105,0.24)">
                           <i class="fa fa-fw fa-unlock"></i>
                         </span>
 
-                        <span class="myIcon" *ngIf="!i.freeEntrance" style="color: rgba(16,177,24,0.8)">
+                        <span class="myIcon" *ngIf="!i.published" style="color: rgba(16,177,24,0.8)">
                           <i class="fa fa-fw fa-lock"></i>
                         </span>
 
                       </div>
-                      <div class="row"><!--TRANSMISJA-->
+                      <div class="row" (click)="deleteEvent(i.idEvent)"><!--USUNIECIE-->
 
-                        <span class="myIcon" *ngIf="i.youtubeLink?.length>0" style="color: rgba(189,0,0,0.8)">
-                          <i class="fa fa-fw fa-trash"></i>
-                        </span>
-
-                        <span class="myIcon" *ngIf="i.youtubeLink==null || i.youtubeLink?.length<=0" style="color: rgba(121,103,105,0.24)">
+                        <span class="myIcon" style="color: rgba(189,0,0,0.8)">
                           <i class="fa fa-fw fa-trash"></i>
                         </span>
 

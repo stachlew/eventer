@@ -36,7 +36,8 @@ public class EventExpressions {
 
         BooleanExpression booleanExpression=QEvent.event.published.isTrue();
 
-        if (searchForm.getTextContent()!=null){
+        if (searchForm.getTextContent()
+        !=null){
             booleanExpression=booleanExpression.and((QEvent.event.title.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%")).or(QEvent.event.description.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%")));
         }
         if(searchForm.getCity()!=null){
