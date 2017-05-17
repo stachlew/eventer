@@ -4,8 +4,8 @@
       <img class="img-responsive"style="width: 100%" src="../assets/images/concert.gif" />
       <!--<img class="img-responsive"style="width: 100%" src="../assets/images/city.gif" />-->
       <div class="imageHeader" style="font-size: 250%;">
-        <span> 64325 </span><span style="color: firebrick">Gości</span><br/>
-        <span>4235 </span><span style="color: firebrick">Wydarzeń</span><br/>
+        <span> {{allGuests}} </span><span style="color: firebrick">Gości</span><br/>
+        <span> {{createEvents}} </span><span style="color: firebrick">Wydarzeń</span><br/>
         <a href="#start" style="color: firebrick; font-size: larger"><i class="fa fa-chevron-down"></i></a><br/>
       </div>
     </div>
@@ -84,7 +84,7 @@
           <strong>{{createEvents}}</strong>
         </div>
         <div>
-          utworzone wydarzenia
+          utworzonych wydarzeń
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 statistic-color2 statistic-design">
@@ -92,7 +92,7 @@
           <strong>{{activeUsers}}</strong>
         </div>
         <div>
-          aktywni użytkownicy
+          aktywnych użytkowników
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
           <strong>{{allVisitors}}</strong>
         </div>
         <div>
-          odwiedzający wydarzenia
+          wyświetleń
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 statistic-color4 statistic-design">
@@ -110,27 +110,13 @@
           <strong>{{avgVisitors}}</strong>
         </div>
         <div>
-          średnio odwiedzający wydarzenie
+          średnio odwiedzających na wydarzenie
         </div>
       </div>
     </div>
   </div>
   </div>
 </div>
-
-
-
-<!--ZAWARTOSC:-->
-<!--<ul>-->
-  <!--<li>Krótki opis o co chodzi w stronie, proces w kilku słowach i obrazkach.</li>-->
-  <!--<li>Ilość eventów, ilość userów, ilość gości</li>-->
-  <!--<li>Np. 3 najnowsze wydarzenie</li>-->
-<!--</ul>-->
-<!--DANE:-->
-<!--<ul>-->
-  <!--<li>Dane statystyczne [Klasa HomeStatistics z 3 danymi statystycznymi]</li>-->
-  <!--<li>Lista najnowszych wydarzeń [Iterable Event]</li>-->
-<!--</ul>-->
 
 <!--<h1>Podglad wydarzeń</h1>-->
 <div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12">
@@ -138,14 +124,20 @@
 </div>
 <div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10">
   <figure class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of latestEvents">
-    <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" id="obrazek" (click)="goToEvent(i.idEvent)">
+        <figure>
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
-        <div class="napis col-lg-12 col-md-12 col-sm-12" style="width: 94%; margin-top: 11% ">
-          <h3>{{i.title}}</h3>
-          Data utworzenia: {{i.createDate |  date }}
-        </div>
+          <figcaption>
+            <h3>{{i.title}}</h3>
+            Data: {{i.createDate |  date }}
+          </figcaption>
+        </figure>
       </div>
-    </div>
   </figure>
 </div>
+
+
+<!--<img [src]="imageUrl" style="width: 100%" class="img-responsive"/>-->
+<!--<div class="imageHeader" style="font-size: 250%;">-->
+  <!--<h1>{{event.title}}</h1>-->
+<!--</div>-->
