@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.*;
 import pl.wat.db.repository.event.EventSearchRepository;
+import pl.wat.logic.event._model.EventAdministrationSearchForm;
 import pl.wat.logic.event._model.EventSearchForm;
 
 import javax.annotation.Nullable;
@@ -75,6 +76,17 @@ public class EventExpressions {
         return booleanExpression ;
     }
 
+    public Predicate createPredicateDependsOfEventSearchForm(EventAdministrationSearchForm searchForm){
+
+        BooleanExpression booleanExpression=QEvent.event.idEvent.isNotNull();
+
+        if (searchForm.getTextContent()!=null){
+            booleanExpression=booleanExpression.and((QEvent.event.title.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%"))
+                    .or(QEvent.event.user.username.upper().like("%"+searchForm.getTextContent().toUpperCase()+"%")));
+        }
+
+        return booleanExpression ;
+    }
 
     public static Predicate hasCapasity(int capacity){
         return QEvent.event.capacity.lt(300);
