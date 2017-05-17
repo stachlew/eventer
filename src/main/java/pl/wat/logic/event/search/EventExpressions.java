@@ -2,23 +2,13 @@ package pl.wat.logic.event.search;
 
 
 import com.querydsl.core.types.*;
-import com.querydsl.core.types.Template;
 import com.querydsl.core.types.dsl.*;
-import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.repository.core.EntityMetadata;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.*;
 import pl.wat.db.repository.event.EventSearchRepository;
 import pl.wat.logic.event._model.EventAdministrationSearchForm;
 import pl.wat.logic.event._model.EventSearchForm;
-
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.swing.text.StyledEditorKit;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
