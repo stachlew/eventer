@@ -46,7 +46,24 @@ public class UserSearchService {
     }
 
     public List<UserAdministrationSearchResult> findAdministrationUserFull(UserAdministrationSearchForm form){
-        return null;
+        Predicate predicate = userExpression.createPredicateDependsOfUserSearchForm(form);
+        Iterable<User> userList = userSearchRepository.findAll(predicate);
+        List<UserAdministrationSearchResult> resultList = new LinkedList<>();
+
+        for (User u:userList){
+            UserAdministrationSearchResult userResult = new UserAdministrationSearchResult(
+                    u.getId(),
+                    u.getUsername(),
+                    u.getFirstname(),
+                    u.getLastname(),
+                    u.getEmail(),
+                    u.getPhone(),
+                    u.getEnabled(),
+                    u.getLastpassres()
+            );
+            resultList.add(userResult);
+        }
+        return resultList;
     }
 
 }

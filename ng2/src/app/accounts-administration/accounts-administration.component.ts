@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EventToSearchForAdminForm, EventForAdminResult} from "../_model/searchDomain";
+import {UsersForAdminForm, UsersForAdminResults} from "../_model/searchDomain";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpSecService} from "../_service/util/http-sec.service";
 import {CustomDateService} from "../_service/util/custom-date.service";
@@ -25,54 +25,54 @@ export class AccountsAdministrationComponent implements OnInit {
     this.complexForm = fb.group({
       'textContent': new FormControl(null, Validators.compose([Validators.maxLength(100)]))
     })
-    this.eventSearchForm = new EventToSearchForAdminForm;
-    this.eventSearchForm.siteNo = 0;
+    this.userSearchForm = new UsersForAdminForm;
+    this.userSearchForm.siteNo = 0;
   }
 
   getLatest() {
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchFull', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchFull', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResultFull = data.json(), this.updateFullData()
+        this.userSearchResultFull = data.json(), this.updateFullData()
       });
 
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchPage', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResult = data.json()
+        this.userSearchResult = data.json()
       });
   }
 
   /* END: INICJALIZACJA ----------------------------------------*/
 
   /*WYNIKI WYSZUKIWANIA*/
-  public eventSearchResult: EventForAdminResult[];
-  public eventSearchResultFull: EventForAdminResult[];
+  public userSearchResult: UsersForAdminResults[];
+  public userSearchResultFull: UsersForAdminResults[];
 
   /*FORMULARZ WYSZUKIWANIA*/
-  public eventSearchForm: EventToSearchForAdminForm;
+  public userSearchForm: UsersForAdminForm;
   public complexForm: FormGroup;
 
   /*WYSZUKANIE WG FORMATKI BEZ MAPY*/
   public postSearchByCriteria(): void {
     this.siteNo = 0;
-    this.eventSearchForm.siteNo = 0;
+    this.userSearchForm.siteNo = 0;
 
     this.isLoading = true;
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchFull', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchFull', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResultFull = data.json(), this.updateFullData()
+        this.userSearchResultFull = data.json(), this.updateFullData()
       });
 
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchPage', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResult = data.json()
+        this.userSearchResult = data.json()
       });
   }
 
   /*Odswiezenie danych po wyszukaniu*/
   private updateFullData(): void {
     this.siteNo = 0;
-    this.eventSearchForm.siteNo = 0;
-    this.countEvents = this.eventSearchResultFull.length;
+    this.userSearchForm.siteNo = 0;
+    this.countEvents = this.userSearchResultFull.length;
     this.siteCount = Math.ceil(this.countEvents / 5);
     this.updatePageData();
   }
@@ -103,23 +103,23 @@ export class AccountsAdministrationComponent implements OnInit {
   public siteCount = 0;
 
   public postNextPage() {
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchPage', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResult = data.json(), this.updatePageData()
+        this.userSearchResult = data.json(), this.updatePageData()
       });
   }
 
   public postPrevPage() {
-    this.http.post(this.myHttp.getUrl() + '/api/event/search/getSearchPage', this.eventSearchForm, this.myHttp.postConfig())
+    this.http.post(this.myHttp.getUrl() + '/api/administration/users/search/getSearchPage', this.userSearchForm, this.myHttp.postConfig())
       .subscribe((data: Response) => {
-        this.eventSearchResult = data.json(), this.updatePageData()
+        this.userSearchResult = data.json(), this.updatePageData()
       });
   }
 
   public prevPage() {
     this.isLoading = true;
-    if (this.eventSearchForm.siteNo > 0) {
-      this.eventSearchForm.siteNo = this.eventSearchForm.siteNo - 1;
+    if (this.userSearchForm.siteNo > 0) {
+      this.userSearchForm.siteNo = this.userSearchForm.siteNo - 1;
       this.siteNo = this.siteNo - 1;
     }
 
@@ -128,8 +128,17 @@ export class AccountsAdministrationComponent implements OnInit {
 
   public nextPage() {
     this.isLoading = true;
-    this.eventSearchForm.siteNo = this.eventSearchForm.siteNo + 1;
+    this.userSearchForm.siteNo = this.userSearchForm.siteNo + 1;
     this.siteNo = this.siteNo + 1;
     this.postNextPage();
   }
+
+  public deleteUser(temp) {
+    this.http.post(this.myHttp.getUrl()+'/api/administration/users/disableUser/'+temp,this.myHttp.getConfig()).subscribe(
+      (data: Response) => {
+        this.userSearchResult = data.json(), this.updatePageData()
+      });
+    console.log(temp+" delete");
+  }
+
 }
