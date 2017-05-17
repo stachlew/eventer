@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
   allVisitors: string = "";
   avgVisitors: string = "";
   activeUsers: string = "";
+  allGuests: string = "";
 
   constructor(private http: Http, private myHttp: HttpSecService, private router: Router) {
 
@@ -60,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfAllVisits').subscribe((data: Response)=> this.allVisitors = data.text());
     this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getAverageOfAllVisits').subscribe((data: Response)=> this.avgVisitors = data.text());
     this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfAllActiveUsers').subscribe((data: Response)=> this.activeUsers = data.text());
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountParticipant').subscribe((data: Response)=> this.allGuests = data.text());
   }
 
   goToEvent(id: number) {
