@@ -39,7 +39,7 @@ public class UserAccountService {
     public boolean deleteUser(String username){
         User userToDelete = getUser(username);
         if(userToDelete!=null){
-            userToDelete.setEnabled(false);
+            userToDelete.setEnabled(!userToDelete.getEnabled());
             userRepository.save(userToDelete);
             return true;
             //CZY NIE WARTO WYCZYSCIC RESZTY ATRYBUTOW ZEBY NP ZWOLNIC USERNAME (kwestia NOT NULL)
