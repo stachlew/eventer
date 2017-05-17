@@ -1,11 +1,13 @@
 package pl.wat.api.event.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.wat.logic.event._model.EventHeader;
-import pl.wat.logic.event._model.EventSearchResult;
 import pl.wat.logic.event._model.view.EventViewDetails;
 import pl.wat.logic.event.view.EventViewService;
+import pl.wat.logic.user._model.SecurityInfo;
+import pl.wat.logic.user.account.UserAccountService;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ import java.util.List;
 public class EventViewController {
     @Autowired
     EventViewService eventViewService;
+
+    @Autowired
+    UserAccountService userAccountService;
 
 
     //zwrotka najnowszych
@@ -35,5 +40,15 @@ public class EventViewController {
             return null;
         }
     }
+
+    //zwrotka uzytkownika
+    @RequestMapping(value = "/getByUser",method = RequestMethod.GET)
+    public @ResponseBody
+    List<EventHeader> getByUser(Authentication auth){
+        SecurityInfo si = new SecurityInfo(auth,userAccountService);
+        return eventViewService.getByUser(si.getDetails());
+    }
+
+
 
 }

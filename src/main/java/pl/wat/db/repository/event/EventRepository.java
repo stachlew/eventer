@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
+import pl.wat.db.domain.user.User;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,8 +21,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
             nativeQuery = true)
     List<Event> findTopNOfLatestEvents(@Param("limit") int limit);
 
+    List<Event> findAllByUserOrderByIdEvent(User user);
 
-    //Metoda zwraca BigDecimal, mimo że powinna Integera- z tego powodu gdy otrzymamy liste numerów, należy
+
+//Metoda zwraca BigDecimal, mimo że powinna Integera- z tego powodu gdy otrzymamy liste numerów, należy
     //zrobić for eacha dla tej listy i dla każdego elementu wywołać metodę z repozytorium findOne(i.intValue())
     @Query(value = "select id_event from (select e.id_event, e.CAPACITY-count(p.id_participant) from eve_events e LEFT JOIN EVE_PARTICIPANTS p ON e.id_event=p.id_event \n" +
             "where  e.published = 1 and e.REGISTER_ENABLED =1   group by e.id_event,e.CAPACITY order by 2 )\n" +
