@@ -26,6 +26,6 @@ public class AdministrationStatisticsService {
   }
 
   public long getCountOfAllActiveUsers() {
-    return userRepository.countUsersByEnabledIsTrueAndRoleTypeEqualsUser();
+    return userRepository.countByEnabledIsTrue();
   }
 }
