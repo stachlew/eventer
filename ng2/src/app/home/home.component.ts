@@ -28,6 +28,8 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
 
   latestEvents : EventHeader[];
+  lastMinuteEvents : EventHeader[];
+  theMostCommonEvents : EventHeader[];
   imageUrl: string = this.myHttp.getUrl()+ "/api/images/getEventImage/";
   possibilityState: string = 'ON';
   statisticState: string = 'OFF';
@@ -43,6 +45,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getLatest();
+    this.getLastMinuteEvents();
+    this.getTheMostCommonEvents();
     this.getStatistic();
     setInterval(() => this.changeState(), 5000);
   }
@@ -56,6 +60,14 @@ export class HomeComponent implements OnInit {
     this.http.get(this.myHttp.getUrl() + '/api/event/view/getLatest').subscribe((data: Response)=> this.latestEvents = data.json());
   }
 
+  getLastMinuteEvents() {
+    this.http.get(this.myHttp.getUrl() + '/api/event/search/getLastMinute').subscribe((data: Response)=> this.lastMinuteEvents = data.json());
+  }
+
+  getTheMostCommonEvents() {
+    this.http.get(this.myHttp.getUrl() + '/api/event/search/getMostVisited').subscribe((data: Response)=> this.theMostCommonEvents = data.json());
+  }
+
   getStatistic() {
     this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfEvents').subscribe((data: Response)=> this.createEvents = data.text());
     this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfAllVisits').subscribe((data: Response)=> this.allVisitors = data.text());
@@ -67,7 +79,4 @@ export class HomeComponent implements OnInit {
   goToEvent(id: number) {
     this.router.navigate(['/event/view/'+id]);
   }
-
-
-
 }

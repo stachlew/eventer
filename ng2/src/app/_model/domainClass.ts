@@ -141,6 +141,9 @@ export class EventHeader{
   idEvent: number;
   title: string;
   description: string;
+  createDate: Timestamp;
+  startDate: Timestamp;
+  endDate: Timestamp;
 }
 
 
