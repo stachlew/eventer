@@ -52,4 +52,10 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query("select count(e.idEvent) from Event e")
     long getCountEvents();
 
+    @Query("SELECT COUNT(*) FROM EVE_EVENTS where START_TIME>ADD_MONTHS(TRUNC(CURRENT_DATE, 'mm'),-1) AND START_TIME<TRUNC(CURRENT_DATE, 'mm')-1;")
+    long getCountEventsInLastMonths();
+
+    @Query("SELECT COUNT(*) FROM EVE_EVENTS where START_TIME>TRUNC(CURRENT_DATE, 'mm') AND START_TIME<ADD_MONTHS(TRUNC(CURRENT_DATE, 'mm')-1,1);")
+    long getCountEventsInThisMonths();
+
 }

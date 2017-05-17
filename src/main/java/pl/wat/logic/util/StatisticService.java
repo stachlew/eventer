@@ -39,4 +39,8 @@ public class StatisticService {
         return participantRepository.getAvgParticipant();
     }
 
+    public long getCountEventsInLastMonths() { return eventRepository.getCountEventsInLastMonths(); }
+
+    public long getCountEventsInThisMonths() { return eventRepository.getCountEventsInThisMonths(); }
+
 }

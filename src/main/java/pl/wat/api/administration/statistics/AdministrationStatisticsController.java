@@ -41,4 +41,10 @@ public class AdministrationStatisticsController {
   @GetMapping("/getAvgParticipant")
   public int getAvgParticipant() { return (int) statisticService.getAvgParticipant(); }
 
+  @GetMapping("/getCountEventsInLastMonths")
+  public long getCountEventsInLastMonths() { return statisticService.getCountEventsInLastMonths(); }
+
+  @GetMapping("/getCountEventsInThisMonths")
+  public long getCountEventsInThisMonths() { return statisticService.getCountEventsInThisMonths(); }
+
 }
