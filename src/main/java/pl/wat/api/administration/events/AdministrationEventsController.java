@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.db.domain.event.Event;
 import pl.wat.logic.administration.events.AdministrationEventsService;
+import pl.wat.logic.event.dashboard.EventDashboardService;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class AdministrationEventsController {
 
   @Autowired
   private AdministrationEventsService administrationEventsService;
+
+  @Autowired
+  private EventDashboardService eventDashboardService;
 
   @GetMapping("/getEventsByUserName/{username}")
   @ResponseBody
@@ -31,29 +35,20 @@ public class AdministrationEventsController {
     return administrationEventsService.getEvents();
   }
 
-  @GetMapping("/getEvent/{id}")
+  @PostMapping("/delete/{id}")
   @ResponseBody
-  public Event getEvent(@PathVariable int id) {
-    return administrationEventsService.getEvent(id);
+  public void deleteEvent(@PathVariable int id) {
+    eventDashboardService.deleteEvent(id);
   }
 
-  @PostMapping("/{id}/publishedUp")
-  public void publishedUp(@PathVariable int id) {
-    administrationEventsService.setPublished(true, id);
+  @PostMapping("/changePublished/{id}")
+  public void changePublished(@PathVariable int id) {
+    administrationEventsService.setPublished(!administrationEventsService.getEvent(id).isPublished(), id);
   }
 
-  @PostMapping("/{id}/publishedDown")
-  public void publishedDown(@PathVariable int id) {
-    administrationEventsService.setPublished(false, id);
+  @PostMapping("/changeRegister/{id}")
+  public void changeRegister(@PathVariable int id) {
+    administrationEventsService.setRegisterEnabled(!administrationEventsService.getEvent(id).isRegisterEnabled(), id);
   }
 
-  @PostMapping("/{id}/registerEnabled")
-  public void registerEnabled(@PathVariable int id) {
-    administrationEventsService.setRegisterEnabled(true, id);
-  }
-
-  @PostMapping("/{id}/registerDisabled")
-  public void registerDisabled(@PathVariable int id) {
-    administrationEventsService.setRegisterEnabled(false, id);
-  }
 }
