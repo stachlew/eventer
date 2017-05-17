@@ -1,0 +1,117 @@
+/*SLIDE MENU*/
+.sidePage{
+  border-top-right-radius :1em;
+  border-bottom-right-radius:1em;
+  border: 2px solid #73AD21;
+  width: 10%;
+  position: fixed;
+  z-index: 1;
+  top: 10%;
+  left: 0;
+  background-color: #e95420;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-left:2px;
+  padding-top:10px;
+  padding-right:5px;
+  padding-bottom:10px;
+}
+
+.sidePage a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #180811;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidePage a:hover, .offcanvas a:focus{
+  color: firebrick;
+}
+
+.sidePage .closebtn {
+  position: absolute;
+  top: 45%;
+  right: 2px;
+  font-size: 50px;
+  margin-left: 50px;
+}
+
+/*BLOK TESTOWY*/
+.blok{
+  margin-top: 50px;
+  margin-bottom: 300px;
+  padding: 100px;
+  height: 300px;
+  width: 100%;
+  background-color: #e95420;
+}
+
+/*LINIA*/
+.fullLine {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 0;
+  margin-right: 0;
+  border-style: dotted;
+  border-width: 1px;
+}
+
+.searchBlock{
+  background-color: #e95420;
+  border-radius: 0.8em;
+}
+
+.resultBlock{
+  border-radius: 0.8em;
+}
+
+.eventFooter{
+  background-color: #e95420;
+}
+
+/*KALENDARZ*/
+.myCalendarContainer{
+  max-width: 120px;
+  min-height: 100px;
+  background-color: #e95420;
+  border-radius: 0.5em;
+  box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
+  text-align: center;
+  font-size: larger;
+}
+.myCalendarHead{
+  background-color: #c0481d;
+  width: 100%;
+  height: 30px;
+}
+.myCalendarBody{
+  background-color: #e1e1e1;
+  width: 100%;
+  height: 80px;
+}
+.myCalendarFooter{
+  background-color: #c0481d;
+  width: 100%;
+  height: 30px;
+}
+
+/*IKONY*/
+.myIcon{
+  margin-left: 15px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.eventPanel{
+  border-radius: 0.8em;
+}
+
+
+.eventPanel:hover{
+  background-color: #d1d1d1;
+  cursor: pointer;
+  box-shadow: 2px 8px 12px 2px rgba(250, 11, 0, 0.86), 0 6px 20px 0 rgba(182, 182, 182, 0.24);
+}

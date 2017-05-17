@@ -15,9 +15,7 @@ public class AdministrationStatisticsService {
   @Autowired
   private UserRepository userRepository;
 
-  public long getCountOfEvents() {
-    return 2;//eventRepository.countByIdEvent();
-  }
+  public long getCountOfEvents() { return eventRepository.getCountEvents();}
 
   public long getCountOfAllVisits() {
     return eventRepository.getCountVisits();
@@ -28,6 +26,6 @@ public class AdministrationStatisticsService {
   }
 
   public long getCountOfAllActiveUsers() {
-    return userRepository.countUsersByEnabledIsTrue();
+    return userRepository.countUsersByEnabledIsTrueAndRoleTypeEqualsUser();
   }
 }

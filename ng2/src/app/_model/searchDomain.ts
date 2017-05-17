@@ -1,5 +1,5 @@
-import {City, EventType, Region, SimpleUser, Timestamp} from "./domainClass";
-export class EventSearchForm {
+import {City, EventType, Region, SimpleUser, Timestamp, User} from "./domainClass";
+export class  EventSearchForm {
   siteNo:number;
   textContent:string;
 
@@ -18,7 +18,7 @@ export class EventSearchForm {
   registerEnabled:boolean;
 }
 
-export class EventSearchResult {
+export class  EventSearchResult {
   idEvent:number;
   user: SimpleUser;
   title:string;
@@ -45,7 +45,39 @@ export class EventSearchResult {
   regionName:string;
 }
 
+export class  EventToSearchForAdminForm {
+  siteNo:number;
+  textContent:string;
+}
 
+export class  EventForAdminResult {
+  idEvent: number;
+  title: string;
+  cityName:string;
+  startTime: Timestamp;
+  endTime: Timestamp;
+  capacity: number;
+  published: boolean;
+  registerEnabled: boolean;
+  registeredGuests:number;
+  visits: number;
+  user: User;
+}
 
+export class  UsersForAdminForm {
+  siteNo:number;
+  textContent:string;
+}
+
+export class  UsersForAdminResults {
+  id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  enabled: boolean;
+  lastpassres: Date;
+}
 
 

@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {SebmGoogleMap} from "angular2-google-maps/core";
-import {EventSearchForm, EventSearchResult} from "../_model/searchDomain";
+import {EventToSearchForAdminForm, EventForAdminResult} from "../_model/searchDomain";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpSecService} from "../_service/util/http-sec.service";
 import {CustomDateService} from "../_service/util/custom-date.service";
 import {Http,Response} from "@angular/http";
-import {City, EventType, Region, Timestamp} from "../_model/domainClass";
 import {Router} from "@angular/router";
 
 @Component({
@@ -21,65 +19,14 @@ export class EventsAdministrationComponent implements OnInit {
   /* INICJALIZACJA ----------------------------------------*/
   ngOnInit() {
     this.getLatest();
-    this.getEventRegions();
-    this.getEventTypes();
   }
 
   constructor(private http: Http, private myHttp: HttpSecService, public fb: FormBuilder, public dateService: CustomDateService, public router: Router) {
     this.complexForm = fb.group({
-      'textContent': new FormControl(null, Validators.compose([Validators.maxLength(100)])),
-      'region': new FormControl(null),
-      'city': new FormControl(null),
-      'dateFrom': new FormControl(null),
-      'dateTo': new FormControl(null),
-      'fromGeoWidth': new FormControl(null),
-      'toGeoWidth': new FormControl(null),
-      'fromGeoLenght': new FormControl(null),
-      'toGeoLenght': new FormControl(null),
-      'freeEntrance': new FormControl(null, Validators.compose([Validators.required])),
-      'registerEnabled': new FormControl(null),
-      'eventType': new FormControl(null)
+      'textContent': new FormControl(null, Validators.compose([Validators.maxLength(100)]))
     })
-    this.eventSearchForm = new EventSearchForm;
+    this.eventSearchForm = new EventToSearchForAdminForm;
     this.eventSearchForm.siteNo = 0;
-  }
-
-  getEventRegions() {
-    console.info("Pobieranie regionow");
-    this.eventSearchForm.region = null;
-    this.eventSearchForm.city = null;
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/regions').subscribe((data: Response) => {
-      this.regions = data.json(), this.addBlankRegion()
-    });
-  }
-
-  getEventTypes() {
-    console.info("Pobieranie eventTypes");
-    this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/eventTypes').subscribe((data: Response) => {
-      this.eventTypes = data.json(), this.addBlankEventType()
-    });
-  }
-
-  getEventCities(region: Region) {
-    this.eventSearchForm.city = null;
-    this.cities = null;
-    console.info("Pobieranie nazw miast");
-    if (region != null)
-      this.http.get(this.myHttp.getUrl() + '/api/util/dictionary/cities?idRegion=' + region.idRegion).subscribe((data: Response) => {
-        this.cities = data.json(), this.addBlankCity()
-      });
-  }
-
-  addBlankEventType() {
-    this.eventTypes.splice(0, 0, null);
-  }
-
-  addBlankRegion() {
-    this.regions.splice(0, 0, null);
-  }
-
-  addBlankCity() {
-    this.cities.splice(0, 0, null);
   }
 
   getLatest() {
@@ -97,27 +44,15 @@ export class EventsAdministrationComponent implements OnInit {
   /* END: INICJALIZACJA ----------------------------------------*/
 
   /*WYNIKI WYSZUKIWANIA*/
-  public eventSearchResult: EventSearchResult[];
-  public eventSearchResultFull: EventSearchResult[];
+  public eventSearchResult: EventForAdminResult[];
+  public eventSearchResultFull: EventForAdminResult[];
 
   /*FORMULARZ WYSZUKIWANIA*/
-  public eventSearchForm: EventSearchForm;
+  public eventSearchForm: EventToSearchForAdminForm;
   public complexForm: FormGroup;
-  public regions: Region[];
-  public cities: City[];
-  public eventTypes: EventType[];
-  public dataRozpoczeciaPomoc: Date;
-  public dataZakonczeniaPomoc: Date;
 
   /*WYSZUKANIE WG FORMATKI BEZ MAPY*/
   public postSearchByCriteria(): void {
-    console.info("postSearchCriteria()");
-    this.eventSearchForm.dateFrom = this.dataRozpoczeciaPomoc;
-    this.eventSearchForm.dateTo = this.dataZakonczeniaPomoc;
-    this.eventSearchForm.toGeoWidth = null;
-    this.eventSearchForm.toGeoLenght = null;
-    this.eventSearchForm.fromGeoWidth = null;
-    this.eventSearchForm.fromGeoLenght = null;
     this.siteNo = 0;
     this.eventSearchForm.siteNo = 0;
 
@@ -150,7 +85,7 @@ export class EventsAdministrationComponent implements OnInit {
     else {
       this.isPrevAvl = false;
     }
-    console.info("ILOSC STRON: " + this.siteCount);
+    // console.info("ILOSC STRON: " + this.siteCount);
     if (this.siteNo < this.siteCount - 1) {
       this.isNextAvl = true;
     }
