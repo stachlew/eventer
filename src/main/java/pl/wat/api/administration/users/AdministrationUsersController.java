@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.db.domain.user.User;
 import pl.wat.logic.administration.users.AdministrationUsersService;
+import pl.wat.logic.user._model.UserAdministrationSearchForm;
+import pl.wat.logic.user._model.UserAdministrationSearchResult;
 import pl.wat.logic.user._model.UserRegisterForm;
 import pl.wat.logic.user.account.UserAccountService;
+import pl.wat.logic.user.search.UserSearchService;
 
 import java.util.List;
 
@@ -23,6 +26,10 @@ public class AdministrationUsersController {
 
   @Autowired
   private AdministrationUsersService administrationUsersService;
+  @Autowired
+  private UserSearchService userSearchService;
+  @Autowired
+  private UserAccountService userAccountService;
 
   @GetMapping("/getAllUsers")
   @ResponseBody
@@ -42,18 +49,16 @@ public class AdministrationUsersController {
     return administrationUsersService.getUser(id);
   }
 
-  /*@PreAuthorize("hasRole('ADMIN')")
-  @PostMapping("/editUser/{id}")
-  public void editUser(@RequestBody UserRegisterForm form) {
-    if ( form != null) {
-      userAccountService.updateUser(form);
-    }
-  }*/
-
-  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("/disableUser/{id}")
-  public void disableUser(@PathVariable int id) {
+  public List<UserAdministrationSearchResult> disableUser(@PathVariable int id) {
     administrationUsersService.disableUser(getUser(id).getUsername());
+    return userSearchService.findAdministrationUserFull(new UserAdministrationSearchForm("", 0));
+  }
+
+  @PostMapping("/deleteUser/{id}")
+  public List<UserAdministrationSearchResult> deleteUser(@PathVariable int id) {
+    userAccountService.deleteUser(getUser(id).getUsername());
+    return userSearchService.findAdministrationUserFull(new UserAdministrationSearchForm("", 0));
   }
 
 }
