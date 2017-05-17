@@ -122,3 +122,33 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+.statistic-design {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  color: white;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.statistic-color1 {
+  background-color: rgba(226,91,90,0.92);;
+}
+
+.statistic-color2 {
+  background-color: rgba(255,185,73,0.92);;
+}
+
+.statistic-color3 {
+  background-color: rgba(86,181,173,0.92);
+}
+
+.statistic-color4 {
+  background-color: rgba(76, 135, 186, 0.92);
+}
+
+.statistic-circle-description {
+  font-size: 40px;
+}

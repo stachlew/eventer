@@ -47,7 +47,7 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     long getCountVisits();
 
     @Query("select avg(e.visits) from Event e")
-    double getAvgVisits();
+    long getAvgVisits();
 
     @Query("select count(e.idEvent) from Event e")
     long getCountEvents();

@@ -21,7 +21,7 @@ public class AdministrationStatisticsService {
     return eventRepository.getCountVisits();
   }
 
-  public double getAverageOfAllVisits() {
+  public long getAverageOfAllVisits() {
     return eventRepository.getAvgVisits();
   }
 

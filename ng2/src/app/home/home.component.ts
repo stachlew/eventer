@@ -31,6 +31,10 @@ export class HomeComponent implements OnInit {
   imageUrl: string = this.myHttp.getUrl()+ "/api/images/getEventImage/";
   possibilityState: string = 'ON';
   statisticState: string = 'OFF';
+  createEvents: string = "";
+  allVisitors: string = "";
+  avgVisitors: string = "";
+  activeUsers: string = "";
 
   constructor(private http: Http, private myHttp: HttpSecService, private router: Router) {
 
@@ -38,6 +42,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getLatest();
+    this.getStatistic();
     setInterval(() => this.changeState(), 5000);
   }
 
@@ -48,6 +53,13 @@ export class HomeComponent implements OnInit {
 
   getLatest(){
     this.http.get(this.myHttp.getUrl() + '/api/event/view/getLatest').subscribe((data: Response)=> this.latestEvents = data.json());
+  }
+
+  getStatistic() {
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfEvents').subscribe((data: Response)=> this.createEvents = data.text());
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfAllVisits').subscribe((data: Response)=> this.allVisitors = data.text());
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getAverageOfAllVisits').subscribe((data: Response)=> this.avgVisitors = data.text());
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getCountOfAllActiveUsers').subscribe((data: Response)=> this.activeUsers = data.text());
   }
 
   goToEvent(id: number) {
