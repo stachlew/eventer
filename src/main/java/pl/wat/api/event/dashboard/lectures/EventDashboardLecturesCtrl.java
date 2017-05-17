@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.wat.logic.event._model.view.EventViewLecture;
-import pl.wat.logic.event._model.view.EventViewSpeaker;
 import pl.wat.logic.event.dashboard.EventDashboardLecturesService;
 
 import java.util.List;
