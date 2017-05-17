@@ -5,8 +5,7 @@ public class EventAdministrationSearchForm {
     private String textContent;
     private int siteNo;
 
-    public EventAdministrationSearchForm() {
-    }
+    public EventAdministrationSearchForm() {}
 
     public EventAdministrationSearchForm(String textContent, int siteNo) {
         this.textContent = textContent;
