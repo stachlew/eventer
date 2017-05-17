@@ -50,6 +50,8 @@ export class CreateOpinionComponent {
 
   public hide(): void {
     this.visibleAnimate = false;
+    this.complexForm.reset();
+
     setTimeout(() => this.visible = false, 300);
   }
 

@@ -35,14 +35,23 @@
 
 <!--MIEJSCE DATA-->
 <div id="placeTime" class="row darkBack">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h1><i class="fa fa-calendar"></i></h1>
       <h3><i class="fa fa-fw fa-play"></i>{{event.startTime|date:'d-MM-y'}}</h3>
       <h3><i class="fa fa-fw fa-stop"></i>{{event.endTime|date:'d-MM-y'}}</h3>
     </div>
   </div>
-  <div class="col-md-6  ">
+  <div class="col-md-4">
+    <div class="jumbotron" style="background-color: inherit" align="center">
+      <h1><i class="fa fa-info"></i></h1>
+      <h3><i class="fa fa-fw fa-flag"></i>{{event.eventTypeName}}</h3>
+      <span *ngIf="freeEntrance" style="color: rgba(121,103,105,0.24)"><h3><i class="fa fa-fw fa-money"></i>Wstęp bezpłatny</h3></span>
+      <span *ngIf="!freeEntrance" style="color: rgba(16,177,24,0.8)"><h3><i class="fa fa-fw fa-money"></i>Wstęp płatny</h3></span>
+
+    </div>
+  </div>
+  <div class="col-md-4">
     <div class="jumbotron" style="background-color: inherit" align="center">
       <h1><i class="fa fa-map-marker"></i></h1>
       <h3>{{event.cityName}}</h3>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.event.lecture.Lecture;
 import pl.wat.db.domain.event.lecture.Speaker;
+import pl.wat.db.domain.user.User;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
@@ -59,5 +60,17 @@ public class EventViewService {
             latest.add(new EventHeader(e));
         }
         return latest;
+    }
+
+    public List<EventHeader> getByUser(User user){
+        List<EventHeader> byUser = new LinkedList<>();
+        List<Event> events;
+        if(user!=null) {
+            events = eventRepository.findAllByUserOrderByIdEvent(user);
+            for (Event e : events) {
+                byUser.add(new EventHeader(e));
+            }
+        }
+        return byUser;
     }
 }
