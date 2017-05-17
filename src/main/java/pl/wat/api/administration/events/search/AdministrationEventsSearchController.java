@@ -23,4 +23,10 @@ public class AdministrationEventsSearchController {
         return administrationEventsPage;
     }
 
+    @RequestMapping(value = "/getSearchFull",method = RequestMethod.POST)
+    public @ResponseBody
+    List<EventAdministrationSearchResult> getSearchFull(@RequestBody EventAdministrationSearchForm form){
+        return eventSearchService.findAdministrationEventsFull(form);
+    }
+
 }
