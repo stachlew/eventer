@@ -13,28 +13,13 @@ public class EventAdministrationSearchResult {
     private int visits;
     private SimpleUser user;
     private boolean published;
+    private boolean register;
     private int registeredGuests;
-
-    @Override
-    public String toString() {
-        return "EventAdministrationSearchResult{" +
-                "idEvent=" + idEvent +
-                ", title='" + title + '\'' +
-                ", cityname='" + cityname + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", capacity=" + capacity +
-                ", visits=" + visits +
-                ", user=" + user +
-                ", published=" + published +
-                ", registeredGuests=" + registeredGuests +
-                '}';
-    }
 
     public EventAdministrationSearchResult() {
     }
 
-    public EventAdministrationSearchResult(int idEvent, String title, String cityname, Timestamp startTime, Timestamp endTime, int capacity, int visits, SimpleUser user, boolean published, int registeredGuests) {
+    public EventAdministrationSearchResult(int idEvent, String title, String cityname, Timestamp startTime, Timestamp endTime, int capacity, int visits, SimpleUser user, boolean published, boolean register, int registeredGuests) {
         this.idEvent = idEvent;
         this.title = title;
         this.cityname = cityname;
@@ -44,15 +29,8 @@ public class EventAdministrationSearchResult {
         this.visits = visits;
         this.user = user;
         this.published = published;
+        this.register = register;
         this.registeredGuests = registeredGuests;
-    }
-
-    public SimpleUser getUser() {
-        return user;
-    }
-
-    public void setUser(SimpleUser user) {
-        this.user = user;
     }
 
     public int getIdEvent() {
@@ -111,12 +89,28 @@ public class EventAdministrationSearchResult {
         this.visits = visits;
     }
 
+    public SimpleUser getUser() {
+        return user;
+    }
+
+    public void setUser(SimpleUser user) {
+        this.user = user;
+    }
+
     public boolean isPublished() {
         return published;
     }
 
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
     }
 
     public int getRegisteredGuests() {
