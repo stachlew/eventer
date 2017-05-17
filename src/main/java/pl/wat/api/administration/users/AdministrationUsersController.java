@@ -29,12 +29,6 @@ public class AdministrationUsersController {
     return administrationUsersService.getUser(id);
   }
 
-  @PostMapping("/disableUser/{id}")
-  public List<UserAdministrationSearchResult> disableUser(@PathVariable int id) {
-    administrationUsersService.disableUser(getUser(id).getUsername());
-    return userSearchService.findAdministrationUserFull(new UserAdministrationSearchForm("", 0));
-  }
-
   @PostMapping("/deleteUser/{id}")
   public List<UserAdministrationSearchResult> deleteUser(@PathVariable int id) {
     userAccountService.deleteUser(getUser(id).getUsername());
