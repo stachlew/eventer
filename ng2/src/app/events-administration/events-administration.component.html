@@ -62,13 +62,13 @@
         <!--CIALO LISTY-->
         <div class="row">
           <div *ngFor="let i of eventSearchResult">
-            <div class="panel panel-default eventPanel" >
+            <div class="panel panel-default eventPanel">
               <!--GORA EVENTU-->
 
               <div class="panel-body" >
                 <!--TYTUL, DATA STARTU, MOZLIWA REJESTRACJA?, BEZPLATNE? TRANSMISJA?-->
                 <div class="row">
-                  <div class="col-md-2">
+                  <div class="col-md-2" (click)="goToEvent(i.idEvent)">
                     <!--ikona kalendarza-->
                     <div class="myCalendarContainer">
                       <div class="myCalendarHead">
@@ -84,29 +84,39 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-9">
+                  <div class="col-md-7" (click)="goToEvent(i.idEvent)">
                     <H2>{{i.title}}</H2>
-                    Użytkownik który utworzył wydarzenie: {{i.user.username}}
+                    Użytkownik: {{i.user.username}}
+                  </div>
+                  <div class="col-md-2">
+                    <div style="margin-top: auto; margin-bottom: auto">
+                        <div class="myText">
+                          Rejestracja:
+                        </div>
+                        <div class="myText2"><!--CZY_PUBLIKOWANE-->
+                          Publikowane:
+                        </div>
+                    </div>
                   </div>
                   <div class="col-md-1">
                     <div style="margin-top: auto; margin-bottom: auto">
                       <div class="row" (click)="toRegisterOrDisRegister(i.idEvent)"><!--Rejestracja-->
 
-                        <span class="myIcon" *ngIf="i.registerEnabled">
+                        <span class="myIcon" *ngIf="i.register">
                           <i class="fa fa-fw fa-toggle-on"></i>
                         </span>
-                        <span class="myIcon" *ngIf="!i.registerEnabled" >
+                        <span class="myIcon" *ngIf="!i.register" >
                           <i class="fa fa-fw fa-toggle-off"></i>
                         </span>
 
                       </div>
                       <div class="row" (click)="toPublishOrDisPublish(i.idEvent)"><!--CZY_PUBLIKOWANE-->
 
-                        <span class="myIcon" *ngIf="i.published"  style="color: rgba(121,103,105,0.24)">
+                        <span class="myIcon" *ngIf="i.published" style="color: rgba(16,177,24,0.8)">
                           <i class="fa fa-fw fa-unlock"></i>
                         </span>
 
-                        <span class="myIcon" *ngIf="!i.published" style="color: rgba(16,177,24,0.8)">
+                        <span class="myIcon" *ngIf="!i.published" style="color: rgba(189,0,0,0.8)">
                           <i class="fa fa-fw fa-lock"></i>
                         </span>
 
@@ -129,7 +139,7 @@
                 <!--REGION,MIASTO, ILOSC WIZYT, ILOSC GOSCI/POJEMNOSC, TYP-->
                 <div class="row" >
                   <div class="col-md-4">
-                    <b>{{i.cityName}}</b>, {{i.regionName}}
+                    <b>{{i.cityname}}</b>
                   </div>
                   <div class="col-md-4" align="center">
                     Obejrzano: {{i.visits}}
@@ -163,4 +173,3 @@
     </div>
   </div>
 </div>
-

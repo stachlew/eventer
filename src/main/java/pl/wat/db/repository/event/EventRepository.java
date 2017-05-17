@@ -17,11 +17,13 @@ import java.util.List;
  */
 public interface EventRepository extends JpaRepository<Event,Integer> {
 
+    List<Event> findAllByUserOrderByIdEvent(User user);
+
     @Query(value = "select * from (select * from eve_events order by create_date desc) where rownum <= :limit",
             nativeQuery = true)
     List<Event> findTopNOfLatestEvents(@Param("limit") int limit);
 
-    List<Event> findAllByUserOrderByIdEvent(User user);
+
 
 
 //Metoda zwraca BigDecimal, mimo że powinna Integera- z tego powodu gdy otrzymamy liste numerów, należy
@@ -32,7 +34,7 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     List<BigDecimal> findTopNIdEventsWithLeastAmountOfFreeSeats(@Param("limit") int limit);
 
 
-    List<Event> findTop3ByOrderByVisitsDesc();
+    List<Event> findTop4ByOrderByVisitsDesc();
 
     List<Event> findEventsByUser_Username(String username);
 

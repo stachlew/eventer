@@ -53,12 +53,12 @@ export class  EventToSearchForAdminForm {
 export class  EventForAdminResult {
   idEvent: number;
   title: string;
-  cityName:string;
+  cityname:string;
   startTime: Timestamp;
   endTime: Timestamp;
   capacity: number;
   published: boolean;
-  registerEnabled: boolean;
+  register: boolean;
   registeredGuests:number;
   visits: number;
   user: User;

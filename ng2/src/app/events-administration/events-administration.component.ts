@@ -157,4 +157,11 @@ export class EventsAdministrationComponent implements OnInit {
     console.log(temp+" delete");
   }
 
+  /* Przejscie do ogloszen */
+  goToEvent(id: number) {
+    console.info("goToEvent"+id);
+    this.router.navigate(['/event/view/'+id]);
+  }
+  /*END: Przejscie do ogloszen*/
+
 }
