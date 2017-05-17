@@ -48,6 +48,7 @@ public class EventSearchService {
                     e.getVisits(),
                     new SimpleUser(e.getUser().getId(), e.getUser().getUsername()),
                     e.isPublished(),
+                    e.isRegisterEnabled(),
                     registeredGuests
             );
             resultList.add(eventResult);
@@ -102,6 +103,7 @@ public class EventSearchService {
                     e.getVisits(),
                     new SimpleUser(e.getUser().getId(), e.getUser().getUsername()),
                     e.isPublished(),
+                    e.isRegisterEnabled(),
                     registeredGuests
             );
             resultList.add(eventResult);
