@@ -50,12 +50,13 @@ public class UserAccountService {
                     user.setLastname(form.getLastname());
                     user.setEmail(form.getEmail());
                     user.setPhone(form.getPhone());
-                    if(form.getNewPass()!=null && form.getNewPass().equals("")) {
+                    if(form.getNewPass()!=null && !form.getNewPass().equals("")) {
                         user.setPassword(passwordEncoder.encode(form.getNewPass()));
                          userRepository.save(user);
                          return true;
                     }
-                    return false;
+                    userRepository.save(user);
+                    return true;
                 }
             }
 
