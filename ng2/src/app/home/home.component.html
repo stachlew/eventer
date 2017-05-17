@@ -119,12 +119,12 @@
 </div>
 
 <!--<h1>Podglad wydarzeń</h1>-->
-<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12">
+<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12 row-border margin-bottom20">
   <h2><strong>Zobacz nasze najnowsze wydarzenia!</strong></h2>
 </div>
 <div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10">
   <figure class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of latestEvents">
-      <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" id="obrazek" (click)="goToEvent(i.idEvent)">
+      <div class="col-lg-12 col-md-12 col-sm-12 blur pading0 obrazek" (click)="goToEvent(i.idEvent)">
         <figure>
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
           <figcaption>
@@ -136,12 +136,12 @@
   </figure>
 </div>
 
-<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12">
+<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12 row-border margin-bottom20">
   <h2><strong>Ostatnie wolne miejsca!</strong></h2>
 </div>
-<div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10">
+<div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10 ">
   <figure class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of lastMinuteEvents">
-    <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" (click)="goToEvent(i.idEvent)">
+    <div class="col-lg-12 col-md-12 col-sm-12 blur pading0 obrazek" (click)="goToEvent(i.idEvent)">
       <figure>
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
         <figcaption>
@@ -153,12 +153,12 @@
   </figure>
 </div>
 
-<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12">
+<div class="text-home marginTop80 col-lg-12 col-md-12 col-sm-12 row-border margin-bottom20">
   <h2><strong>Najczęściej odwiedzane wydarzenia!</strong></h2>
 </div>
 <div class="row" class="padding0 col-lg-12 col-md-12 col-sm-12 marginTop10">
   <figure class="col-lg-3 col-md-4 col-sm-6 col" *ngFor="let i of theMostCommonEvents">
-    <div class="col-lg-12 col-md-12 col-sm-12 blur pading0" (click)="goToEvent(i.idEvent)">
+    <div class="col-lg-12 col-md-12 col-sm-12 blur pading0 obrazek" (click)="goToEvent(i.idEvent)">
       <figure>
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
         <figcaption>

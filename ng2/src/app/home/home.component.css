@@ -37,17 +37,17 @@
   -webkit-transition: all 1s ease;
 }
 
-#obrazek img{
+.obrazek img{
   -webkit-transition: all 1s ease;
   margin-bottom: 15px;
 }
 
-#obrazek:hover img{
+.obrazek:hover img{
   -webkit-filter: blur(5px);
   -webkit-transition: all 1s ease;
 }
 
-#obrazek:hover .napis{
+.obrazek:hover .napis{
   color: white;
   -webkit-transition: all 1s ease;
 }
@@ -190,4 +190,8 @@ figcaption {
 
 img {
   display: block;
+}
+
+.margin-bottom20 {
+  margin-bottom: 20px;
 }
