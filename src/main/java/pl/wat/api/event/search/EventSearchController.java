@@ -2,9 +2,11 @@ package pl.wat.api.event.search;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.wat.logic.event._model.EventHeader;
 import pl.wat.logic.event._model.EventSearchForm;
 import pl.wat.logic.event._model.EventSearchResult;
 import pl.wat.logic.event.search.EventSearchService;
+import pl.wat.logic.event.view.EventViewService;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class EventSearchController {
 
     @Autowired
     EventSearchService eventSearchService;
+    @Autowired
+    EventViewService eventViewService;
 
     //zwrotka najnowszych dla wyszukiwarki
     @RequestMapping(value = "/getLatest",method = RequestMethod.GET)
@@ -37,4 +41,17 @@ public class EventSearchController {
     List<EventSearchResult> getSearchFull(@RequestBody EventSearchForm form){
         return eventSearchService.findEventsFull(form);
     }
+
+    @RequestMapping(value = "/getLastMinute",method = RequestMethod.GET)
+    public @ResponseBody
+    List<EventHeader> getLastMinuteEvent(){
+        return eventViewService.getLastMinuteEvent();
+    }
+
+    @RequestMapping(value = "/getMostVisited",method = RequestMethod.GET)
+    public @ResponseBody
+    List<EventHeader> getMostVisitedEvent(){
+        return eventViewService.getMostVisitedEvent();
+    }
+
 }

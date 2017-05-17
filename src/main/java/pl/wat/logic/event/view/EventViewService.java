@@ -73,4 +73,41 @@ public class EventViewService {
         }
         return byUser;
     }
+
+    public List<EventHeader> getLastMinuteEvent() {
+        List<Event> lastMinuteEvents = eventRepository.findTopNOfLatestEvents(4);
+        List<EventHeader> resultList = new LinkedList<>();
+
+
+        for (Event e: lastMinuteEvents) {
+            EventHeader eventHeader = new EventHeader(
+                    e.getIdEvent(),
+                    e.getTitle(),
+                    e.getDescription(),
+                    e.getStartTime(),
+                    e.getEndTime()
+            );
+            resultList.add(eventHeader);
+        }
+        return resultList;
+    }
+
+    public List<EventHeader> getMostVisitedEvent() {
+        List<Event> mostVisitedEvent = eventRepository.findTop4ByOrderByVisitsDesc();
+        List<EventHeader> resultList = new LinkedList<>();
+
+
+        for (Event e: mostVisitedEvent) {
+            EventHeader eventHeader = new EventHeader(
+                    e.getIdEvent(),
+                    e.getTitle(),
+                    e.getDescription(),
+                    e.getStartTime(),
+                    e.getEndTime()
+            );
+            resultList.add(eventHeader);
+        }
+        return resultList;
+    }
+
 }

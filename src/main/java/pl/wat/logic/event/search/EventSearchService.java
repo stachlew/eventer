@@ -25,7 +25,6 @@ public class EventSearchService {
     EventExpressions eventExpressions;
     @Autowired
     EventRepository eventRepository;
-
     @Autowired
     EventDashboardStatisticsService eventDashboardStatisticsService;
 
@@ -54,6 +53,31 @@ public class EventSearchService {
             resultList.add(eventResult);
         }
 
+        return resultList;
+    }
+
+    public List<EventAdministrationSearchResult> findAdministrationEventsFull(EventAdministrationSearchForm form){
+        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
+        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
+        List<EventAdministrationSearchResult> resultList = new LinkedList<>();
+
+        for (Event e:eventList){
+            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
+            EventAdministrationSearchResult eventResult = new EventAdministrationSearchResult(
+                    e.getIdEvent(),
+                    e.getTitle(),
+                    e.getPlace().getCity().getCityName(),
+                    e.getStartTime(),
+                    e.getEndTime(),
+                    e.getCapacity(),
+                    e.getVisits(),
+                    new SimpleUser(e.getUser().getId(), e.getUser().getUsername()),
+                    e.isPublished(),
+                    e.isRegisterEnabled(),
+                    registeredGuests
+            );
+            resultList.add(eventResult);
+        }
         return resultList;
     }
 
@@ -86,28 +110,4 @@ public class EventSearchService {
         return resultList;
     }
 
-    public List<EventAdministrationSearchResult> findAdministrationEventsFull(EventAdministrationSearchForm form){
-        Predicate predicate = eventExpressions.createPredicateDependsOfEventSearchForm(form);
-        Iterable<Event> eventList = eventSearchRepository.findAll(predicate);
-        List<EventAdministrationSearchResult> resultList = new LinkedList<>();
-
-        for (Event e:eventList){
-            int registeredGuests= eventDashboardStatisticsService.getStatistics(e.getIdEvent()).getParticipants();
-            EventAdministrationSearchResult eventResult = new EventAdministrationSearchResult(
-                    e.getIdEvent(),
-                    e.getTitle(),
-                    e.getPlace().getCity().getCityName(),
-                    e.getStartTime(),
-                    e.getEndTime(),
-                    e.getCapacity(),
-                    e.getVisits(),
-                    new SimpleUser(e.getUser().getId(), e.getUser().getUsername()),
-                    e.isPublished(),
-                    e.isRegisterEnabled(),
-                    registeredGuests
-            );
-            resultList.add(eventResult);
-        }
-        return resultList;
-    }
 }

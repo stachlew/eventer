@@ -71,7 +71,7 @@ public class EventViewDetails {
 
         this.startTime=event.getStartTime();
         this.endTime=event.getEndTime();
-//        this.createDate=event.getCreateDate();
+//        this.createDate=event.getStartDate();
 
         this.lectures = new LinkedList<>();
         for (Lecture lecture: lectures) {

@@ -23,16 +23,12 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
             nativeQuery = true)
     List<Event> findTopNOfLatestEvents(@Param("limit") int limit);
 
-
-
-
 //Metoda zwraca BigDecimal, mimo że powinna Integera- z tego powodu gdy otrzymamy liste numerów, należy
     //zrobić for eacha dla tej listy i dla każdego elementu wywołać metodę z repozytorium findOne(i.intValue())
     @Query(value = "select id_event from (select e.id_event, e.CAPACITY-count(p.id_participant) from eve_events e LEFT JOIN EVE_PARTICIPANTS p ON e.id_event=p.id_event \n" +
             "where  e.published = 1 and e.REGISTER_ENABLED =1   group by e.id_event,e.CAPACITY order by 2 )\n" +
             "where ROWNUM<=:limit",nativeQuery = true)
     List<BigDecimal> findTopNIdEventsWithLeastAmountOfFreeSeats(@Param("limit") int limit);
-
 
     List<Event> findTop4ByOrderByVisitsDesc();
 
