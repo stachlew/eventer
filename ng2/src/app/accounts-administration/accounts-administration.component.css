@@ -105,6 +105,20 @@
   font-weight: 500;
 }
 
+.myText {
+  margin-top: 10px;
+  margin-left: 30px;
+  /*font-size: 15px;*/
+  font-weight: 500;
+}
+
+.myText2 {
+  margin-top: 25px;
+  margin-left: 30px;
+  /*font-size: 15px;*/
+  font-weight: 500;
+}
+
 .eventPanel{
   border-radius: 0.8em;
 }

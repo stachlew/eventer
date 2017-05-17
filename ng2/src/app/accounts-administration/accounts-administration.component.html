@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-md-10">
               <div class="form-group-lg" >
-                <input type="text" placeholder="Jakie wydarzenie chcesz moderować?" class="form-control" id="textContent" [(ngModel)]="eventSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
+                <input type="text" placeholder="Jakie wydarzenie chcesz moderować?" class="form-control" id="textContent" [(ngModel)]="userSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
               </div>
             </div>
             <div class="col-md-2">
@@ -43,9 +43,9 @@
         <!--NAGLOWEK LISTY-->
         <div class="row">
           <div class="col-md-12 resultBlock">
-            <h2 *ngIf="eventSearchResultFull?.length>0">Znaleziono {{eventSearchResultFull?.length}} wydarzeń</h2>
-            <h2 *ngIf="eventSearchResultFull?.length<=0">Nie znaleziono wydarzeń według podanych kryteriów</h2>
-            <div class="row resultBlock" *ngIf="eventSearchResultFull?.length>0">
+            <h2 *ngIf="userSearchResultFull?.length>0">Znaleziono {{userSearchResultFull?.length}} userów</h2>
+            <h2 *ngIf="userSearchResultFull?.length<=0">Nie znaleziono userów</h2>
+            <div class="row resultBlock" *ngIf="userSearchResultFull?.length>0">
               <div class="col-md-offset-1 col-md-10">
                 <nav aria-label="...">
                   <ul class="pager">
@@ -61,64 +61,54 @@
         </div>
         <!--CIALO LISTY-->
         <div class="row">
-          <div *ngFor="let i of eventSearchResult">
-            <div class="panel panel-default eventPanel" (click)="goToEvent(i.idEvent)" >
+          <div *ngFor="let i of userSearchResult">
+            <div class="panel panel-default eventPanel">
               <!--GORA EVENTU-->
 
               <div class="panel-body" >
                 <!--TYTUL, DATA STARTU, MOZLIWA REJESTRACJA?, BEZPLATNE? TRANSMISJA?-->
                 <div class="row">
+                  <div class="col-md-9">
+                    <div class="col-md-4">
+                      <H2><strong>Użytkownik: </strong></H2>
+                      <strong>
+                      Imię i nazwisko: <br>
+                      Email: <br>
+                      Telefon:
+                      </strong>
+                    </div>
+                    <div class="col-md-4">
+                      <H2>{{i.username}}</H2>
+                      {{i.firstname}} {{i.lastname}}<br>
+                      {{i.email}}<br>
+                      {{i.phone}}
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                  </div>
                   <div class="col-md-2">
-                    <!--ikona kalendarza-->
-                    <div class="myCalendarContainer">
-                      <div class="myCalendarHead">
-                        {{i.startTime | date:'MMMM'}}
+                    <div style="margin-top: auto; margin-bottom: auto">
+                      <div class="myText" *ngIf="i.enabled">
+                        Aktywny
                       </div>
-                      <div class="myCalendarBody">
-                        <span style="font-size: 35px">{{i.startTime | date:'d'}}</span>
-                        <br>
-                        <span><b>{{i.startTime | date:'EEEE'}}</b></span>
-                      </div>
-                      <div class="myCalendarFooter">
-                        <div>{{i.startTime | date:'y'}}</div>
+                      <div class="myText" *ngIf="!i.enabled"><!--CZY_PUBLIKOWANE-->
+                        Nieaktywny
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-9">
-                    <H2>{{i.title}}</H2>
-                    Jaki użytkownik utwrzył
-                  </div>
                   <div class="col-md-1">
                     <div style="margin-top: auto; margin-bottom: auto">
-                      <div class="row"><!--Rejestracja-->
+                      <div class="row" *ngIf="i.enabled" (click)="deleteUser(i.id)"><!--AKTYWNE-->
 
-                        <span class="myIcon" *ngIf="!i.registerEnabled" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-toggle-on"></i>
-                        </span>
-                        <span class="myIcon" *ngIf="i.registerEnabled" >
-                          <i class="fa fa-fw fa-toggle-off"></i>
+                        <span class="myIcon" style="color: rgba(16,177,24,0.8)">
+                          <i class="fa fa-fw fa-check"></i>
                         </span>
 
                       </div>
-                      <div class="row"><!--BEZPLATNE-->
+                      <div class="row" *ngIf="!i.enabled" (click)="deleteUser(i.id)"><!--USUNIECIE-->
 
-                        <span class="myIcon" *ngIf="i.freeEntrance" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-unlock"></i>
-                        </span>
-
-                        <span class="myIcon" *ngIf="!i.freeEntrance" style="color: rgba(16,177,24,0.8)">
-                          <i class="fa fa-fw fa-lock"></i>
-                        </span>
-
-                      </div>
-                      <div class="row"><!--TRANSMISJA-->
-
-                        <span class="myIcon" *ngIf="i.youtubeLink?.length>0" style="color: rgba(189,0,0,0.8)">
-                          <i class="fa fa-fw fa-trash"></i>
-                        </span>
-
-                        <span class="myIcon" *ngIf="i.youtubeLink==null || i.youtubeLink?.length<=0" style="color: rgba(121,103,105,0.24)">
-                          <i class="fa fa-fw fa-trash"></i>
+                        <span class="myIcon" style="color: rgba(189,0,0,0.8)">
+                          <i class="fa fa-fw fa-times"></i>
                         </span>
 
                       </div>
@@ -130,19 +120,6 @@
               <!--END GORA EVENTU-->
               <!--DOL EVENTU-->
               <div class="panel-footer eventFooter">
-                <!--REGION,MIASTO, ILOSC WIZYT, ILOSC GOSCI/POJEMNOSC, TYP-->
-                <div class="row" >
-                  <div class="col-md-4">
-                    <b>{{i.cityName}}</b>, {{i.regionName}}
-                  </div>
-                  <div class="col-md-4" align="center">
-                    Obejrzano: {{i.visits}}
-                  </div>
-                  <div class="col-md-4" align="right">
-                    Zajętość: <b>{{i.registeredGuests}}/{{i.capacity}}</b>
-                  </div>
-                </div>
-
               </div>
               <!--END DOL EVENTU-->
             </div>
@@ -151,7 +128,7 @@
         </div>
         <!--END CIALO LISTY-->
         <!--STOPKA LISTY-->
-        <div class="row resultBlock" *ngIf="eventSearchResultFull?.length>0">
+        <div class="row resultBlock" *ngIf="userSearchResultFull?.length>0">
           <div class="col-md-offset-1 col-md-10">
             <nav aria-label="...">
               <ul class="pager">
@@ -167,4 +144,3 @@
     </div>
   </div>
 </div>
-
