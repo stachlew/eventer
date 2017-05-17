@@ -96,6 +96,35 @@ export class EventCreateComponent implements OnInit {
     }
   }
 
+  helpLocalization(region :Region, city: City){
+    if(this.addEventClass.city!=null && this.addEventClass.streetName!=null){
+      let address: string = "";
+      address=region.regionName+","+this.addEventClass.streetName+" "+this.addEventClass.streetNo+","+city.cityName;
+      this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).subscribe((data: Response)=> this.afterHelpLocalization(data.json()));
+    }else {
+      alert("Wymagane miasto oraz ulica.")
+    }
+  }
+
+  afterHelpLocalization(response:any):void{
+    if(response.status=="OK"){
+      let respLng :number = response.results[0].geometry.location.lng;
+      let respLat :number = response.results[0].geometry.location.lat;
+      this.addEventClass.geoLength=respLng.toString().substring(0,11);
+      this.addEventClass.geoWidth=respLat.toString().substring(0,11);
+      this.markers.pop();
+      this.markers.push({
+        lat: respLat,
+        lng: respLng,
+        draggable: true
+      });
+      this.isMapValid = 1;
+    }
+    else {
+      alert("Nie udało się znaleźć miejsca o podanej lokalizacji. Popraw lokalizację lub umieść znacznik samodzielnie.")
+    }
+  }
+
 
 
   postAddEvent(){

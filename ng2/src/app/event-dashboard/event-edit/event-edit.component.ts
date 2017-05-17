@@ -415,6 +415,42 @@ export class EventEditComponent implements OnInit {
     this.http.get(this.myHttp.getUrl() + '/api/images/deleteEventImage/'+this.eventInfo.idEvent,this.myHttp.getConfig()).subscribe((data: Response)=> this.updateData());
   }
 
+  //POMOC MAPA
+
+  helpLocalization(region :Region, city: City){
+    if(region!=null && city!=null){
+      let address: string = "";
+      address=region.regionName+","+this.evePlace.streetName+" "+this.evePlace.streetNo+","+city.cityName;
+      this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).subscribe((data: Response)=> this.afterHelpLocalization(data.json()));
+    }else {
+      alert("Wymagane miasto oraz ulica.")
+    }
+  }
+
+  afterHelpLocalization(response:any):void{
+    if(response.status=="OK"){
+      let respLng :number = response.results[0].geometry.location.lng;
+      let respLat :number = response.results[0].geometry.location.lat;
+      this.evePlace.geoLength=respLng.toString().substring(0,11);
+      this.evePlace.geoWidth=respLat.toString().substring(0,11);
+      this.markers.pop();
+      this.markers.push({
+        lat: respLat,
+        lng: respLng,
+        draggable: true
+      });
+      this.isMapValid = 1;
+    }
+    else {
+      alert("Nie udało się znaleźć miejsca o podanej lokalizacji. Popraw lokalizację lub umieść znacznik samodzielnie.")
+    }
+  }
+
+
+  //END POMOC MAPA
+
+
+
 
   //MAPA
   zoom: number = 12;
