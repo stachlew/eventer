@@ -21,10 +21,10 @@ public class AdministrationUserSearchController {
         return userSearchService.findAdministrationUserPage(form);
     }
 
-    @RequestMapping(value = "/getSearchFull",method = RequestMethod.GET)
+    @RequestMapping(value = "/getSearchFull",method = RequestMethod.POST)
     @ResponseBody
-    public List<UserAdministrationSearchResult> getSearchFull(){
-        return userSearchService.findAdministrationUserPage(new UserAdministrationSearchForm("", 0));
+    public List<UserAdministrationSearchResult> getSearchFull(@RequestBody UserAdministrationSearchForm form){
+        return userSearchService.findAdministrationUserPage(form);
     }
 
 
