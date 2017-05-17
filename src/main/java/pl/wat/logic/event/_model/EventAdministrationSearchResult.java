@@ -1,8 +1,5 @@
 package pl.wat.logic.event._model;
 
-import pl.wat.db.domain.event.location.Place;
-import pl.wat.db.domain.user.User;
-
 import java.sql.Timestamp;
 
 public class EventAdministrationSearchResult {
