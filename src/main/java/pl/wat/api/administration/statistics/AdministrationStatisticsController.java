@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.logic.administration.statistics.AdministrationStatisticsService;
+import pl.wat.logic.util.StatisticService;
 
 @RestController
 @RequestMapping("/api/administration/statistics")
@@ -13,6 +14,8 @@ public class AdministrationStatisticsController {
 
   @Autowired
   private AdministrationStatisticsService administrationStatisticsService;
+  @Autowired
+  StatisticService statisticService;
 
   @GetMapping("/getCountOfEvents")
   public long getCountOfEvents() {
@@ -30,7 +33,12 @@ public class AdministrationStatisticsController {
   }
 
   @GetMapping("/getCountOfAllActiveUsers")
-  public long getCountOfAllActiveUsers() {
-    return administrationStatisticsService.getCountOfAllActiveUsers();
-  }
+  public long getCountOfAllActiveUsers() { return administrationStatisticsService.getCountOfAllActiveUsers(); }
+
+  @GetMapping("/getCountParticipant")
+  public long getCountParticipant() { return statisticService.getCountParticipant(); }
+
+  @GetMapping("/getAvgParticipant")
+  public int getAvgParticipant() { return (int) statisticService.getAvgParticipant(); }
+
 }
