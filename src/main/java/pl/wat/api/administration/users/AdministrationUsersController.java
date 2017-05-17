@@ -13,7 +13,6 @@ import pl.wat.db.domain.user.User;
 import pl.wat.logic.administration.users.AdministrationUsersService;
 import pl.wat.logic.user._model.UserAdministrationSearchForm;
 import pl.wat.logic.user._model.UserAdministrationSearchResult;
-import pl.wat.logic.user._model.UserRegisterForm;
 import pl.wat.logic.user.account.UserAccountService;
 import pl.wat.logic.user.search.UserSearchService;
 
