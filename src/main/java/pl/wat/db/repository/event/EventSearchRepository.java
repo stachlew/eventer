@@ -1,18 +1,12 @@
 package pl.wat.db.repository.event;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-
 import org.springframework.data.repository.query.Param;
 import pl.wat.db.domain.event.Event;
-import pl.wat.logic.event._model.EventSearchForm;
-
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Predicate;
 
 
 /**
