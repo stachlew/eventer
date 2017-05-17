@@ -3,6 +3,7 @@ package pl.wat.logic.user.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.wat.config.PasswordGenerator;
 import pl.wat.db.domain.user.User;
 import pl.wat.db.repository.user.UserRepository;
 import pl.wat.logic.user._model.UserChangeForm;
@@ -43,18 +44,22 @@ public class UserAccountService {
 
     public boolean changeUser(String username,UserChangeForm form){
         if(username!=null){
+
             User user = userRepository.findByUsername(username);
             if(user!=null){
-                if(user.getUsername().equals(form.getUsername()) && user.getPassword().equals(passwordEncoder.encode(form.getOldPass()))){
+                if(user.getUsername().equals(form.getUsername()) && PasswordGenerator.comparePassword(user.getPassword(),form.getOldPass())){
+
                     user.setFirstname(form.getFirstname());
                     user.setLastname(form.getLastname());
                     user.setEmail(form.getEmail());
                     user.setPhone(form.getPhone());
                     if(form.getNewPass()!=null && !form.getNewPass().equals("")) {
-                        user.setPassword(passwordEncoder.encode(form.getNewPass()));
+
+                        user.setPassword(PasswordGenerator.hashPassword(form.getNewPass()));
                          userRepository.save(user);
                          return true;
                     }
+
                     userRepository.save(user);
                     return true;
                 }

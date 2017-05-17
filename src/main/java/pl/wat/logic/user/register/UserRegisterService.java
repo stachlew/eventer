@@ -3,6 +3,7 @@ package pl.wat.logic.user.register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.wat.config.PasswordGenerator;
 import pl.wat.db.domain.user.User;
 import pl.wat.db.repository.user.UserRepository;
 import pl.wat.logic.user._model.UserRegisterForm;
@@ -24,9 +25,6 @@ public class UserRegisterService {
     UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     AuthorityService authorityService;
 
     public void sendUserRegisterMail(String mailTo, String subject, String message){
@@ -37,7 +35,7 @@ public class UserRegisterService {
     public boolean createUser(UserRegisterForm userForm){
         if(userForm!=null && userAccountService.isUsernameFree(userForm.getUsername())){
             String password = UUID.randomUUID().toString().substring(0,8);
-            String passwordHash = passwordEncoder.encode(password);
+            String passwordHash = PasswordGenerator.hashPassword(password);
             User user=new User(userForm.getUsername(),passwordHash,userForm.getFirstname(),userForm.getLastname(),userForm.getEmail(),userForm.getPhone());
             user.setAuthorities(authorityService.getUserAuthority());
             user.setLastpassres(new Date());
@@ -60,7 +58,7 @@ public class UserRegisterService {
 
     public boolean createAdmin(User user){
         if(user!=null && userAccountService.isUsernameFree(user.getUsername())){
-            String passwordHash = passwordEncoder.encode(user.getPassword());
+            String passwordHash = PasswordGenerator.hashPassword(user.getPassword());
             user.setPassword(passwordHash);
             user.setAuthorities(authorityService.getAdminAuthority());
             user.setLastpassres(new Date());
