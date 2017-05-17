@@ -25,7 +25,7 @@ public class AdministrationStatisticsController {
   }
 
   @GetMapping("/getAverageOfAllVisits")
-  public double getAverageOfAllVisits() {
+  public long getAverageOfAllVisits() {
     return administrationStatisticsService.getAverageOfAllVisits();
   }
 
