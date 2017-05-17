@@ -24,7 +24,7 @@ public class AdministrationUserSearchController {
     @RequestMapping(value = "/getSearchFull",method = RequestMethod.POST)
     @ResponseBody
     public List<UserAdministrationSearchResult> getSearchFull(@RequestBody UserAdministrationSearchForm form){
-        return userSearchService.findAdministrationUserPage(form);
+        return userSearchService.findAdministrationUserFull(form);
     }
 
 
