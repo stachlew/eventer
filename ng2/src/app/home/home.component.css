@@ -178,11 +178,14 @@ figcaption {
   background-color: rgba(99, 99, 99, 0.5);
   color: #fff;
   font-size: 1.2em;
-  padding: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   position: absolute;
-  bottom: 40%;
+  bottom: 30%;
   left: 0;
   right: 0;
+  padding-top: 0px;
 }
 
 img {
