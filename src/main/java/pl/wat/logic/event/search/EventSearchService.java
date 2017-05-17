@@ -104,7 +104,6 @@ public class EventSearchService {
                     new SimpleUser(e.getUser().getId(), e.getUser().getUsername()),
                     e.isPublished(),
                     e.isRegisterEnabled(),
-
                     registeredGuests
             );
             resultList.add(eventResult);
