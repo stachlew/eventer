@@ -110,6 +110,8 @@ export class EventCreateComponent implements OnInit {
     if(response.status=="OK"){
       let respLng :number = response.results[0].geometry.location.lng;
       let respLat :number = response.results[0].geometry.location.lat;
+      this.lat=respLat;
+      this.lng=respLng;
       this.addEventClass.geoLength=respLng.toString().substring(0,11);
       this.addEventClass.geoWidth=respLat.toString().substring(0,11);
       this.markers.pop();

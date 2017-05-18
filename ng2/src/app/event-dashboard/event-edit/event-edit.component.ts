@@ -431,6 +431,8 @@ export class EventEditComponent implements OnInit {
     if(response.status=="OK"){
       let respLng :number = response.results[0].geometry.location.lng;
       let respLat :number = response.results[0].geometry.location.lat;
+      this.defaultLat=respLat;
+      this.defaultLng=respLng;
       this.evePlace.geoLength=respLng.toString().substring(0,11);
       this.evePlace.geoWidth=respLat.toString().substring(0,11);
       this.markers.pop();
