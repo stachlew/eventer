@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.user.UserRepository;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Service
 public class AdministrationStatisticsService {
 
@@ -28,4 +31,8 @@ public class AdministrationStatisticsService {
   public long getCountOfAllActiveUsers() {
     return userRepository.countByEnabledIsTrue();
   }
+
+  public List<BigDecimal> getSumVisitsEventsByMonth() { return eventRepository.getSumVisitsEventsSortedByMonth(); }
+
+  public List<BigDecimal> getMonthEventCreatedDate() { return eventRepository.getMonthEventCreatedDate(); }
 }

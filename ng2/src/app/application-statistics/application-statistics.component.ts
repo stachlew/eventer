@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Http,Response} from "@angular/http";
+import {HttpSecService} from "../_service/util/http-sec.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-application-statistics',
@@ -8,6 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ApplicationStatisticsComponent implements OnInit {
+
+  sumVisits: number[];
+  monthEvent: string[];
+
+  constructor(private http: Http, private myHttp: HttpSecService, private router: Router) { }
+
+  ngOnInit() {
+    this.getStatistic();
+  }
+
+  getStatistic() {
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getSumVisitsEventsByMonth').subscribe((data: Response) => this.sumVisits = data.json());
+    this.http.get(this.myHttp.getUrl() + '/api/administration/statistics/getMonthEventCreatedDate').subscribe((data: Response) => this.monthEvent = data.json());
+  }
 // lineChart
   public lineChartData:Array<any> = [
     {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
@@ -65,9 +82,5 @@ export class ApplicationStatisticsComponent implements OnInit {
 
   public chartHovered(e:any):void {
     console.log(e);
-  }
-  constructor() { }
-
-  ngOnInit() {
   }
 }

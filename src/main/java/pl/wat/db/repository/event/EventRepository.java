@@ -54,4 +54,9 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
     @Query("SELECT COUNT(*) FROM Event where START_TIME>TRUNC(CURRENT_DATE, 'mm') AND START_TIME<ADD_MONTHS(TRUNC(CURRENT_DATE, 'mm')-1,1)")
     long getCountEventsInThisMonths();
 
+    @Query(value = "SELECT  SUM(E.VISITS) FROM EVE_EVENTS E GROUP BY EXTRACT(MONTH FROM E.CREATE_DATE) ORDER BY EXTRACT(MONTH FROM E.CREATE_DATE) ASC", nativeQuery = true)
+    List<BigDecimal> getSumVisitsEventsSortedByMonth();
+
+    @Query(value = "SELECT EXTRACT(MONTH FROM E.CREATE_DATE) FROM EVE_EVENTS E GROUP BY EXTRACT(MONTH FROM E.CREATE_DATE) ORDER BY EXTRACT(MONTH FROM E.CREATE_DATE) ASC", nativeQuery = true)
+    List<BigDecimal> getMonthEventCreatedDate();
 }

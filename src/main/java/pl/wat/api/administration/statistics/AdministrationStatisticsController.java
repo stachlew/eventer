@@ -5,8 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.wat.api.util.Month;
 import pl.wat.logic.administration.statistics.AdministrationStatisticsService;
 import pl.wat.logic.util.StatisticService;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/administration/statistics")
@@ -47,4 +52,17 @@ public class AdministrationStatisticsController {
   @GetMapping("/getCountEventsInThisMonths")
   public long getCountEventsInThisMonths() { return statisticService.getCountEventsInThisMonths(); }
 
+  @GetMapping("/getSumVisitsEventsByMonth")
+  public List<BigDecimal> getSumVisitsEventsByMonth() {return administrationStatisticsService.getSumVisitsEventsByMonth();}
+
+  @GetMapping("/getMonthEventCreatedDate")
+  public List<String> getMonthEventCreatedDate() {
+    List<BigDecimal> decimalList = administrationStatisticsService.getMonthEventCreatedDate();
+    List<String> miesiaceList = new ArrayList<>();
+    for(BigDecimal decimal : decimalList) {
+      System.out.println(decimal);
+      miesiaceList.add(Month.parseMiesiac(decimal));
+    }
+    return miesiaceList;
+  }
 }
