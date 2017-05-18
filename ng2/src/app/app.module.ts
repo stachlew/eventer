@@ -51,6 +51,8 @@ import { SpeakerEditComponent } from './event-dashboard/lecture-dashboard/speake
 import { LectureViewComponent } from './event-view/lecture-view/lecture-view.component';
 import { SpeakerViewComponent } from './event-view/speaker-view/speaker-view.component';
 import { CreateOpinionComponent } from './event-view/create-opinion/create-opinion.component';
+import {ChartsModule} from "ng2-charts";
+import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 
 @NgModule({
   declarations: [
@@ -105,7 +107,8 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
     Ng2PageTransitionModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDzRwU70aqc9Fsin5RDv0MGpP12b-nnBGA'
-    })
+    }),
+    ChartsModule
   ],
   providers: [
     AuthenticationService,
