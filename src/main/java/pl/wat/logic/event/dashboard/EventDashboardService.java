@@ -22,6 +22,7 @@ import pl.wat.db.repository.event.lecture.LectureRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
 import pl.wat.db.repository.event.location.PlaceRepository;
 import pl.wat.logic.event._model.dashboard.EventDashboardInfo;
+import pl.wat.logic.util.MailContainer;
 
 import java.util.List;
 
@@ -51,6 +52,21 @@ public class EventDashboardService {
 
     @Autowired
     ParticipantRepository participantRepository;
+
+    public void sendMail(String mailTo, String subject, String message){
+        MailContainer mailContainer = new MailContainer();
+        mailContainer.sendMail("mail@eventer.pl",mailTo,subject,message);
+    }
+
+    public void sendMailAboutEventDelete(int idEvent){
+        Event event = eventRepository.getOne(idEvent);
+        if(event!=null){
+            sendMail(event.getUser().getEmail(),"Usunięcie wydarzenia : "+event.getTitle(),
+                    "Wydarzenie: "+event.getTitle()+" zostało usunięte z powodu naruszenia regulaminu."
+                            + "\n \nPozdrawiamy, \n Zespół EVenter");
+        }
+
+    }
 
     //Zwrot pelnego Eventu z bazy
     public Event getFullEvent(int id){

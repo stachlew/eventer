@@ -31,6 +31,7 @@ public class AdministrationUsersController {
 
   @PostMapping("/disableUser/{id}")
   public List<UserAdministrationSearchResult> deleteUser(@PathVariable int id) {
+    userAccountService.sendMailAboutUserDelete(id);
     userAccountService.deleteUser(getUser(id).getUsername());
     return userSearchService.findAdministrationUserFull(new UserAdministrationSearchForm("", 0));
   }

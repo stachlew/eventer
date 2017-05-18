@@ -12,6 +12,7 @@ import pl.wat.db.repository.user.UserRepository;
 import pl.wat.logic.event.dashboard.EventDashboardService;
 import pl.wat.logic.user._model.UserChangeForm;
 import pl.wat.logic.user.account.AuthorityService;
+import pl.wat.logic.util.MailContainer;
 
 import java.util.Date;
 
@@ -33,6 +34,21 @@ public class UserAccountService {
 
     @Autowired
     EventRepository eventRepository;
+
+    public void sendMail(String mailTo, String subject, String message){
+        MailContainer mailContainer = new MailContainer();
+        mailContainer.sendMail("mail@eventer.pl",mailTo,subject,message);
+    }
+
+    public void sendMailAboutUserDelete(int idUser){
+        User user = userRepository.getOne(idUser);
+        if(user!=null){
+            sendMail(user.getEmail(),"Usunięcie użytkownika : "+user.getUsername(),
+                    "Użytkownik: "+user.getUsername()+" został usunięty z powodu naruszenia regulaminu."
+                            + "\n \nPozdrawiamy, \n Zespół EVenter");
+        }
+
+    }
 
     public UserChangeForm getInfo(User user){
         UserChangeForm form;

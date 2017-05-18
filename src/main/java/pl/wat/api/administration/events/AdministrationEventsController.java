@@ -39,6 +39,7 @@ public class AdministrationEventsController {
   @PostMapping("/delete/{id}")
   @ResponseBody
   public List<EventAdministrationSearchResult> deleteEvent(@PathVariable int id) {
+    eventDashboardService.sendMailAboutEventDelete(id);
     eventDashboardService.deleteEvent(id);
     return eventSearchService.findAdministrationEventsFull(new EventAdministrationSearchForm("",0));
   }
