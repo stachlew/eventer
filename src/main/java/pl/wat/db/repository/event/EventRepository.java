@@ -30,6 +30,9 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
             "where ROWNUM<=:limit",nativeQuery = true)
     List<BigDecimal> findTopNIdEventsWithLeastAmountOfFreeSeats(@Param("limit") int limit);
 
+    @Query(value = "SELECT * FROM eve_events WHERE end_time <= CURRENT_TIMESTAMP AND ROWNUM <= 5 ORDER BY end_time DESC", nativeQuery = true)
+    List<Event> findLast5FinishedEvent();
+
     List<Event> findTop4ByOrderByVisitsDesc();
 
     List<Event> findEventsByUser_Username(String username);

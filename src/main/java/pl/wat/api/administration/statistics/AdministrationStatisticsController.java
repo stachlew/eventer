@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wat.api.util.Month;
+import pl.wat.logic.administration._model.EventStars;
 import pl.wat.logic.administration.statistics.AdministrationStatisticsService;
 import pl.wat.logic.util.StatisticService;
 
@@ -65,4 +66,8 @@ public class AdministrationStatisticsController {
     }
     return miesiaceList;
   }
+
+  @GetMapping("/getStarsForLastFinished")
+  public List<EventStars> getAvgStarsForLastFinished() { return administrationStatisticsService.getStarsForLast5Events(); }
+
 }
