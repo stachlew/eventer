@@ -3,9 +3,13 @@ package pl.wat.logic.user.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.wat.api.event.dashboard.edit.EventDashboardEditCtrl;
 import pl.wat.config.PasswordGenerator;
+import pl.wat.db.domain.event.Event;
 import pl.wat.db.domain.user.User;
+import pl.wat.db.repository.event.EventRepository;
 import pl.wat.db.repository.user.UserRepository;
+import pl.wat.logic.event.dashboard.EventDashboardService;
 import pl.wat.logic.user._model.UserChangeForm;
 import pl.wat.logic.user.account.AuthorityService;
 
@@ -23,6 +27,12 @@ public class UserAccountService {
 
     @Autowired
     AuthorityService authorityService;
+
+    @Autowired
+    EventDashboardService eventDashboardService;
+
+    @Autowired
+    EventRepository eventRepository;
 
     public UserChangeForm getInfo(User user){
         UserChangeForm form;
@@ -84,8 +94,10 @@ public class UserAccountService {
     public boolean deleteUser(String username){
         User userToDelete = getUser(username);
         if(userToDelete!=null){
-            userToDelete.setEnabled(!userToDelete.getEnabled());
-            userRepository.save(userToDelete);
+            for (Event event : eventRepository.findAllByUserOrderByIdEvent(userToDelete)) {
+                eventDashboardService.deleteEvent(event.getIdEvent());
+            }
+            userRepository.delete(userToDelete);
             return true;
             //CZY NIE WARTO WYCZYSCIC RESZTY ATRYBUTOW ZEBY NP ZWOLNIC USERNAME (kwestia NOT NULL)
         }
