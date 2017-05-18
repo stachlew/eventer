@@ -80,3 +80,11 @@ export class  UsersForAdminResults {
   lastpassres: Date;
 }
 
+export class StarsForAdminStatistics {
+  eventTitle: string;
+  star1: number;
+  star2: number;
+  star3: number;
+  star4: number;
+  star5: number;
+}
