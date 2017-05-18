@@ -9,11 +9,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.jsolve.sweetener.criteria.restriction.In;
 import pl.wat.db.domain.Customer;
 import pl.wat.db.domain.DemoClass;
+import pl.wat.db.domain.event.Event;
 import pl.wat.db.repository.event.EventRepository;
-import pl.wat.db.repository.event.lecture.LectureRepository;
+import pl.wat.db.repository.event.EventSearchRepository;
+import pl.wat.db.repository.event.OpinionRepository;
 import pl.wat.db.repository.event.lecture.SpeakerRepository;
+import pl.wat.db.repository.event.location.CityRepository;
+import pl.wat.db.repository.event.location.RegionRepository;
 import pl.wat.logic.demo.CustomerService;
 import pl.wat.logic.document.DocumentService;
 import pl.wat.logic.event._model.EventSearchForm;
@@ -26,11 +31,14 @@ import pl.wat.logic.event.image.EventImageService;
 import pl.wat.logic.event.search.EventSearchService;
 import pl.wat.logic.event.view.EventRegisterService;
 import pl.wat.logic.user._model.SecurityInfo;
+import pl.wat.logic.user._model.UserRegisterForm;
 import pl.wat.logic.user.account.UserAccountService;
 import pl.wat.logic.user.register.UserRegisterService;
+import pl.wat.logic.util.StatisticService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,9 +56,6 @@ public class DemoRestController {
     UserAccountService userAccountService;
 
     @Autowired
-    UserRegisterService userRegisterService;
-
-    @Autowired
     DocumentService documentService;
 
     @Autowired
@@ -64,8 +69,7 @@ public class DemoRestController {
     @Autowired
     EventRegisterService eventRegisterService;
 
-    @Autowired
-    LectureRepository lectureRepository;
+
 
     @Autowired
     EventDashboardParticipantsService eventDashboardParticipantsService;
@@ -74,71 +78,57 @@ public class DemoRestController {
     EventDashboardLecturesService eventDashboardLecturesService;
 
     @Autowired
+    EventSearchRepository eventSearchRepository;
+    @Autowired
     EventSearchService eventSearchService;
+    @Autowired
+    RegionRepository regionRepository;
+    @Autowired
+    CityRepository cityRepository;
 
-    //POBRANIE DANYCH BEZ AUTORYZACJI
-    @RequestMapping(value = "/test3/{id}",method = RequestMethod.GET)
-    @ResponseBody int getTest3(@PathVariable int id){
-        System.out.println("getTest3()");
-        return  lectureRepository.countBySpeakerIdSpeaker(id);
-    }
+    @Autowired
+    OpinionRepository opinionRepository;
 
+    @Autowired
+    UserRegisterService userRegisterService;
 
-    //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
-//    @RequestMapping(value = "/test",method = RequestMethod.GET)
-//    @ResponseBody
-//    List<EventSearchResult> getTest(){
-//        System.out.println("URUCHOMIENIE TESTU");
-//        boolean status1=false;
-//        boolean status2=false;
-//
-//
-//
-//
-//        //Deklaracja
-//        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
-//
-////        for (Integer s: distinctSpeakersByIdEvent
-////             ) {
-////            System.out.println(s);
-////
-////        }
-////        ParticipantForm participantForm = new ParticipantForm("adam","wan","da@da2",1100);
-////        eventRegisterService.registeredParticipant(participantForm);
-//
-//
-//        //User newUser = new User("test","1234","Adam","Nowak","nowak@wp.pl","425754243");
-//        //User newAdmin = new User("test","1234","Admin","Nowak","nowak@wp.pl","425754243");
-//
-//        //Wykonywanie
-//        // status1 = userRegisterService.createUser(newUser);
-//        //status2 = userAccountService.deleteUser("user");
-//
-//        //Zwrot wyniku
-//        if(status1 && status2)
-//            return "OK!";
-//        else
-//            return "FAIL";
-//    }
+    @Autowired
+    StatisticService statisticService;
+
 
     //METODA DO SZYBKIEGO TESTOWANIA SERWISOW [ wchodzic na: http://localhost:8080/api/test ]
-//    @RequestMapping(value = "/test/{id}",method = RequestMethod.GET)
-//    @ResponseBody
-//    EventDashboardLecture getParticipantInfo(@PathVariable String id){
-//        System.out.println("URUCHOMIENIE TESTU");
-////        boolean status1=false;
-////        boolean status2=false;
-//        int intId = Integer.parseInt(id);
-//        EventDashboardLecture eventDashboardLecturesInfo = eventDashboardLecturesService.getEventDashboardLecturesInfo(intId);
-//
-//        return eventDashboardLecturesInfo;
-//
-//
-//        //Deklaracja
-//        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
-//
-////        for (Integer s: distinctSpeakersByIdEvent
-////             ) {
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    @ResponseBody String getTest(){
+        System.out.println("URUCHOMIENIE TESTU");
+        boolean status1=false;
+        boolean status2=false;
+
+        System.out.println(statisticService.getCountEvent());
+        System.out.println(statisticService.getCountParticipant());
+        System.out.println(statisticService.getCountVisits());
+        System.out.println(statisticService.getAvgParticipant());
+        System.out.println(statisticService.getAvgVisits());
+        // userRegisterService.createUser(new UserRegisterForm("kamil123","Kam","Kam","kamil.kosiorek.94@gmail.com","3232322"));
+        //System.out.println(opinionRepository.countByEventIdEventAndRate(1,1));
+       // eventRepository.incrementVisit(1);
+       // eventSearchForm.setCity(cityRepository.findOne(1));
+        //eventSearchForm.setTextContent("pol");
+//        eventSearchForm.setFromGeoLenght("19");
+//        eventSearchForm.setToGeoLenght("52");
+//        eventSearchForm.setFromGeoWidth("49");
+//        eventSearchForm.setToGeoWidth("53");
+//       List<EventSearchResult> eventSearchResults = eventSearchService.findEvents(eventSearchForm);
+//        for (EventSearchResult e: eventSearchResults
+//             ) {
+//            System.out.println(e.getTitle());
+//        }
+
+
+        //Deklaracja
+        //List<Integer> distinctSpeakersByIdEvent = speakerRepository.getDistinctIdSpeakersByIdEvent(1);
+
+//        for (Integer s: distinctSpeakersByIdEvent
+//             ) {
 //            System.out.println(s);
 //
 //        }
@@ -154,28 +144,29 @@ public class DemoRestController {
         //status2 = userAccountService.deleteUser("user");
 
         //Zwrot wyniku
-//        if(status1 && status2)
-//            return "OK!";
-//        else
-//            return "FAIL";
-    //}
+        if(status1 && status2)
+            return "OK!";
+        else
+            return "FAIL";
+    }
+
 
     //Przyklad pobierania dokumentu
-    @PreAuthorize("hasRole('USER')")
-    @RequestMapping(value = "/download",method = RequestMethod.GET)
+    //@PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/download/{nr}",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<byte[]> getDocument(Authentication authentication){
-        if(authentication!=null){
+    public ResponseEntity<byte[]> getDocument(Authentication authentication,@PathVariable String nr){
+       // if(authentication!=null){
             //Dla kogo tworzony
-            //String username = authentication.getName();
+           // String username = authentication.getName();
 
             //Pobranie odpowiednio przygotowanego w serwisie dokumentu
-            XWPFDocument document = documentService.getDocument(1,1);
+            XWPFDocument document = documentService.getDocument(1,Integer.valueOf(nr));
 
             //Zwrocenie przygotowanej odpowiedzi
             return documentService.createDocumentResponse(document);
-        }
-        return null;
+        //}
+       // return null;
     }
 
 
