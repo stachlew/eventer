@@ -166,6 +166,10 @@ export class EventCreateComponent implements OnInit {
   markerDragEnd(m: marker, $event: any) {
     m.lat = $event.coords.lat;
     m.lng = $event.coords.lng;
+
+    this.addEventClass.geoLength=m.lng.toString().substring(0,11);
+    this.addEventClass.geoWidth=m.lat.toString().substring(0,11);
+
     console.log('dragEnd', m, $event);
   }
 

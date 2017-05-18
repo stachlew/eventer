@@ -133,12 +133,9 @@ export class AccountsAdministrationComponent implements OnInit {
     this.postNextPage();
   }
 
-  public deleteUser(temp) {
-    this.http.post(this.myHttp.getUrl()+'/api/administration/users/disableUser/'+temp,this.myHttp.getConfig()).subscribe(
-      (data: Response) => {
-        this.userSearchResult = data.json(), this.updatePageData()
-      });
-    console.log(temp+" delete");
+  public  updateOpinionsList():void{
+    this.getLatest();
   }
+
 
 }

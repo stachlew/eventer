@@ -51,6 +51,9 @@ import { SpeakerEditComponent } from './event-dashboard/lecture-dashboard/speake
 import { LectureViewComponent } from './event-view/lecture-view/lecture-view.component';
 import { SpeakerViewComponent } from './event-view/speaker-view/speaker-view.component';
 import { CreateOpinionComponent } from './event-view/create-opinion/create-opinion.component';
+import { AccountMailModalComponent } from './accounts-administration/account-mail-modal/account-mail-modal.component';
+import { EventMailModalComponent } from './events-administration/event-mail-modal/event-mail-modal.component';
+import { EventWarnModalComponent } from './events-administration/event-warn-modal/event-warn-modal.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +96,9 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
     LectureViewComponent,
     SpeakerViewComponent,
     CreateOpinionComponent,
+    AccountMailModalComponent,
+    EventMailModalComponent,
+    EventWarnModalComponent,
     // DateTimePickerDirective,
   ],
   imports: [

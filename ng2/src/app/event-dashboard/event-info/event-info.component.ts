@@ -36,7 +36,10 @@ export class EventInfoComponent implements OnInit {
     let sum5:number = stats.stars5 * 5;
     let sumAll = sum1+sum2+sum3+sum4+sum5;
     let sumStars = stats.stars1+stats.stars2+stats.stars3+stats.stars4+stats.stars5;
-    this.average = sumAll/sumStars;
+    if(sumStars>0)
+      this.average = sumAll/sumStars;
+    else
+      this.average=0;
   }
 
 

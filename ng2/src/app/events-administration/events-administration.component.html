@@ -88,40 +88,32 @@
                     <H2>{{i.title}}</H2>
                     Użytkownik: {{i.user.username}}
                   </div>
-                  <div class="col-md-2">
-                    <div style="margin-top: auto; margin-bottom: auto">
-                        <div class="myText">
-                          Rejestracja:
-                        </div>
-                        <div class="myText2"><!--CZY_PUBLIKOWANE-->
-                          Publikowane:
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-md-1">
-                    <div style="margin-top: auto; margin-bottom: auto">
-                      <div class="row" (click)="toRegisterOrDisRegister(i.idEvent)"><!--Rejestracja-->
 
-                        <span class="myIcon" *ngIf="i.register">
-                          <i class="fa fa-fw fa-toggle-on"></i>
-                        </span>
-                        <span class="myIcon" *ngIf="!i.register" >
-                          <i class="fa fa-fw fa-toggle-off"></i>
-                        </span>
+                  <div class="col-md-3">
+                    <div style="margin-top: auto; margin-bottom: auto; margin-right: 15px" align="right">
+                      <div class="row"><!--CZY_PUBLIKOWANE-->
 
-                      </div>
-                      <div class="row" (click)="toPublishOrDisPublish(i.idEvent)"><!--CZY_PUBLIKOWANE-->
-
-                        <span class="myIcon" *ngIf="i.published" style="color: rgba(16,177,24,0.8)">
-                          <i class="fa fa-fw fa-unlock"></i>
+                        <!--<span (click)="toPublishOrDisPublish(i.idEvent)" class="myIcon" *ngIf="i.published" style="color: rgba(16,177,24,0.8)">-->
+                          <!--Publikowane:<i class="fa fa-fw fa-times"></i>-->
+                        <!--</span>-->
+                        <span (click)="modal4.show(i.idEvent)" class="myIcon" *ngIf="i.published" style="color: rgba(16,177,24,0.8)">
+                          Publikowane<i class="fa fa-fw fa-times"></i>
                         </span>
 
                         <span class="myIcon" *ngIf="!i.published" style="color: rgba(189,0,0,0.8)">
-                          <i class="fa fa-fw fa-lock"></i>
+                          Niepublikowane
                         </span>
 
                       </div>
-                      <div class="row" (click)="deleteEvent(i.idEvent)"><!--USUNIECIE-->
+                      <!--<div class="row" (click)="toRegisterOrDisRegister(i.idEvent)">&lt;!&ndash;Rejestracja&ndash;&gt;-->
+                        <!--<span class="myIcon" *ngIf="i.register">-->
+                          <!--Rejestracja: <i class="fa fa-fw fa-unlock"></i>-->
+                        <!--</span>-->
+                        <!--<span class="myIcon" *ngIf="!i.register" >-->
+                          <!--Rejestracja: <i class="fa fa-fw fa-lock"></i>-->
+                        <!--</span>-->
+                      <!--</div>-->
+                      <div class="row" (click)="modal5.show(i.idEvent)"><!--USUNIECIE-->
 
                         <span class="myIcon" style="color: rgba(189,0,0,0.8)">
                           <i class="fa fa-fw fa-trash"></i>
@@ -173,3 +165,20 @@
     </div>
   </div>
 </div>
+
+<!--OKNO DODAWANIA OPINII-->
+<app-event-mail-modal #modal4>
+  <div class="app-modal-header"></div>
+  <div class="app-modal-body"></div>
+  <div class="app-modal-footer"></div>
+</app-event-mail-modal>
+<!--END: OKNO-->
+
+<!--OKNO DODAWANIA OPINII-->
+<app-event-warn-modal #modal5>
+  <div class="app-modal-header"></div>
+  <div class="app-modal-body"></div>
+  <div class="app-modal-footer"></div>
+</app-event-warn-modal>
+<!--END: OKNO-->
+

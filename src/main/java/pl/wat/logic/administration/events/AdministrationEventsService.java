@@ -35,12 +35,14 @@ public class AdministrationEventsService {
     Event event = eventRepository.findOne(idEvent);
     event.setPublished(false);
     if(eventRepository.save(event)!=null){
+      System.out.println("START");
       sendMail(event.getUser().getEmail(),"Blokada widoczności wydarzenia : "+event.getTitle(),
               "Wydarzenie: "+event.getTitle()+" zostało zablokowane."
                       + "\n Powód: "
                       + message
                       + "\n \nPozdrawiamy, \n Zespół EVenter");
     }
+    System.out.println("STOP");
   }
 
   public void setRegisterEnabled(boolean flag, int id) {

@@ -11,7 +11,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./create-opinion.component.css']
 })
 export class CreateOpinionComponent {
-
   public visible = false;
   private visibleAnimate = false;
 
@@ -135,3 +134,4 @@ export class CreateOpinionComponent {
 
 
 }
+

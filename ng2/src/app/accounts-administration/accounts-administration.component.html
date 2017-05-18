@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-md-10">
               <div class="form-group-lg" >
-                <input type="text" placeholder="Jakie wydarzenie chcesz moderować?" class="form-control" id="textContent" [(ngModel)]="userSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
+                <input type="text" placeholder="Jakich użytkowników chcesz moderować?" class="form-control" id="textContent" [(ngModel)]="userSearchForm.textContent" name="textContent" [formControl]="complexForm.controls['textContent']">
               </div>
             </div>
             <div class="col-md-2">
@@ -68,7 +68,7 @@
               <div class="panel-body" >
                 <!--TYTUL, DATA STARTU, MOZLIWA REJESTRACJA?, BEZPLATNE? TRANSMISJA?-->
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-md-11">
                     <div class="col-md-4">
                       <H2><strong>Użytkownik: </strong></H2>
                       <strong>
@@ -86,29 +86,12 @@
                     <div class="col-md-4">
                     </div>
                   </div>
-                  <div class="col-md-2">
-                    <div style="margin-top: auto; margin-bottom: auto">
-                      <div class="myText" *ngIf="i.enabled">
-                        Aktywny
-                      </div>
-                      <div class="myText" *ngIf="!i.enabled"><!--CZY_PUBLIKOWANE-->
-                        Nieaktywny
-                      </div>
-                    </div>
-                  </div>
                   <div class="col-md-1">
                     <div style="margin-top: auto; margin-bottom: auto">
-                      <div class="row" *ngIf="i.enabled" (click)="deleteUser(i.id)"><!--AKTYWNE-->
+                      <div class="row" (click)="modal6.show(i.id)"><!--AKTYWNE-->
 
-                        <span class="myIcon" style="color: rgba(16,177,24,0.8)">
-                          <i class="fa fa-fw fa-check"></i>
-                        </span>
-
-                      </div>
-                      <div class="row" *ngIf="!i.enabled" (click)="deleteUser(i.id)"><!--USUNIECIE-->
-
-                        <span class="myIcon" style="color: rgba(189,0,0,0.8)">
-                          <i class="fa fa-fw fa-times"></i>
+                        <span class="myIcon" style="color: rgba(255,15,24,0.8)">
+                          <i class="fa fa-fw fa-trash"></i>
                         </span>
 
                       </div>
@@ -144,3 +127,12 @@
     </div>
   </div>
 </div>
+
+
+<app-account-mail-modal #modal6>
+  <div class="app-modal-header"></div>
+  <div class="app-modal-body"></div>
+  <div class="app-modal-footer"></div>
+</app-account-mail-modal>
+
+
