@@ -57,14 +57,14 @@ public class AdministrationStatisticsController {
   public List<BigDecimal> getSumVisitsEventsByMonth() {return administrationStatisticsService.getSumVisitsEventsByMonth();}
 
   @GetMapping("/getMonthEventCreatedDate")
-  public List<String> getMonthEventCreatedDate() {
+  public List<BigDecimal> getMonthEventCreatedDate() {
     List<BigDecimal> decimalList = administrationStatisticsService.getMonthEventCreatedDate();
     List<String> miesiaceList = new ArrayList<>();
     for(BigDecimal decimal : decimalList) {
       System.out.println(decimal);
       miesiaceList.add(Month.parseMiesiac(decimal));
     }
-    return miesiaceList;
+    return administrationStatisticsService.getMonthEventCreatedDate();
   }
 
   @GetMapping("/getStarsForLastFinished")
