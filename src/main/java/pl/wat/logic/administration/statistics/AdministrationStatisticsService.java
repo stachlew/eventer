@@ -39,9 +39,9 @@ public class AdministrationStatisticsService {
     return userRepository.countByEnabledIsTrue();
   }
 
-  public List<BigDecimal> getSumVisitsEventsByMonth() { return eventRepository.getSumVisitsEventsSortedByMonth(); }
-
-  public List<BigDecimal> getMonthEventCreatedDate() { return eventRepository.getMonthEventCreatedDate(); }
+  public List<BigDecimal> getSumVisitsForMonth() { return eventRepository.getSumVisitsForMonth(); }
+//
+//  public List<BigDecimal> getMonthEventCreatedDate() { return eventRepository.getMonthEventCreatedDate(); }
 
   public List<EventStars> getStarsForLast5Events() {
     List<Event> events = eventRepository.findLast5FinishedEvent();

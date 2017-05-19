@@ -51,11 +51,11 @@ public class AdministrationStatisticsController {
   @GetMapping("/getCountEventsInThisMonths")
   public long getCountEventsInThisMonths() { return statisticService.getCountEventsInThisMonths(); }
 
-  @GetMapping("/getSumVisitsEventsByMonth")
-  public List<BigDecimal> getSumVisitsEventsByMonth() {return administrationStatisticsService.getSumVisitsEventsByMonth();}
+//  @GetMapping("/getSumVisitsEventsByMonth")
+//  public List<BigDecimal> getSumVisitsEventsByMonth() {return administrationStatisticsService.getSumVisitsEventsByMonth();}
 
-  @GetMapping("/getMonthEventCreatedDate")
-  public List<BigDecimal> getMonthEventCreatedDate() { return administrationStatisticsService.getMonthEventCreatedDate(); }
+  @GetMapping("/getSumVisitsForMonth")
+  public List<BigDecimal> getSumVisitsForMonth() { return administrationStatisticsService.getSumVisitsForMonth(); }
 
   @GetMapping("/getStarsForLastFinished")
   public List<EventStars> getAvgStarsForLastFinished() { return administrationStatisticsService.getStarsForLast5Events(); }

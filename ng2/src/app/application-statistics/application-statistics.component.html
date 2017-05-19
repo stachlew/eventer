@@ -1,49 +1,112 @@
 <div class="row glowny-div margin-top15 font">
-
   <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Obecnie użytkowników:</strong>
+    <strong>Utworzonych wydarzeń:</strong>
   </div>
   <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    12312312313
+    {{createEvents}}
   </div>
+</div>
 
+<div class="row glowny-div font row-border">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Aktywnych użytkowników:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{activeUsers}}
+  </div>
 </div>
 
 <div class="row glowny-div font">
-
   <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Obecnie wydarzeń:</strong>
+    <strong>Liczba wydarzeń w ostatnim miesiącu:</strong>
   </div>
   <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    12312312313
+    {{countEventsInLastMonths}}
   </div>
-
 </div>
 
-<div class="row">
-  <div class="col-md-6">
-    <div style="display: block;">
-      <canvas baseChart width="400" height="400"
-              [datasets]="lineChartData"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
+<div class="row glowny-div font row-border">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Liczba wydarzeń w tym miesiącu:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{countEventsInThisMonths}}
+  </div>
+</div>
+
+<div class="row glowny-div font">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Wszystkich odwiedzających:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{allVisitors}}
+  </div>
+</div>
+
+<div class="row glowny-div font row-border">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Wszyscy goście na wydarzeniach:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{allGuests}}
+  </div>
+</div>
+
+<div class="row glowny-div font">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Średnia odwiedzających na wydarzenie:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{avgVisitors}}
+  </div>
+</div>
+
+<div class="row glowny-div font row-border">
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <strong>Średnia gości na wydarzeniach:</strong>
+  </div>
+  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    {{avgParticipant}}
+  </div>
+</div>
+
+<button (click)="loadPlots()">CLICK</button>
+<div >
+  <div class="row glowny-div font padding-top10">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+      <strong>Wykres liczy odwiedzeń na wdyarzenia, w zalezności od miesiąca utworzenia</strong>
     </div>
   </div>
-  <div class="col-md-6" style="margin-bottom: 10px">
-    <table class="table table-responsive table-condensed">
-      <tr>
-        <th *ngFor="let label of lineChartLabels">{{label}}</th>
-      </tr>
-      <tr *ngFor="let d of lineChartData">
-        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-      </tr>
-    </table>
-    <button (click)="randomize()">CLICK</button>
+  <div *ngIf="seePlots" class="row wykres">
+    <div class="col-md-12">
+      <div style="display: block;">
+        <canvas baseChart width="500px" height="200px"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType">
+        </canvas>
+      </div>
+    </div>
   </div>
-</div>
 
+
+  <div class="row glowny-div font padding-top10">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+      <strong>Wykres liczy odwiedzeń na wdyarzenia, w zalezności od miesiąca utworzenia</strong>
+    </div>
+  </div>
+  <div class="row wykres">
+    <div class="col-md-12">
+      <div *ngIf="isRadarReady" style="display: block">
+      <canvas baseChart width="500px" height="200px"
+            [datasets]="radarChartData"
+            [labels]="radarChartLabels"
+            [chartType]="radarChartType"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>

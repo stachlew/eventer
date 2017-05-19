@@ -53,6 +53,7 @@ import { SpeakerViewComponent } from './event-view/speaker-view/speaker-view.com
 import { CreateOpinionComponent } from './event-view/create-opinion/create-opinion.component';
 import {ChartsModule} from "ng2-charts";
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
+import {ApplicationStatisticsService} from "./application-statistics/application-statistics.service";
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
     AuthenticationService,
     HttpSecService,
     routingGuards,
-    CustomDateService
+    CustomDateService,
+    ApplicationStatisticsService
   ],
   bootstrap: [AppComponent]
 })

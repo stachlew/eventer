@@ -1,39 +1,40 @@
 .animacja {
   text-align:center;
   padding:15px 0;
-  border:3px solid #FDD700;
-
   animation-name:szerokosc;
   animation-duration:5s;
   animation-iteration-count:infinite;
-
   -webkit-animation-name:szerokosc;
   -webkit-animation-duration:3s;
   -webkit-animation-iteration-count:1;
 }
-
 /* ------------ANIMACJA-SZEROKOSC------------ */
 @keyframes szerokosc
 {
   0% { width: 250px; }
   100% { width: 50%; }
 }
-
 @-webkit-keyframes szerokosc
 {
   0% { width: 200px; }
   100% { width: 50%; }
 }
-
 .glowny-div {
-  margin-left: 15px;
-  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
-
 .font {
-  font-size: 20px;
+  font-size: 18px;
 }
-
 .margin-top15 {
   margin-top: 15px;
+}
+.wykres {
+  margin: 15px;
+}
+.row-border {
+  background-color: rgba(190, 190, 190, 0.4);
+}
+.text-center {
+  text-align: center;
 }
