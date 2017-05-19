@@ -5,7 +5,7 @@
   animation-duration:5s;
   animation-iteration-count:infinite;
   -webkit-animation-name:szerokosc;
-  -webkit-animation-duration:3s;
+  -webkit-animation-duration:8s;
   -webkit-animation-iteration-count:1;
 }
 /* ------------ANIMACJA-SZEROKOSC------------ */
@@ -37,4 +37,12 @@
 }
 .text-center {
   text-align: center;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-top-6pr {
+  margin-top: 6%;
 }

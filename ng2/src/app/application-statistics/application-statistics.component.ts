@@ -88,7 +88,6 @@ export class ApplicationStatisticsComponent implements OnInit{
   }
 
   convertLineData(data: number[]) {
-    console.log(this.lineChartData);
     let chartData:Array<any> = new Array(12);
     let _chartData:Array<any> = new Array(12);
     chartData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

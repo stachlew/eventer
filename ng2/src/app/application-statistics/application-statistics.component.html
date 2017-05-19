@@ -1,86 +1,13 @@
-<div class="row glowny-div margin-top15 font">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Utworzonych wydarzeń:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{createEvents}}
-  </div>
-</div>
-
-<div class="row glowny-div font row-border">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Aktywnych użytkowników:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{activeUsers}}
-  </div>
-</div>
-
-<div class="row glowny-div font">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Liczba wydarzeń w ostatnim miesiącu:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{countEventsInLastMonths}}
-  </div>
-</div>
-
-<div class="row glowny-div font row-border">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Liczba wydarzeń w tym miesiącu:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{countEventsInThisMonths}}
-  </div>
-</div>
-
-<div class="row glowny-div font">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Wszystkich odwiedzających:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{allVisitors}}
-  </div>
-</div>
-
-<div class="row glowny-div font row-border">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Wszyscy goście na wydarzeniach:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{allGuests}}
-  </div>
-</div>
-
-<div class="row glowny-div font">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Średnia odwiedzających na wydarzenie:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{avgVisitors}}
-  </div>
-</div>
-
-<div class="row glowny-div font row-border">
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    <strong>Średnia gości na wydarzeniach:</strong>
-  </div>
-  <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
-    {{avgParticipant}}
-  </div>
-</div>
-
-<button (click)="loadPlots()">CLICK</button>
-<div >
-  <div class="row glowny-div font padding-top10">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-      <strong>Wykres liczy odwiedzeń na wdyarzenia, w zalezności od miesiąca utworzenia</strong>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div *ngIf="seePlots" class="glowny-div font padding-top10 margin-top-20">
+    <div class="row">
+      <div class="text-center">
+        <strong>Wykres liczy odwiedzeń na wdyarzenia, w zalezności od miesiąca utworzenia</strong>
+      </div>
     </div>
-  </div>
-  <div *ngIf="seePlots" class="row wykres">
-    <div class="col-md-12">
+    <div class="row wykres">
       <div style="display: block;">
-        <canvas baseChart width="500px" height="200px"
+        <canvas baseChart width="500px" height="180px"
                 [datasets]="lineChartData"
                 [labels]="lineChartLabels"
                 [options]="lineChartOptions"
@@ -91,22 +18,101 @@
       </div>
     </div>
   </div>
+</div>
 
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margin-top-6pr">
+    <div class="row glowny-div margin-top15 font">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Utworzonych wydarzeń:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{createEvents}}
+      </div>
+    </div>
 
-  <div class="row glowny-div font padding-top10">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-      <strong>Wykres liczy odwiedzeń na wdyarzenia, w zalezności od miesiąca utworzenia</strong>
+    <div class="row glowny-div font row-border">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Aktywnych użytkowników:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{activeUsers}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Liczba wydarzeń w ostatnim miesiącu:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{countEventsInLastMonths}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font row-border">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Liczba wydarzeń w tym miesiącu:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{countEventsInThisMonths}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Wszystkich odwiedzających:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{allVisitors}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font row-border">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Wszyscy goście na wydarzeniach:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{allGuests}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Średnia odwiedzających na wydarzenie:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{avgVisitors}}
+      </div>
+    </div>
+
+    <div class="row glowny-div font row-border">
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <strong>Średnia gości na wydarzeniach:</strong>
+      </div>
+      <div class="animacja col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        {{avgParticipant}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+  <div *ngIf="isRadarReady" class="glowny-div font padding-top10 margin-top-20">
+  <div class="row">
+    <div class="text-center">
+      <strong>Skala ocen dla ostatnich 5 zakończonych wydarzeń w postaci ilości gwiazdek</strong>
     </div>
   </div>
   <div class="row wykres">
-    <div class="col-md-12">
-      <div *ngIf="isRadarReady" style="display: block">
-      <canvas baseChart width="500px" height="200px"
+      <div style="display: block">
+      <canvas baseChart width="500px" height="400px"
             [datasets]="radarChartData"
             [labels]="radarChartLabels"
-            [chartType]="radarChartType"></canvas>
+            [chartType]="radarChartType"
+            [options]="lineChartOptions">
+      </canvas>
       </div>
-    </div>
+  </div>
+  </div>
   </div>
 
 </div>
