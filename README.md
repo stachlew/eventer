@@ -73,6 +73,10 @@ npm i ng2-cookies
 UPDATE[12.04.2017]
 npm install angular2-google-maps 
 
+UPDATE[19.05.2017]
+npm install ng2-charts --save
+npm install chart.js --save
+
 -- uruchomienie frontendu (http://localhost:4200)
 3. ng serve
 4. Wyłączenie serwowania apki: W terminalu w którym została zaserwowana: CTRL+C, potem y
