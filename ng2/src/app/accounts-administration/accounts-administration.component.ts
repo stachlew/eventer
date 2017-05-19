@@ -133,7 +133,7 @@ export class AccountsAdministrationComponent implements OnInit {
     this.postNextPage();
   }
 
-  public  updateOpinionsList():void{
+  public updateOpinionsList():void{
     this.getLatest();
   }
 

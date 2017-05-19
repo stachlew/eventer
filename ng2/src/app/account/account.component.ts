@@ -4,6 +4,8 @@ import {Http,Response} from "@angular/http";
 import {UserChangeForm} from "../_model/user.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {el} from "@angular/platform-browser/testing/browser_util";
+import {AuthenticationService} from "../_service/authentication/authentication.service";
 
 @Component({
   selector: 'app-account',
@@ -20,7 +22,40 @@ export class AccountComponent implements OnInit {
 
   isSuccessRegister:boolean = false;
 
-  constructor(private http: Http, private myHttp: HttpSecService,public fb: FormBuilder, public router:Router) {
+  isDeleting:boolean=false;
+  changeDelete(){
+    if(this.isDeleting){
+      this.isDeleting=false
+    }
+    else{
+      this.isDeleting=true;
+      alert("UWAGA! Usunięcie konta skutkuje usunięciem wszytkich Twoich wydarzeń. Aby usunięcie było możliwe należy wpisać aktualne hasło do konta u dołu strony.");
+    }
+  }
+  deleteAccount(){
+    this.http.post(this.myHttp.getUrl()+'/api/user/account/deleteUser',this.newUser.oldPass,this.myHttp.postConfig()).subscribe(
+      (data: Response) => {
+        this.endRequest(data.json());
+      });
+  }
+
+  endRequest(flag:boolean){
+    if(flag){
+      this.logout();
+    }
+    else {
+      alert("Nie udało się usunąć konta. Zweryfikuj poprawność hasła.");
+    }
+  }
+
+  logout() {
+    this.auth.doLogout();
+    this.router.navigate(['login']);
+  }
+
+
+
+  constructor(private http: Http, private myHttp: HttpSecService,public fb: FormBuilder, public router:Router,public auth: AuthenticationService) {
    this.newUser = new UserChangeForm;
    this.newUser.oldPass="";
    this.newUser.newPass="";
