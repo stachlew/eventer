@@ -69,19 +69,23 @@
       </div>
 
       <div class="col-sm-12 col-md-12 col-lg-12 pading0">
-      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['streetName'].valid && complexForm.controls['streetName'].touched}">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingLeftForm" [ngClass]="{'has-error':!complexForm.controls['streetName'].valid && complexForm.controls['streetName'].touched}">
         <label for="streetName">Podaj nazwę ulicy:</label>
         <input type="text" class="form-control" id="streetName" [(ngModel)]="addEventClass.streetName" name="streetName" [formControl]="complexForm.controls['streetName']">
         <div *ngIf="complexForm.controls['streetName'].hasError('required') && complexForm.controls['streetName'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
         <div *ngIf="complexForm.controls['streetName'].hasError('minlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Minimum 3 znaki.</div>
         <div *ngIf="complexForm.controls['streetName'].hasError('maxlength') && complexForm.controls['streetName'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
       </div>
-      <div class="form-group col-sm-6 col-md-6 col-lg-6 padingRightForm" [ngClass]="{'has-error':!complexForm.controls['streetNo'].valid && complexForm.controls['streetNo'].touched}">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4 padingCenterForm" [ngClass]="{'has-error':!complexForm.controls['streetNo'].valid && complexForm.controls['streetNo'].touched}">
         <label for="streetNo">Podaj numer budynku/lokalu:</label>
         <input type="text" class="form-control" id="streetNo" [(ngModel)]="addEventClass.streetNo" name="streetNo" [formControl]="complexForm.controls['streetNo']">
         <div *ngIf="complexForm.controls['streetNo'].hasError('required') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
         <div *ngIf="complexForm.controls['streetNo'].hasError('minlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Minimum 1 znaki.</div>
         <div *ngIf="complexForm.controls['streetNo'].hasError('maxlength') && complexForm.controls['streetNo'].touched" class="alert alert-danger">Maksimum 20 znaków.</div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 padingRightForm">
+        <label for="helpButton">&nbsp;</label>
+        <button id="helpButton" (click)="helpLocalization(addEventClass.region,addEventClass.city)" type="" class="btn btn-block"><i class="fa fa-search"></i>Wyszukaj na mapie</button>
       </div>
       </div>
 
@@ -94,6 +98,9 @@
       <div class="col-sm-12 col-md-12 col-lg-12 pading0">
       <button (click)="postAddEvent()" type="" class="btn btn-success btn-block">Utwórz wydarzenie!</button>
       </div>
+
+
+
 
     </form>
   </div>

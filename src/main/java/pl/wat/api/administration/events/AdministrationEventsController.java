@@ -1,12 +1,7 @@
 package pl.wat.api.administration.events;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.wat.db.domain.event.Event;
 import pl.wat.logic.administration.events.AdministrationEventsService;
 import pl.wat.logic.event._model.EventAdministrationSearchForm;
@@ -44,13 +39,14 @@ public class AdministrationEventsController {
   @PostMapping("/delete/{id}")
   @ResponseBody
   public List<EventAdministrationSearchResult> deleteEvent(@PathVariable int id) {
+    eventDashboardService.sendMailAboutEventDelete(id);
     eventDashboardService.deleteEvent(id);
     return eventSearchService.findAdministrationEventsFull(new EventAdministrationSearchForm("",0));
   }
 
-  @PostMapping("/changePublished/{id}")
-  public List<EventAdministrationSearchResult> changePublished(@PathVariable int id) {
-    administrationEventsService.setPublished(!administrationEventsService.getEvent(id).isPublished(), id);
+  @PostMapping("/changePublished/{idEvent}")
+  public List<EventAdministrationSearchResult> changePublished(@PathVariable int idEvent, @RequestBody String message) {
+    administrationEventsService.setPublished(idEvent,message);
     return eventSearchService.findAdministrationEventsFull(new EventAdministrationSearchForm("",0));
   }
 

@@ -1,0 +1,33 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}" [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- HEADER -->
+      <div class="modal-header">
+        <ng-content select=".app-modal-header"></ng-content>
+        <div class="row">
+          <div class="col-md-10">
+            <h2>Usunięcie wydarzenia</h2>
+          </div>
+          <div class="col-md-1" style="color: black; background-color: white">
+            <h2><a (click)="hide()"><i class="fa fa-window-close-o"></i></a></h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+        <ng-content select=".app-modal-body"></ng-content>
+        <!--FORMULARZ-->
+        <div>
+          <div>Czy na pewno chcesz usunąć wydarzenie?</div>
+          <div align="right">
+          <button (click)="save()" *ngIf="!loading" class="btn btn-default btn-lg">Tak</button>
+          <button (click)="hide()" *ngIf="!loading" class="btn btn-default btn-lg">Nie</button>
+          <i *ngIf="loading" class="fa fa-spin fa-spinner"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

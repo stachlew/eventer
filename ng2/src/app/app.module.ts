@@ -54,6 +54,9 @@ import { CreateOpinionComponent } from './event-view/create-opinion/create-opini
 import {ChartsModule} from "ng2-charts";
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import {ApplicationStatisticsService} from "./application-statistics/application-statistics.service";
+import { AccountMailModalComponent } from './accounts-administration/account-mail-modal/account-mail-modal.component';
+import { EventMailModalComponent } from './events-administration/event-mail-modal/event-mail-modal.component';
+import { EventWarnModalComponent } from './events-administration/event-warn-modal/event-warn-modal.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +99,9 @@ import {ApplicationStatisticsService} from "./application-statistics/application
     LectureViewComponent,
     SpeakerViewComponent,
     CreateOpinionComponent,
+    AccountMailModalComponent,
+    EventMailModalComponent,
+    EventWarnModalComponent,
     // DateTimePickerDirective,
   ],
   imports: [

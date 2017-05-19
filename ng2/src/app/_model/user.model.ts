@@ -14,3 +14,16 @@ export class UserRegisterForm {
   email:string;
   phone:string;
 }
+
+export class UserChangeForm {
+  username:string;
+  email:string;
+
+  //zmienne
+  firstname:string;
+  lastname:string;
+  phone:string;
+
+  oldPass:string;
+  newPass:string;
+}

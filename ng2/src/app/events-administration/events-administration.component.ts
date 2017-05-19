@@ -133,20 +133,25 @@ export class EventsAdministrationComponent implements OnInit {
     this.postNextPage();
   }
 
-  public toRegisterOrDisRegister(temp) {
-    this.http.post(this.myHttp.getUrl()+'/api/administration/events/changeRegister/'+temp,this.myHttp.getConfig()).subscribe(
-      (data: Response) => {
-      this.eventSearchResult = data.json(), this.updatePageData()
-    });
-    console.log(temp+" register");
-  }
+  // public toRegisterOrDisRegister(temp) {
+  //   this.http.post(this.myHttp.getUrl()+'/api/administration/events/changeRegister/'+temp,this.myHttp.getConfig()).subscribe(
+  //     (data: Response) => {
+  //     this.eventSearchResult = data.json(), this.updatePageData()
+  //   });
+  //   console.log(temp+" register");
+  // }
 
-  public toPublishOrDisPublish(temp) {
-    this.http.post(this.myHttp.getUrl()+'/api/administration/events/changePublished/'+temp,this.myHttp.getConfig()).subscribe(
-      (data: Response) => {
-        this.eventSearchResult = data.json(), this.updatePageData()
-      });
-    console.log(temp+" publish");
+  // public toPublishOrDisPublish(temp) {
+  //   this.http.post(this.myHttp.getUrl()+'/api/administration/events/changePublished/'+temp,this.myHttp.getConfig()).subscribe(
+  //     (data: Response) => {
+  //       this.eventSearchResult = data.json(), this.updatePageData()
+  //     });
+  //   console.log(temp+" publish");
+  // }
+
+
+  updateOpinionsList():void{
+    this.getLatest();
   }
 
   public deleteEvent(temp) {

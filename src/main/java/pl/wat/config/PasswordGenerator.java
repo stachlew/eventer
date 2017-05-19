@@ -8,4 +8,9 @@ public class PasswordGenerator {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         return passwordEncoder.encode(password);
     }
+
+    public static boolean comparePassword(String hash, String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        return passwordEncoder.matches(password,hash);
+    }
 }

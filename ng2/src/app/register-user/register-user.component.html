@@ -22,7 +22,7 @@
           <label for="firstname">Podaj imię:</label>
           <input type="text" class="form-control" id="firstname" [(ngModel)]="newUser.firstname" name="firstname" [formControl]="complexForm.controls['firstname']">
           <div *ngIf="complexForm.controls['firstname'].hasError('required') && complexForm.controls['firstname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
-          <div *ngIf="complexForm.controls['firstname'].hasError('minlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['firstname'].hasError('minlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Minimum 2 znaki.</div>
           <div *ngIf="complexForm.controls['firstname'].hasError('maxlength') && complexForm.controls['firstname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
         </div>
 
@@ -31,7 +31,7 @@
           <label for="lastname">Podaj nazwisko:</label>
           <input type="text" class="form-control" id="lastname" [(ngModel)]="newUser.lastname" name="lastname" [formControl]="complexForm.controls['lastname']">
           <div *ngIf="complexForm.controls['lastname'].hasError('required') && complexForm.controls['lastname'].touched" class="alert alert-danger">Pole obowiązkowe.</div>
-          <div *ngIf="complexForm.controls['lastname'].hasError('minlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Minimum 4 znaki.</div>
+          <div *ngIf="complexForm.controls['lastname'].hasError('minlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Minimum 2 znaki.</div>
           <div *ngIf="complexForm.controls['lastname'].hasError('maxlength') && complexForm.controls['lastname'].touched" class="alert alert-danger">Maksimum 50 znaków.</div>
         </div>
 
@@ -57,6 +57,7 @@
 
       </form>
     </div>
+
 
   </div>
   <div *ngIf="isSuccessRegister" class="col-md-6 col-md-offset-3" align="center" style="margin-top: 50px">
