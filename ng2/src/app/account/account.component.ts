@@ -63,8 +63,8 @@ export class AccountComponent implements OnInit {
     this.complexForm = fb.group({
       'newPass':new FormControl(null,Validators.compose([ Validators.minLength(4), Validators.maxLength(50)])),
       'oldPass':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
-      'firstname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
-      'lastname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
+      'firstname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])),
+      'lastname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])),
       'phone':new FormControl(null,Validators.compose([Validators.maxLength(50)])),
     })
     this.http.get(this.myHttp.getUrl() + '/api/user/account/getInfo', this.myHttp.getConfig()).subscribe((data: Response)=> {this.newUser = data.json()});

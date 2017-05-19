@@ -23,8 +23,8 @@ export class RegisterUserComponent implements OnInit {
     this.newUser = new UserRegisterForm;
     this.complexForm = fb.group({
       'username':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
-      'firstname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
-      'lastname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
+      'firstname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])),
+      'lastname':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])),
       'email':new FormControl(null,Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
       'phone':new FormControl(null,Validators.compose([Validators.maxLength(50)])),
     })
