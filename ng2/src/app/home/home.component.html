@@ -129,7 +129,7 @@
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
           <figcaption>
             <h3>{{i.title}}</h3>
-            Data utworzenia: {{i.createDate |  date }}
+            Data utworzenia: {{i.createDate |date:'dd.MM.y' }}
           </figcaption>
         </figure>
       </div>
@@ -146,7 +146,7 @@
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
         <figcaption>
           <h3>{{i.title}}</h3>
-          Od {{i.startDate | date}} do {{i.endDate | date}}
+          Od {{i.startDate |date:'dd.MM'}} do {{i.endDate |date:'dd.MM.y'}}
         </figcaption>
       </figure>
     </div>
@@ -163,7 +163,7 @@
         <img [src]="imageUrl+i.idEvent" class="img-rounded img-responsive img-style-events" alt=""/>
         <figcaption>
           <h3>{{i.title}}</h3>
-          Od {{i.startDate | date}} do {{i.endDate | date}}
+          Od {{i.startDate |date:'dd.MM'}} do {{i.endDate |date:'dd.MM.y'}}
         </figcaption>
       </figure>
     </div>
