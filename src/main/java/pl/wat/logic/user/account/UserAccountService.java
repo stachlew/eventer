@@ -120,6 +120,17 @@ public class UserAccountService {
         return false;
     }
 
+    public boolean deleteSelfUser(User user,String password){
+        if(user!=null && password!=null && password.length()!=0 && PasswordGenerator.comparePassword(user.getPassword(),password)){
+            for (Event event : eventRepository.findAllByUserOrderByIdEvent(user)) {
+                eventDashboardService.deleteEvent(event.getIdEvent());
+            }
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
+
     public boolean enableUser(String username){
         User userToEnable = getUser(username);
         if(userToEnable!=null){
