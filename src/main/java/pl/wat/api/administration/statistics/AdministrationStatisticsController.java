@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.wat.api.util.Month;
 import pl.wat.logic.administration._model.EventStars;
 import pl.wat.logic.administration.statistics.AdministrationStatisticsService;
 import pl.wat.logic.util.StatisticService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,7 +17,7 @@ import java.util.List;
 public class AdministrationStatisticsController {
 
   @Autowired
-  private AdministrationStatisticsService administrationStatisticsService;
+  AdministrationStatisticsService administrationStatisticsService;
   @Autowired
   StatisticService statisticService;
 
@@ -57,15 +55,7 @@ public class AdministrationStatisticsController {
   public List<BigDecimal> getSumVisitsEventsByMonth() {return administrationStatisticsService.getSumVisitsEventsByMonth();}
 
   @GetMapping("/getMonthEventCreatedDate")
-  public List<BigDecimal> getMonthEventCreatedDate() {
-    List<BigDecimal> decimalList = administrationStatisticsService.getMonthEventCreatedDate();
-    List<String> miesiaceList = new ArrayList<>();
-    for(BigDecimal decimal : decimalList) {
-      System.out.println(decimal);
-      miesiaceList.add(Month.parseMiesiac(decimal));
-    }
-    return administrationStatisticsService.getMonthEventCreatedDate();
-  }
+  public List<BigDecimal> getMonthEventCreatedDate() { return administrationStatisticsService.getMonthEventCreatedDate(); }
 
   @GetMapping("/getStarsForLastFinished")
   public List<EventStars> getAvgStarsForLastFinished() { return administrationStatisticsService.getStarsForLast5Events(); }
