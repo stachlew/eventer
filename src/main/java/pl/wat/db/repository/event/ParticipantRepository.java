@@ -18,6 +18,6 @@ public interface ParticipantRepository extends JpaRepository<Participant,Integer
 
         public Integer countByEventAndPresenceIsTrue(Event event);
 
-        @Query(value = "select avg(s) from (select sum(p.id_Event) as s from Eve_Participants p group by p.id_Event) ",nativeQuery = true)
+        @Query(value = "select avg(s) from (select count(p.id_Event) as s from Eve_Participants p group by p.id_Event)",nativeQuery = true)
         public double getAvgParticipant();
 }
