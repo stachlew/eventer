@@ -49,9 +49,9 @@
               <div class="col-md-offset-1 col-md-10">
                 <nav aria-label="...">
                   <ul class="pager">
-                    <li class="" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
+                    <li class="myHover" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
                     <li class=""><span>Strona {{siteNo+1}}/{{siteCount}}</span></li>
-                    <li class="" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
+                    <li class="myHover" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
                   </ul>
                 </nav>
               </div>
@@ -153,9 +153,9 @@
           <div class="col-md-offset-1 col-md-10">
             <nav aria-label="...">
               <ul class="pager">
-                <li class="" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
+                <li class="myHover" *ngIf="isPrevAvl"><a (click)="prevPage()"><i class="fa fa-arrow-left"></i> Poprzednie</a></li>
                 <li class=""><span>Strona {{siteNo+1}}/{{siteCount}}</span></li>
-                <li class="" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
+                <li class="myHover" *ngIf="isNextAvl"><a (click)="nextPage()">Następne <i class="fa fa-arrow-right"></i></a></li>
               </ul>
             </nav>
           </div>
