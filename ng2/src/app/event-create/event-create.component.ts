@@ -97,12 +97,12 @@ export class EventCreateComponent implements OnInit {
   }
 
   helpLocalization(region :Region, city: City){
-    if(this.addEventClass.city!=null && this.addEventClass.streetName!=null){
+    if(this.addEventClass.city!=null && this.addEventClass.streetName!=null && this.addEventClass.streetNo!=null){
       let address: string = "";
       address=region.regionName+","+this.addEventClass.streetName+" "+this.addEventClass.streetNo+","+city.cityName;
       this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address).subscribe((data: Response)=> this.afterHelpLocalization(data.json()));
     }else {
-      alert("Wymagane miasto oraz ulica.")
+      alert("Wymagane miasto oraz ulica z numerem.")
     }
   }
 
